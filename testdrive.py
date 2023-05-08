@@ -20,7 +20,7 @@ def menu():
         if op == 1:
             adicionar_ponto_interesse()
         elif op == 2:
-            alterar_ponto_interesse(PontoInteresse)
+            alterar_ponto_interesse()
         elif op == 3:
             pass
         elif op == 4:

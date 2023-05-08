@@ -1,30 +1,27 @@
 [
     {
-        "designacao": "111",
-        "morada": "11",
-        "latitude": 1,
-        "longitude": 1,
-        "categoria_ponto": 1
+        "designacao": "JoaoAV",
+        "morada": "Rua do a",
+        "latitude": 1231,
+        "longitude": 31231,
+        "categoria_ponto": 10,
+        "acessiblidade": "Bike"
     },
     {
-        "designacao": "1",
-        "morada": "1",
-        "latitude": 1,
-        "longitude": 1,
-        "categoria_ponto": 1
-    },
-    {
-        "designacao": "1",
-        "morada": "1",
-        "latitude": 1,
-        "longitude": 1,
-        "categoria_ponto": 1
+        "designacao": "al",
+        "morada": "rua do al",
+        "latitude": 123,
+        "longitude": 123,
+        "categoria_ponto": 9,
+        "acessiblidade": "Carro",
+        "acessibilidade": "nao"
     },
     {
         "designacao": "joao",
-        "morada": "joa",
-        "latitude": 1,
-        "longitude": 1,
-        "categoria_ponto": 1
+        "morada": "ra do mi",
+        "latitude": 1231,
+        "longitude": 1231,
+        "categoria_ponto": 1,
+        "acessibilidade": "Bike"
     }
 ]
