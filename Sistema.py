@@ -2,22 +2,22 @@ from PontoInteresse import PontoInteresse
 import os
 import json
 
+FICHEIRO = "pontos_interesse.json"
+
 
 def adicionar_ponto_interesse():
-    nome_ficheiro = "pontos_interesse.json"
     # Verificar se o ficheiro existe e não está vazio
-    if os.path.exists(nome_ficheiro) and os.path.getsize(nome_ficheiro) > 0:
+    if os.path.exists(FICHEIRO) and os.path.getsize(FICHEIRO) > 0:
         # Carregar os pontos de interesse existentes do ficheiro
-        with open(nome_ficheiro, "r") as f:
+        with open(FICHEIRO, "r") as f:
             pontos_interesse = json.load(f)
     else:
         pontos_interesse = []
-
     designacao = str(input("Insira uma designacao do ponto de interesse: "))
     morada = str(input("Insira a morada do ponto de interesse: "))
     latitude = int(input("Insira a latitude do ponto de interesse: "))
     longitude = int(input("Insira a longitude do ponto de interesse: "))
-    categoria_ponto = int(input("Insira a categoria do ponto de interesse: (0) a (10) "))
+    categoria_ponto = str(input("Insira a categoria do ponto de interesse: "))
     acessibilidade = str(input("Insira a acessiblidade do ponto de interesse? "))
 
     novo_ponto_interesse = {
@@ -33,7 +33,7 @@ def adicionar_ponto_interesse():
     pontos_interesse.append(novo_ponto_interesse)
 
     # Guardar todos os pontos de interesse no ficheiro
-    with open(nome_ficheiro, "w") as f:
+    with open(FICHEIRO, "w") as f:
         json.dump(pontos_interesse, f, indent=4)
 
     print("\n")
@@ -62,7 +62,7 @@ def alterar_ponto_interesse():
             escolha = int(input("Insira a sua escolha (1) ou (2): "))
 
             if escolha == 1:
-                nova_categoria = int(input("Insira a nova categoria (0 a 10): "))
+                nova_categoria = str(input("Insira a nova categoria: "))
                 ponto["categoria_ponto"] = nova_categoria
                 print("Categoria do ponto de interesse alterada com sucesso!")
             elif escolha == 2:
@@ -85,4 +85,39 @@ def alterar_ponto_interesse():
     print("\n")
 
 
+def pesquisar_ponto_interesse():
+    if os.path.exists(FICHEIRO) and os.path.getsize(FICHEIRO) > 0:
+        with open(FICHEIRO, "r") as f:
+            pontos_interesse = json.load(f)
+    else:
+        print("Não existem pontos de interesse registados!")
+        return
+
+    categoria = str(input("Insira a categoria que pretende pesquisar: "))
+    resultados = []
+
+    for ponto in pontos_interesse:
+        if ponto["categoria_ponto"] == categoria:
+            resultados.append(ponto)
+
+    # Ordenar os pontos de interesse por ordem alfabética da designação (utilizando Insertion Sort)
+    for i in range(1, len(resultados)):
+        j = i - 1
+        while j >= 0 and resultados[j]["designacao"] > resultados[j+1]["designacao"]:
+            resultados[j], resultados[j+1] = resultados[j+1], resultados[j]
+            j -= 1
+
+    # Exibir os resultados
+    if len(resultados) > 0:
+        print(f"Resultados para a categoria {categoria}:")
+        for ponto in resultados:
+            print("-----")
+            print(f"Designação: {ponto['designacao']}")
+            print(f"Morada: {ponto['morada']}")
+            print(f"Latitude: {ponto['latitude']}")
+            print(f"Longitude: {ponto['longitude']}")
+            print(f"Categoria: {ponto['categoria_ponto']}")
+            print("-----")
+    else:
+        print(f"Não foram encontrados pontos de interesse para a categoria {categoria}!")
 

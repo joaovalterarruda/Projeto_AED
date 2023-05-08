@@ -1,27 +1,42 @@
 [
     {
-        "designacao": "JoaoAV",
-        "morada": "Rua do a",
-        "latitude": 1231,
-        "longitude": 31231,
-        "categoria_ponto": 10,
-        "acessiblidade": "Bike"
-    },
-    {
-        "designacao": "al",
-        "morada": "rua do al",
+        "designacao": "Joao",
+        "morada": "Rua do ar",
         "latitude": 123,
-        "longitude": 123,
-        "categoria_ponto": 9,
-        "acessiblidade": "Carro",
-        "acessibilidade": "nao"
+        "longitude": 321,
+        "categoria_ponto": "neh",
+        "acessibilidade": "Bike"
     },
     {
-        "designacao": "joao",
-        "morada": "ra do mi",
+        "designacao": "Dani",
+        "morada": "1231",
+        "latitude": 312,
+        "longitude": 31,
+        "categoria_ponto": "Ok",
+        "acessibilidade": "A pe"
+    },
+    {
+        "designacao": "Estadio Sao Miguel",
+        "morada": "Rua do estadio ",
         "latitude": 1231,
-        "longitude": 1231,
-        "categoria_ponto": 1,
-        "acessibilidade": "Bike"
+        "longitude": 312,
+        "categoria_ponto": "Muito ma",
+        "acessibilidade": "De carro"
+    },
+    {
+        "designacao": "Igreja",
+        "morada": "Rua do ar n 28",
+        "latitude": 29131,
+        "longitude": 123131,
+        "categoria_ponto": "Ok",
+        "acessibilidade": "A pe"
+    },
+    {
+        "designacao": "Armazem",
+        "morada": "Rua do armazem",
+        "latitude": 131131,
+        "longitude": 2131231,
+        "categoria_ponto": "Ok",
+        "acessibilidade": "A pe"
     }
 ]
