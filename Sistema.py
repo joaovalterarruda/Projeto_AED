@@ -20,8 +20,8 @@ def adicionar_ponto_interesse():
     categoria_ponto = int(input("Insira a categoria do ponto de interesse: (0) a (10) "))
 
     novo_ponto_interesse = {
-        "designacao": designacao + "\n",
-        "morada": morada + "\n",
+        "designacao": designacao,
+        "morada": morada,
         "latitude": latitude,
         "longitude": longitude,
         "categoria_ponto": categoria_ponto
@@ -32,7 +32,7 @@ def adicionar_ponto_interesse():
 
     # Guardar todos os pontos de interesse no ficheiro
     with open("pontos_interesse.json", "w") as f:
-        json.dump(pontos_interesse, f)
+        json.dump(pontos_interesse, f, indent=4)
 
     print("\n")
     print("Ponto interesse criado com sucesso!!")
@@ -55,3 +55,5 @@ def alterar_ponto_interesse(ponto_interesse):
         print("Acessibilidade do ponto de interesse alterada com sucesso!")
     else:
         print("Escolha inválida!")
+
+

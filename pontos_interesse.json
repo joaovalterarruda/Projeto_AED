@@ -1,3 +1,30 @@
-[{"designacao": "dasda\n", "morada": "sdada\n", "latitude": 12313, "longitude": 131, "categoria_ponto": 10},
-  {"designacao": "Alterar\n", "morada": "Alterar\n", "latitude": 10, "longitude": 10, "categoria_ponto": 10},
-  {"designacao": "131\n", "morada": "123131\n", "latitude": 1231231, "longitude": 23131, "categoria_ponto": 0}]
+[
+    {
+        "designacao": "111",
+        "morada": "11",
+        "latitude": 1,
+        "longitude": 1,
+        "categoria_ponto": 1
+    },
+    {
+        "designacao": "1",
+        "morada": "1",
+        "latitude": 1,
+        "longitude": 1,
+        "categoria_ponto": 1
+    },
+    {
+        "designacao": "1",
+        "morada": "1",
+        "latitude": 1,
+        "longitude": 1,
+        "categoria_ponto": 1
+    },
+    {
+        "designacao": "joao",
+        "morada": "joa",
+        "latitude": 1,
+        "longitude": 1,
+        "categoria_ponto": 1
+    }
+]
