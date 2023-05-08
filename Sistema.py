@@ -27,6 +27,7 @@ def mostrar_pontos_interesse():
         print("Acessibilidade:", ponto["acessibilidade"])
         print("Classificação:", ponto["classificacao"])
         print("\n")
+        input("Prima qualquer tecla para continuar")
 
 
 def adicionar_ponto_interesse(): # RF01
@@ -112,5 +113,6 @@ def pesquisar_ponto_interesse(): #RF03
             print(f"Latitude: {ponto['latitude']}")
             print(f"Longitude: {ponto['longitude']}")
             print(f"Categoria: {ponto['categoria_ponto']}")
+            input("Prima qualquer tecla para continuar.")
     else:
         print(f"Não foram encontrados pontos de interesse para a categoria {categoria}!")

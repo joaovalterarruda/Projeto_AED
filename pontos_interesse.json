@@ -43,5 +43,14 @@
         "categoria_ponto": "Ok",
         "acessibilidade": "Bike",
         "classificacao": 0
+    },
+    {
+        "designacao": "Teste1",
+        "morada": "Avenida do Mar",
+        "latitude": 30,
+        "longitude": 67,
+        "categoria_ponto": "vista",
+        "acessibilidade": "medio",
+        "classificacao": 0
     }
 ]

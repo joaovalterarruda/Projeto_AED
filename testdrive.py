@@ -1,6 +1,6 @@
 from Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, pesquisar_ponto_interesse, \
     mostrar_pontos_interesse, FICHEIRO
-from projeto_aed.PontoInteresse import PontoInteresse
+from PontoInteresse import PontoInteresse
 
 
 def opcoes_menu():
