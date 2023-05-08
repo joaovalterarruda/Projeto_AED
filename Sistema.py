@@ -3,6 +3,7 @@ import os
 import json
 
 FICHEIRO = "pontos_interesse.json"
+categorias_turismo = ("Praia", "Monumento", "Museu", "Parque", "Miradouro", "Outros")
 
 
 def ler_ficheiro(nome_ficheiro):
@@ -13,7 +14,7 @@ def ler_ficheiro(nome_ficheiro):
 
 def guardar_ficheiro(dados, ficheiro):
     with open(ficheiro, 'w') as file:
-        json.dump(dados, file,indent=4)
+        json.dump(dados, file, indent=4)
 
 
 def mostrar_pontos_interesse():
@@ -30,13 +31,18 @@ def mostrar_pontos_interesse():
         input("Prima qualquer tecla para continuar")
 
 
-def adicionar_ponto_interesse(): # RF01
+def adicionar_ponto_interesse():  # RF01
     pontos_interesse = ler_ficheiro(FICHEIRO)
     designacao = str(input("Insira uma designacao do ponto de interesse: "))
     morada = str(input("Insira a morada do ponto de interesse: "))
     latitude = int(input("Insira a latitude do ponto de interesse: "))
     longitude = int(input("Insira a longitude do ponto de interesse: "))
-    categoria_ponto = str(input("Insira a categoria do ponto de interesse: "))
+    while True:
+        categoria_ponto = str(input("Insira a categoria do ponto de interesse: "))
+        if categoria_ponto not in categorias_turismo:
+            print("Categoria inválida! As que se encontram disponíveis são:", categorias_turismo)
+        else:
+            break
     acessibilidade = str(input("Insira a acessiblidade do ponto de interesse? "))
     novo_ponto_interesse = {
         "designacao": designacao,
@@ -57,7 +63,7 @@ def adicionar_ponto_interesse(): # RF01
     print("\n")
 
 
-def alterar_ponto_interesse(): # RF02
+def alterar_ponto_interesse():  # RF02
     nome_interesse = ler_ficheiro(FICHEIRO)
     designacao = input("Insira a designação do ponto de interesse que pretende alterar: ")
     for ponto in nome_interesse:
@@ -88,7 +94,7 @@ def alterar_ponto_interesse(): # RF02
     print("\n")
 
 
-def pesquisar_ponto_interesse(): #RF03
+def pesquisar_ponto_interesse():  # RF03
     nome_interesse = ler_ficheiro(FICHEIRO)
     categoria = str(input("Insira a categoria que pretende pesquisar: "))
     resultados = []
@@ -116,3 +122,24 @@ def pesquisar_ponto_interesse(): #RF03
             input("Prima qualquer tecla para continuar.")
     else:
         print(f"Não foram encontrados pontos de interesse para a categoria {categoria}!")
+
+
+def avaliar_visita(nome_arquivo, nome_ponto_interesse, nova_classificacao):
+    # Ler o conteúdo do ficheiro.json para uma variável
+    dados = ler_ficheiro(nome_arquivo)
+
+    # Percorrer a lista de pontos de interesse e atualizar o contador de visitas e a classificação
+    encontrado = False
+    for ponto in dados['pontos_interesse']:
+        if ponto['nome'] == nome_ponto_interesse:
+            ponto['visitas'] += 1
+            ponto['classificacao'] = nova_classificacao
+            encontrado = True
+            break
+
+    # Caso o ponto de interesse não seja encontrado, imprimir mensagem de erro
+    if not encontrado:
+        print("Ponto de interesse não encontrado!")
+    else:
+        # Guardar os dados atualizados no ficheiro.json
+        guardar_ficheiro(dados, nome_arquivo)
