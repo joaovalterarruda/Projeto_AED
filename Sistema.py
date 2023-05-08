@@ -5,6 +5,20 @@ import json
 FICHEIRO = "pontos_interesse.json"
 
 
+def mostrar_pontos_interesse():
+    with open(FICHEIRO, "r") as f:
+        pontos_interesse = json.load(f)
+        for ponto in pontos_interesse:
+            print("Designação:", ponto["designacao"])
+            print("Morada:", ponto["morada"])
+            print("Latitude:", ponto["latitude"])
+            print("Longitude:", ponto["longitude"])
+            print("Categoria:", ponto["categoria_ponto"])
+            print("Acessibilidade:", ponto["acessibilidade"])
+            print("Classificação:", ponto["classificacao"])
+            print("\n")
+
+
 def adicionar_ponto_interesse():
     # Verificar se o ficheiro existe e não está vazio
     if os.path.exists(FICHEIRO) and os.path.getsize(FICHEIRO) > 0:
@@ -26,7 +40,8 @@ def adicionar_ponto_interesse():
         "latitude": latitude,
         "longitude": longitude,
         "categoria_ponto": categoria_ponto,
-        "acessibilidade": acessibilidade
+        "acessibilidade": acessibilidade,
+        "classificacao": 0
     }
 
     # Adicionar o novo ponto de interesse à lista
@@ -120,4 +135,30 @@ def pesquisar_ponto_interesse():
             print("-----")
     else:
         print(f"Não foram encontrados pontos de interesse para a categoria {categoria}!")
+
+
+def avaliar_ponto_interesse(pontos_interesse):
+    # Mostrar a lista de pontos de interesse disponíveis
+    print("Pontos de interesse disponíveis:")
+    for i, ponto in enumerate(pontos_interesse):
+        print(f"{i}: {ponto['designacao']}")
+
+    # Pedir ao utilizador que selecione o ponto de interesse a avaliar
+    ponto_index = int(input("Selecione o ponto de interesse a avaliar: "))
+
+    # Incrementar o contador de visitas
+    pontos_interesse[ponto_index]['visitas'] += 1
+
+    # Pedir ao utilizador que insira a sua classificação da experiência
+    classificacao = int(input("Insira a sua classificação da experiência (1-4): "))
+
+    # Verificar se a classificação é válida
+    while classificacao < 1 or classificacao > 4:
+        classificacao = int(input("Insira uma classificação válida (1-4): "))
+
+    # Atualizar a classificação do ponto de interesse
+    pontos_interesse[ponto_index]['classificacoes'].append(classificacao)
+
+    # Mostrar a mensagem de sucesso
+    print("Avaliação registada com sucesso!")
 

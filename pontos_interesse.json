@@ -1,42 +1,20 @@
 [
     {
-        "designacao": "Joao",
-        "morada": "Rua do ar",
-        "latitude": 123,
-        "longitude": 321,
-        "categoria_ponto": "neh",
-        "acessibilidade": "Bike"
+        "designacao": "SemPontuacao",
+        "morada": "dasdasda",
+        "latitude": 313131,
+        "longitude": 131231,
+        "categoria_ponto": "Boa",
+        "acessibilidade": "Bike",
+        "classificacao": 0
     },
     {
         "designacao": "Dani",
         "morada": "1231",
-        "latitude": 312,
-        "longitude": 31,
-        "categoria_ponto": "Ok",
-        "acessibilidade": "A pe"
-    },
-    {
-        "designacao": "Estadio Sao Miguel",
-        "morada": "Rua do estadio ",
-        "latitude": 1231,
-        "longitude": 312,
-        "categoria_ponto": "Muito ma",
-        "acessibilidade": "De carro"
-    },
-    {
-        "designacao": "Igreja",
-        "morada": "Rua do ar n 28",
-        "latitude": 29131,
-        "longitude": 123131,
-        "categoria_ponto": "Ok",
-        "acessibilidade": "A pe"
-    },
-    {
-        "designacao": "Armazem",
-        "morada": "Rua do armazem",
-        "latitude": 131131,
-        "longitude": 2131231,
-        "categoria_ponto": "Ok",
-        "acessibilidade": "A pe"
+        "latitude": 13132,
+        "longitude": 1231,
+        "categoria_ponto": "31",
+        "acessibilidade": "31",
+        "classificacao": 0
     }
 ]
