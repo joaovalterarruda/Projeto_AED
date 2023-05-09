@@ -56,8 +56,7 @@ def adicionar_ponto_interesse():  # RF01
     # Adicionar o novo ponto de interesse à lista
     pontos_interesse.append(novo_ponto_interesse)
     # Guardar todos os pontos de interesse no ficheiro
-    with open(FICHEIRO, "w") as f:
-        json.dump(pontos_interesse, f, indent=4)
+    guardar_ficheiro(novo_ponto_interesse,FICHEIRO)
     print("\n")
     print("Ponto interesse criado com sucesso!!")
     print("\n")
