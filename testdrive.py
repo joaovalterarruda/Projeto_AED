@@ -13,6 +13,7 @@ def opcoes_menu():
     print(" 6 - Consultar estátisticas de visitas aos pontos de interesse")
     print(" 7 - Obter sugestões de visitas a pontos de interesse ")
     print(" 9 - Sair ")
+    print("----------------------------------------------------------------")
 
 
 def menu():
