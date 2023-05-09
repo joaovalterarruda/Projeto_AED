@@ -1,5 +1,5 @@
 from Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, pesquisar_ponto_interesse, \
-    mostrar_pontos_interesse, FICHEIRO, avaliar_visita
+    mostrar_pontos_interesse, FICHEIRO
 from PontoInteresse import PontoInteresse
 
 
@@ -31,9 +31,10 @@ def menu():
         elif op == 4:
             pesquisar_ponto_interesse()
         elif op == 5:
-            nome_ponto = str(input("Introduza o nome do ponto de interesse: "))
-            classificar = str(input("Introduza uma classificacao para esse ponto de interesse: "))
-            avaliar_visita(FICHEIRO, nome_ponto, classificar)
+            #nome_ponto = str(input("Introduza o nome do ponto de interesse: "))
+            #classificar = str(input("Introduza uma classificacao para esse ponto de interesse: "))
+            #avaliar_visita(FICHEIRO, nome_ponto, classificar)
+            pass
         elif op == 6:
             pass
         elif op == 7:

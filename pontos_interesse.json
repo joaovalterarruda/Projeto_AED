@@ -70,5 +70,14 @@
         "categoria_ponto": "Praia",
         "acessibilidade": "Boa",
         "classificacao": 0
+    },
+    {
+        "designacao": "Estatua",
+        "morada": "Rua da liberdade",
+        "latitude": 123,
+        "longitude": 321,
+        "categoria_ponto": "Monumento",
+        "acessibilidade": "Muito bom",
+        "classificacao": 0
     }
 ]
