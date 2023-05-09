@@ -31,7 +31,6 @@ def mostrar_pontos_interesse():
         input("Prima qualquer tecla para continuar")
 
 
-
 def adicionar_ponto_interesse(): # RF01
     pontos_interesse = ler_ficheiro(FICHEIRO)
     designacao = str(input("Insira uma designacao do ponto de interesse: "))
