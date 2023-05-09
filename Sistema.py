@@ -3,6 +3,7 @@ import os
 import json
 
 FICHEIRO = "pontos_interesse.json"
+categorias_turismo = ("Praia", "Monumento", "Museu", "Parque", "Miradouro", "Outros")
 
 
 def ler_ficheiro(nome_ficheiro):
@@ -36,7 +37,12 @@ def adicionar_ponto_interesse(): # RF01
     morada = str(input("Insira a morada do ponto de interesse: "))
     latitude = int(input("Insira a latitude do ponto de interesse: "))
     longitude = int(input("Insira a longitude do ponto de interesse: "))
-    categoria_ponto = str(input("Insira a categoria do ponto de interesse: "))
+    while True:
+        categoria_ponto = str(input("Insira a categoria do ponto de interesse: "))
+        if categoria_ponto not in categorias_turismo:
+            print("Categoria inválida! As que se encontram disponíveis são:", categorias_turismo)
+        else:
+            break
     acessibilidade = str(input("Insira a acessiblidade do ponto de interesse? "))
     novo_ponto_interesse = {
         "designacao": designacao,

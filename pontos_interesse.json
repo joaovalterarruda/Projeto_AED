@@ -52,5 +52,23 @@
         "categoria_ponto": "vista",
         "acessibilidade": "medio",
         "classificacao": 0
+    },
+    {
+        "designacao": "Estadio",
+        "morada": "Rua",
+        "latitude": 123,
+        "longitude": 321,
+        "categoria_ponto": "ok",
+        "acessibilidade": "ok",
+        "classificacao": 0
+    },
+    {
+        "designacao": "Estadio",
+        "morada": "Rua",
+        "latitude": 123,
+        "longitude": 321,
+        "categoria_ponto": "Praia",
+        "acessibilidade": "Boa",
+        "classificacao": 0
     }
 ]
