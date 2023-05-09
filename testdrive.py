@@ -38,7 +38,7 @@ def menu():
             pass
         elif op == 7:
             pass
-        elif op == 0:
+        elif op == 9:
             fim = True
 
 
