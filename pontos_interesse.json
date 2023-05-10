@@ -22,7 +22,7 @@
         "morada": "Rua do Horizonte",
         "latitude": 31931,
         "longitude": 31231,
-        "categoria_ponto": "Boa",
+        "categoria_ponto": "Outros",
         "acessibilidade": "Bike",
         "classificacao": 0
     },
@@ -60,7 +60,8 @@
         "longitude": 321,
         "categoria_ponto": "ok",
         "acessibilidade": "ok",
-        "classificacao": 0
+        "classificacao": 1.0833333333333335,
+        "visitas": 5
     },
     {
         "designacao": "Estadio",
@@ -78,6 +79,66 @@
         "longitude": 321,
         "categoria_ponto": "Monumento",
         "acessibilidade": "Muito bom",
+        "classificacao": 0.7666666666666666,
+        "visitas": 6
+    },
+    {
+        "designacao": "Estadio",
+        "morada": "ra",
+        "latitude": 123,
+        "longitude": 321,
+        "categoria_ponto": "Praia",
+        "acessibilidade": "ok",
         "classificacao": 0
+    },
+    {
+        "designacao": "Milu",
+        "morada": "Rua do milu",
+        "latitude": 2310,
+        "longitude": 31231,
+        "categoria_ponto": "Outros",
+        "acessibilidade": "Muito boa",
+        "classificacao": 1.0833333333333335,
+        "visitas": 5
+    },
+    {
+        "designacao": "Teste",
+        "morada": "Rua do Teste n81",
+        "latitude": 23131,
+        "longitude": 2131,
+        "categoria_ponto": "Outros",
+        "acessibilidade": "Muito boa",
+        "classificacao": 4.0,
+        "visitas": 1
+    },
+    {
+        "designacao": "Visitas",
+        "morada": "Rua da Visita",
+        "latitude": 23131,
+        "longitude": 3112,
+        "categoria_ponto": "Outros",
+        "acessibilidade": "Excelente",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Alvalade",
+        "morada": "Rua do Scp",
+        "latitude": 123,
+        "longitude": 231,
+        "categoria_ponto": "Outros",
+        "acessibilidade": "Excelente",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Deportivo Espanhol",
+        "morada": "El rua Espanhol",
+        "latitude": 312,
+        "longitude": 2131,
+        "categoria_ponto": "Outros",
+        "acessibilidade": "Boa",
+        "classificacao": 0,
+        "visitas": 0
     }
 ]
