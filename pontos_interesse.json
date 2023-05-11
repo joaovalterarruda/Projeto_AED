@@ -6,7 +6,8 @@
         "longitude": 131231,
         "categoria_ponto": "Boa",
         "acessibilidade": "Bike",
-        "classificacao": 0
+        "classificacao": 4.0,
+        "visitas": 1
     },
     {
         "designacao": "Dani",
@@ -15,7 +16,8 @@
         "longitude": 1231,
         "categoria_ponto": "hyndia",
         "acessibilidade": "31",
-        "classificacao": 0
+        "classificacao": 3.0,
+        "visitas": 1
     },
     {
         "designacao": "Casa do Mar",
@@ -24,7 +26,8 @@
         "longitude": 31231,
         "categoria_ponto": "Outros",
         "acessibilidade": "Bike",
-        "classificacao": 0
+        "classificacao": 0,
+        "visitas": 0
     },
     {
         "designacao": "Joao",
@@ -33,7 +36,8 @@
         "longitude": 3131,
         "categoria_ponto": "Boa",
         "acessibilidade": "Bike",
-        "classificacao": 0
+        "classificacao": 0,
+        "visitas": 0
     },
     {
         "designacao": "EmBloco",
@@ -42,7 +46,8 @@
         "longitude": 11,
         "categoria_ponto": "Ok",
         "acessibilidade": "Bike",
-        "classificacao": 0
+        "classificacao": 0,
+        "visitas": 0
     },
     {
         "designacao": "Teste1",
@@ -51,7 +56,8 @@
         "longitude": 67,
         "categoria_ponto": "vista",
         "acessibilidade": "medio",
-        "classificacao": 0
+        "classificacao": 0,
+        "visitas": 0
     },
     {
         "designacao": "Estadio",
@@ -70,7 +76,8 @@
         "longitude": 321,
         "categoria_ponto": "Praia",
         "acessibilidade": "Boa",
-        "classificacao": 0
+        "classificacao": 0,
+        "visitas": 0
     },
     {
         "designacao": "Estatua",
@@ -89,7 +96,8 @@
         "longitude": 321,
         "categoria_ponto": "Praia",
         "acessibilidade": "ok",
-        "classificacao": 0
+        "classificacao": 0,
+        "visitas": 0
     },
     {
         "designacao": "Milu",
@@ -126,10 +134,10 @@
         "morada": "Rua do Scp",
         "latitude": 123,
         "longitude": 231,
-        "categoria_ponto": "Outros",
+        "categoria_ponto": "k",
         "acessibilidade": "Excelente",
-        "classificacao": 0,
-        "visitas": 0
+        "classificacao": 4,
+        "visitas": 4
     },
     {
         "designacao": "Deportivo Espanhol",
@@ -138,7 +146,27 @@
         "longitude": 2131,
         "categoria_ponto": "Outros",
         "acessibilidade": "Boa",
-        "classificacao": 0,
-        "visitas": 0
+        "classificacao": 4.0,
+        "visitas": 1
+    },
+    {
+        "designacao": "Testar",
+        "morada": "Rua do testar",
+        "latitude": 213,
+        "longitude": 31,
+        "categoria_ponto": "Outros",
+        "acessibilidade": "Pessima",
+        "classificacao": 2.1666666666666665,
+        "visitas": 3
+    },
+    {
+        "designacao": "E desta?",
+        "morada": "Rua",
+        "latitude": "123",
+        "longitude": "321",
+        "categoria_ponto": "Outros",
+        "acessibilidade": "1",
+        "classificacao": 4.0,
+        "visitas": 1
     }
 ]

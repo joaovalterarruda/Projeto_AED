@@ -12,7 +12,7 @@ def opcoes_menu():
     print(" 5 - Avaliar visita a ponto de interesse")
     print(" 6 - Consultar estátisticas de visitas aos pontos de interesse")
     print(" 7 - Obter sugestões de visitas a pontos de interesse ")
-    print(" 9 - Sair ")
+    print(" 0 - Sair ")
 
 
 def menu():
@@ -38,7 +38,7 @@ def menu():
             consultar_estatisticas()
         elif op == 7:
             pass
-        elif op == 9:
+        elif op == 0:
             fim = True
 
 
