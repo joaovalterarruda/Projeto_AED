@@ -31,7 +31,7 @@ def mostrar_pontos_interesse():
         input("Prima Enter para continuar")
 
 
-def adicionar_ponto_interesse():
+def adicionar_ponto_interesse(): # RF01 OK
     pontos_interesse = ler_ficheiro(FICHEIRO)
     designacao = str(input("Insira uma designacao do ponto de interesse: "))
 
@@ -65,31 +65,37 @@ def adicionar_ponto_interesse():
 
 
 def alterar_ponto_interesse():  # RF02 ok
-    nome_interesse = ler_ficheiro(FICHEIRO)
+    pontos_interesse = ler_ficheiro(FICHEIRO)
     designacao = input("Insira a designação do ponto de interesse que pretende alterar: ")
-    for ponto in nome_interesse:
+    for ponto in pontos_interesse:
         if ponto["designacao"] == designacao:
             print("O que pretende alterar?")
             print("1- Categoria")
             print("2- Acessibilidade")
             escolha = int(input("Insira a sua escolha (1) ou (2): "))
             if escolha == 1:
-                nova_categoria = str(input("Insira a nova categoria: "))
-                ponto["categoria_ponto"] = nova_categoria
-                print("Categoria do ponto de interesse alterada com sucesso!")
+                nova_categoria = input(f"Insira a nova categoria ({', '.join(categorias_turismo)}): ")
+                # join para juntar os elementos da lista categorias_turismo
+                if nova_categoria in categorias_turismo:
+                    ponto["categoria_turismo"] = nova_categoria
+                    print("Categoria do ponto de interesse alterada com sucesso!")
+                else:
+                    print("Categoria inválida!")
+                    return
             elif escolha == 2:
                 nova_acessibilidade = input("Insira a nova acessibilidade: ")
                 ponto["acessibilidade"] = nova_acessibilidade
                 print("Acessibilidade do ponto de interesse alterada com sucesso!")
             else:
                 print("Escolha inválida!")
+                return
             break
     else:
         print("Não existe nenhum ponto de interesse com essa designação!")
         return
 
     # Guardar todos os pontos de interesse no ficheiro
-    guardar_ficheiro(nome_interesse, FICHEIRO)
+    guardar_ficheiro(pontos_interesse, FICHEIRO)
     print("\n")
     print("Ponto de interesse alterado com sucesso!")
     print("\n")
