@@ -31,12 +31,19 @@ def mostrar_pontos_interesse():
         input("Prima qualquer tecla para continuar")
 
 
-def adicionar_ponto_interesse():  # RF01 ok
+def adicionar_ponto_interesse():
     pontos_interesse = ler_ficheiro(FICHEIRO)
     designacao = str(input("Insira uma designacao do ponto de interesse: "))
+
+    # Verificar se a designação já existe na lista de pontos de interesse
+    existe_designacao = [ponto["designacao"] for ponto in pontos_interesse]
+    while designacao in existe_designacao:
+        print("O ponto de interesse com esta designacao já foi usado!")
+        designacao = str(input("Insira uma designacao do ponto de interesse: "))
+
     morada = str(input("Insira a morada do ponto de interesse: "))
-    latitude = str(input("Insira a latitude do ponto de interesse: "))
-    longitude = str(input("Insira a longitude do ponto de interesse: "))
+    latitude = int(input("Insira a latitude do ponto de interesse: "))
+    longitude = int(input("Insira a longitude do ponto de interesse: "))
     while True:
         categoria_ponto = str(input("Insira a categoria do ponto de interesse: "))
         if categoria_ponto not in categorias_turismo:
@@ -44,7 +51,7 @@ def adicionar_ponto_interesse():  # RF01 ok
         else:
             break
     acessibilidade = str(input("Insira a acessiblidade do ponto de interesse? "))
-    novo_ponto_interesse = PontoInteresse(designacao, morada, latitude,longitude, categoria_ponto,
+    novo_ponto_interesse = PontoInteresse(designacao, morada, latitude, longitude, categoria_ponto,
                                           acessibilidade, classificacao=0, visitas=0)
 
     # Adicionar o novo ponto de interesse à lista
