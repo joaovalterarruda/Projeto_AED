@@ -1,5 +1,5 @@
 from Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, pesquisar_ponto_interesse, \
-    mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas
+    mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas, sugestao_pontos_interesse
 from PontoInteresse import PontoInteresse
 
 
@@ -37,7 +37,13 @@ def menu():
         elif op == 6:
             consultar_estatisticas()
         elif op == 7:
-            pass
+            latitude = int(input("Introduza a latitude: "))
+            longitude = int(input("Introduza a longitude: "))
+            distancia = int(input("Introduza a distancia máxima: "))
+            pontos_sugeridos = sugestao_pontos_interesse(latitude, longitude, FICHEIRO, distancia)
+            print("Pontos sugeridos:")
+            for ponto in pontos_sugeridos:
+                print(ponto)
         elif op == 0:
             fim = True
 

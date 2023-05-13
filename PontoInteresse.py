@@ -46,7 +46,7 @@ class PontoInteresse:
     def get_acessibilidade(self) -> str:
         return self._acessibilidade
 
-    def get_classificao(self) -> int:
+    def get_classificacao(self) -> int:
         return self._classificacao
 
     def get_visitas(self) -> int:

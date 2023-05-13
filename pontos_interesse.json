@@ -168,5 +168,15 @@
         "acessibilidade": "1",
         "classificacao": 4.0,
         "visitas": 1
+    },
+    {
+        "designacao": "Esta ok?",
+        "morada": "Rua do esta tudo menos o ultimo ponto",
+        "latitude": 20,
+        "longitude": 10,
+        "categoria_ponto": "Outros",
+        "acessibilidade": "Pessima",
+        "classificacao": 0,
+        "visitas": 0
     }
 ]

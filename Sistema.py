@@ -1,5 +1,6 @@
 from PontoInteresse import PontoInteresse
 import json
+from math import radians, cos, sin, sqrt, atan2
 
 FICHEIRO = "pontos_interesse.json"
 categorias_turismo = ("Praia", "Monumento", "Museu", "Parque", "Miradouro", "Outros")
@@ -26,12 +27,12 @@ def mostrar_pontos_interesse():
         print("Longitude:", ponto_interesse.get_longitude())
         print("Categoria:", ponto_interesse.get_categoria_turismo())
         print("Acessibilidade:", ponto_interesse.get_acessibilidade())
-        print("Classificação:", ponto_interesse.get_classificao())
+        print("Classificação:", ponto_interesse.get_classificacao())
         print("\n")
         input("Prima Enter para continuar")
 
 
-def adicionar_ponto_interesse(): # RF01 OK
+def adicionar_ponto_interesse():  # RF01 OK
     pontos_interesse = ler_ficheiro(FICHEIRO)
     designacao = str(input("Insira uma designacao do ponto de interesse: "))
 
@@ -128,7 +129,7 @@ def pesquisar_ponto_interesse():  # RF03 ok
         print(f"Não foram encontrados pontos de interesse para a categoria {categoria}!")
 
 
-def avaliar_visita(ficheiro, nome_ponto, classificar): ############# falta completar
+def avaliar_visita(ficheiro, nome_ponto, classificar):  ############# falta completar RF04
     pontos_interesse = ler_ficheiro(ficheiro)
 
     # É feita a procura pela designação
@@ -179,8 +180,35 @@ def consultar_estatisticas():  # RF05 ok
     print("Estatísticas das Visitas nos Pontos Turísticos: ")
     for ponto in pontos_turisticos:
         num_visitas = ponto.get_visitas()
-        classificacao_media = ponto.get_classificao()
+        classificacao_media = ponto.get_classificacao()
         print(f"Designação: {ponto.get_designacao()}")
         print(f"Número de Visitantes: {num_visitas}")
         print(f"Classificação Média: {classificacao_media}\n")
+
+
+def formula_de_haversine(coord1, coord2):
+    R = 6371  # raio da Terra em km
+    lat1, lon1 = coord1
+    lat2, lon2 = coord2
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+    a = sin(dlat / 2) * sin(dlat / 2) + cos(radians(lat1)) \
+        * cos(radians(lat2)) * sin(dlon / 2) * sin(dlon / 2)
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    d = R * c
+    return d
+
+
+def sugestao_pontos_interesse(latitude, longitude, ficheiro, distancia_maxima):
+    pontos = ler_ficheiro(ficheiro)
+    pontos_perto = []
+    for ponto in pontos:
+        if isinstance(ponto, PontoInteresse):
+            coord_ponto = (ponto.get_latitude(), ponto.get_longitude())
+            coord_localizacao = (latitude, longitude)
+            dist = formula_de_haversine(coord_ponto, coord_localizacao)
+            if dist <= distancia_maxima:
+                pontos_perto.append(ponto)
+    pontos_perto = sorted(pontos_perto, key=lambda x: x.get_visitas(), reverse=True)
+    return pontos_perto
 
