@@ -1,4 +1,30 @@
 class PontoInteresse:
+    """
+    Representa um ponto de interesse turístico.
+
+    Args:
+        designacao (str): A designação do ponto de interesse.
+        morada (str): O endereço do ponto de interesse.
+        latitude (float): A latitude do ponto de interesse.
+        longitude (float): A longitude do ponto de interesse.
+        categoria_ponto (str): A categoria do ponto de interesse.
+        acessibilidade_fis (str): A acessibilidade física do ponto de interesse.
+        acessibilidade_geo (str): A acessibilidade geográfica do ponto de interesse.
+        classificacao (int): A classificação do ponto de interesse.
+        visitas (int): O número de visitas do ponto de interesse.
+
+    Attributes:
+        _designacao (str): A designação do ponto de interesse.
+        _morada (str): O endereço do ponto de interesse.
+        _latitude (float): A latitude do ponto de interesse.
+        _longitude (float): A longitude do ponto de interesse.
+        _categoria_ponto (str): A categoria do ponto de interesse.
+        _acessibilidade_fis (str): A acessibilidade física do ponto de interesse.
+        _acessibilidade_geo (str): A acessibilidade geográfica do ponto de interesse.
+        _classificacao (int): A classificação do ponto de interesse.
+        _visitas (int): O número de visitas do ponto de interesse.
+    """
+
     def __init__(self, designacao: str, morada: str, latitude: float, longitude: float, categoria_ponto: str,
                  acessibilidade_fis: str, acessibilidade_geo: str, classificacao: 0, visitas=0) -> None:
         self._designacao: str = designacao
@@ -19,6 +45,12 @@ class PontoInteresse:
             + str(self._classificacao) + "Visitas" + str(self._visitas)
 
     def __dict__(self):
+        """
+        Retorna um dicionário contendo os atributos do ponto de interesse.
+
+        Returns:
+            dict: Um dicionário contendo os atributos do ponto de interesse.
+        """
         return {
             "designacao": self._designacao,
             "morada": self._morada,

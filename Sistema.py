@@ -1,5 +1,5 @@
 import math
-
+import shutil
 from PontoInteresse import PontoInteresse
 import json
 from LinkedList import LinkedList
@@ -8,8 +8,19 @@ FICHEIRO = "pontos_interesse.json"
 categorias_turismo = ("natureza", "cultural", "aventura", "gastronomia", "praia", "outros")
 classificacao = ("1", "2", "3", "4")
 
+FRASE_INPUT = "Enter para continuar ou (C) para cancelar e voltar ao menu. "
 
 def ler_ficheiro(nome_ficheiro):
+    """
+        Lê o conteúdo de um ficheiro JSON e cria uma lista ligada com os dados lidos.
+
+        Args:
+            nome_ficheiro (str): O nome do ficheiro a ser lido.
+
+        Returns:
+            LinkedList: A lista ligada criada a partir dos dados do ficheiro.
+        """
+
     linked_list = LinkedList()
     with open(nome_ficheiro, 'r') as file:
         conteudo = json.load(file)
@@ -30,7 +41,31 @@ def guardar_ficheiro(dados, nome_ficheiro):
     print("Ficheiro " + nome_ficheiro + " guardado com sucesso.")
 
 
+def fazer_backup(nome_ficheiro):
+    """
+        Faz uma cópia de backup do ficheiro JSON.
+
+        Args:
+            nome_ficheiro (str): O nome do ficheiro a ser feito o backup.
+
+        Returns:
+            None
+    """
+    nome_backup = nome_ficheiro + ".backup"
+    shutil.copy(nome_ficheiro, nome_backup)
+    print("Backup do ficheiro " + nome_ficheiro + " criado com sucesso.")
+
+
 def mostrar_pontos_interesse(linked_list):
+    """
+        Mostra os pontos de interesse de uma lista ligada, ordenados por critério definido pelo utilizador.
+
+        Args:
+            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
+
+        Returns:
+            None
+        """
     opcao_ordem = input("Ordenar por: (D)esignação, (C)ategoria ou (A)cessibilidade: ")
 
     if opcao_ordem.lower() == 'd':
@@ -71,12 +106,21 @@ def mostrar_pontos_interesse(linked_list):
         print("Acessibilidade geográfica:", ponto_interesse.get_acessibilidade_geo())
         print("Classificação:", ponto_interesse.get_classificacao())
         print("\n")
-        opcao = input("Enter para continuar ou (C) para cancelar e voltar ao menu. ")
+        opcao = input(FRASE_INPUT)
         if opcao.lower() == 'c':
             return  # retorna para o menu
 
 
 def adicionar_ponto_interesse(linked_list):  # RF01 OK
+    """
+       Adiciona um novo ponto de interesse à LinkedList.
+
+       Args:
+           linked_list (LinkedList): A lista ligada onde o ponto de interesse será adicionado.
+
+       Returns:
+           None
+       """
     designacao = str(input("Insira uma designação do ponto de interesse: "))
 
     # Verificar se a designação já existe na lista de pontos de interesse
@@ -112,7 +156,16 @@ def adicionar_ponto_interesse(linked_list):  # RF01 OK
 
 
 
-def alterar_ponto_interesse(linked_list):  # RF02 ok
+def alterar_ponto_interesse(linked_list): # RF02 ok
+    """
+        Altera as informações de um ponto de interesse existente na lista ligada.
+
+        Args:
+            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
+
+        Returns:
+            None
+        """
     designacao = input("Insira a designação do ponto de interesse que pretende alterar: ")
     current = linked_list.head
     while current:
@@ -157,6 +210,15 @@ def alterar_ponto_interesse(linked_list):  # RF02 ok
 
 
 def apagar_ponto_interesse(linked_list):
+    """
+        Remove um ponto de interesse da lista ligada.
+
+        Args:
+            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
+
+        Returns:
+            None
+        """
     designacao = input("Insira a designação do ponto de interesse que pretende apagar: ")
     current = linked_list.head
     previous = None
@@ -176,6 +238,16 @@ def apagar_ponto_interesse(linked_list):
 
 
 def pesquisar_ponto_interesse(linked_list):  # RF03 ok
+    """
+        Pesquisa pontos de interesse com base na categoria especificada.
+
+        Args:
+            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
+
+        Returns:
+            None
+        """
+
     categoria = input(f"Insira a categoria que pretende pesquisar: ({', '.join(categorias_turismo)}): ")
     resultados = []
     current = linked_list.head
@@ -209,6 +281,17 @@ def pesquisar_ponto_interesse(linked_list):  # RF03 ok
 
 
 def avaliar_visita(linked_list, nome_ponto, classificar):
+    """
+       Avalia uma visita a um ponto de interesse, atualizando o número de visitas e a classificação média.
+
+       Args:
+           linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
+           nome_ponto (str): O nome do ponto de interesse a ser avaliado.
+           classificar (int): A classificação atribuída à visita (1 a 4).
+
+       Returns:
+           None
+       """
     current = linked_list.head
 
     # Verificar se o ponto de interesse existe
@@ -237,6 +320,16 @@ def avaliar_visita(linked_list, nome_ponto, classificar):
     print("A classificação de {} foi avaliada com sucesso!".format(nome_ponto))
 
 def consultar_estatisticas(linked_list):  # RF05 ok
+    """
+       Consulta estatísticas sobre os pontos turísticos, como ordenar por nome, número de visitas ou classificação média.
+
+       Args:
+           linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
+
+       Returns:
+           None
+       """
+
     opcao = input("Escolha a ordenação (1 - Nome, 2 - Número de Visitas, 3 - Classificação Média): ")
 
     if opcao == "1":
@@ -262,7 +355,7 @@ def consultar_estatisticas(linked_list):  # RF05 ok
         print(f"Número de Visitantes: {num_visitas}")
         print(f"Classificação Média: {classificacao_media}\n")
 
-        opcao = input("Enter para continuar ou (C) para cancelar e voltar ao menu. ")
+        opcao = input(FRASE_INPUT)
         if opcao.lower() == 'c':
             return  # retorna para o menu
 
@@ -271,9 +364,19 @@ def consultar_estatisticas(linked_list):  # RF05 ok
 
 def haversine(lat1, lon1, lat2, lon2) -> float:
     """
-    Calcula a distância em km entre dois pontos na Terra utilizando a fórmula de Haversine.
-    Os pontos são especificados em latitude e longitude.
-    """
+        Calcula a distância em km entre dois pontos na Terra utilizando a fórmula de Haversine.
+        Os pontos são especificados em latitude e longitude.
+
+        Args:
+            lat1 (float): Latitude do primeiro ponto.
+            lon1 (float): Longitude do primeiro ponto.
+            lat2 (float): Latitude do segundo ponto.
+            lon2 (float): Longitude do segundo ponto.
+
+        Returns:
+            float: A distância entre os dois pontos em km.
+        """
+
 
     # Raio médio da Terra em km
     radius = 6371
@@ -294,6 +397,19 @@ def haversine(lat1, lon1, lat2, lon2) -> float:
 
 
 def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, distancia_maxima: float):
+    """
+        Retorna uma lista de pontos de interesse próximos a uma localização específica, dentro de uma distância máxima.
+
+        Args:
+            latitude (float): Latitude da localização de referência.
+            longitude (float): Longitude da localização de referência.
+            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
+            distancia_maxima (float): A distância máxima em km.
+
+        Returns:
+            List[Dict]: Uma lista de dicionários representando os pontos de interesse próximos.
+        """
+
     pontos_perto = []
     current = linked_list.head
     while current:
@@ -328,6 +444,17 @@ def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, di
 
 
 def merge_sort(arr, key, reverse=False):
+    """
+        Ordena uma lista usando o algoritmo de ordenação merge sort.
+
+        Args:
+            arr (List[Dict]): A lista a ser ordenada.
+            key (str): A chave do dicionário a ser usada como critério de ordenação.
+            reverse (bool): Indica se a ordenação deve ser em ordem decrescente. O padrão é False (ordem crescente).
+
+        Returns:
+            List[Dict]: A lista ordenada.
+        """
     if len(arr) <= 1:
         return arr
 
@@ -342,6 +469,19 @@ def merge_sort(arr, key, reverse=False):
 
 
 def merge(left, right, key, reverse=False):
+    """
+        Combina duas listas ordenadas em uma única lista ordenada.
+
+        Args:
+            left (List[Dict]): A primeira lista ordenada.
+            right (List[Dict]): A segunda lista ordenada.
+            key (str): A chave do dicionário a ser usada como critério de ordenação.
+            reverse (bool): Indica se a ordenação deve ser em ordem decrescente. O padrão é False (ordem crescente).
+
+        Returns:
+            List[Dict]: A lista combinada e ordenada.
+        """
+
     result = []
     i = j = 0
 

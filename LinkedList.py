@@ -5,12 +5,31 @@ class Node:
         self.data = data
         self.next = None
 class LinkedList:
+    """
+        Uma lista ligada simples.
+
+        Attributes:
+            head: O primeiro nó da lista.
+            tail: O último nó da lista.
+            length: O tamanho da lista.
+        """
+
     def __init__(self):
         self.head = None
         self.tail = None
         self.length = 0
 
     def add(self, data):
+        """
+        Adiciona um novo elemento no final da lista.
+
+        Args:
+            data: O dado a ser adicionado.
+
+        Returns:
+            None
+        """
+
         node = Node(data)
         if self.head is None:
             self.head = node
@@ -21,6 +40,15 @@ class LinkedList:
         self.length += 1
 
     def remove(self, data):
+        """
+        Remove a primeira ocorrência do dado especificado da lista.
+
+        Args:
+            data: O dado a ser removido.
+
+        Returns:
+            None
+        """
         if self.head is None:
             return
         if self.head.data == data:
@@ -40,6 +68,15 @@ class LinkedList:
             current = current.next
 
     def find(self, data):
+        """
+        Procura a primeira ocorrência do dado especificado na lista.
+
+        Args:
+            data: O dado a ser procurado.
+
+        Returns:
+            Node: O nó contendo o dado, ou None se o dado não for encontrado.
+        """
         current = self.head
         while current is not None:
             if current.data == data:
@@ -48,11 +85,30 @@ class LinkedList:
         return None
 
     def update(self, old_data, new_data):
+        """
+        Atualiza o valor de um dado na lista.
+
+        Args:
+            old_data: O dado a ser atualizado.
+            new_data: O novo valor do dado.
+
+        Returns:
+            None
+        """
         node = self.find(old_data)
         if node is not None:
             node.data = new_data
 
     def insertion_sort(self, key=lambda x: x):
+        """
+        Ordena a lista usando o algoritmo de ordenação por inserção.
+
+        Args:
+            key (function): A função de chave opcional para personalizar a ordenação.
+
+        Returns:
+            None
+        """
         if self.head is None or self.head.next is None:
             return
 
@@ -80,6 +136,12 @@ class LinkedList:
         return sorted_head
 
     def to_list(self):
+        """
+        Converte a lista ligada em uma lista Python.
+
+        Returns:
+            list: A lista Python.
+        """
         lst = []
         node = self.head
         while node is not None:
@@ -89,12 +151,30 @@ class LinkedList:
 
 
     def load_from_json(self, file_name):
+        """
+        Carrega os dados da lista a partir de um arquivo JSON.
+
+        Args:
+           file_name (str): O nome do arquivo JSON.
+
+        Returns:
+           None
+        """
         with open(file_name, 'r') as f:
             data = json.load(f)
         for item in data:
             self.add(item)
 
     def save_to_json(self, file_name):
+        """
+        Salva os dados da lista em um arquivo JSON.
+
+        Args:
+            file_name (str): O nome do arquivo JSON.
+
+        Returns:
+            None
+        """
         with open(file_name, 'w') as f:
             data = []
             current = self.head
@@ -104,12 +184,24 @@ class LinkedList:
             json.dump(data, f, indent=4)
 
     def __iter__(self):
+        """
+        Retorna um iterador para percorrer os elementos da lista.
+
+        Returns:
+            iterator: Um iterador para percorrer os elementos da lista.
+        """
         node = self.head
         while node is not None:
             yield node.data
             node = node.next
 
     def __str__(self):
+        """
+        Retorna uma representação em string da lista.
+
+        Returns:
+            str: A representação em string da lista.
+        """
         current = self.head
         items = []
         while current is not None:

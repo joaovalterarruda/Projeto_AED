@@ -1,4 +1,4 @@
-from Sistema import ler_ficheiro, guardar_ficheiro, adicionar_ponto_interesse, alterar_ponto_interesse, \
+from Sistema import ler_ficheiro, guardar_ficheiro, fazer_backup, adicionar_ponto_interesse, alterar_ponto_interesse, \
     apagar_ponto_interesse, pesquisar_ponto_interesse, \
     mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas, sugestao_pontos_interesse
 
@@ -53,10 +53,13 @@ def menu():
                 sugestao_pontos_interesse(latitude, longitude, linkedlist, distancia)
             elif op == 0:
                 guardar_ficheiro(linkedlist, FICHEIRO)
+                fazer_backup(FICHEIRO)
                 fim = True
         except ValueError:
             print("Opção inválida. Tente outra vez.")
 
-
-linkedlist = ler_ficheiro("pontos_interesse.json")
-menu()
+if __name__ == '__main__':
+    #Carrega o ficheiro JSON para a LinkedList no inicio do programa
+    linkedlist = ler_ficheiro("pontos_interesse.json")
+    fazer_backup(FICHEIRO)
+    menu()
