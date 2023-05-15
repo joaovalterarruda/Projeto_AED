@@ -15,17 +15,19 @@ def ler_ficheiro(nome_ficheiro):
         conteudo = json.load(file)
         for item in conteudo:
             linked_list.add(item)
+        print("Ficheiro " + nome_ficheiro + " carregado com sucesso.")
     return linked_list
 
 
-def guardar_ficheiro(dados, ficheiro):
+
+def guardar_ficheiro(dados, nome_ficheiro):
     linked_list = LinkedList()
     for item in dados:
         linked_list.add(item)
     conteudo = linked_list.to_list()
-    with open(ficheiro, 'w') as file:
+    with open(nome_ficheiro, 'w') as file:
         json.dump(conteudo, file, indent=4)
-    print("Ficheiro guardado com sucesso.")
+    print("Ficheiro " + nome_ficheiro + " guardado com sucesso.")
 
 
 def mostrar_pontos_interesse(linked_list):
@@ -153,9 +155,8 @@ def alterar_ponto_interesse(linked_list):  # RF02 ok
     print("\n")
 
 
-
 def pesquisar_ponto_interesse(linked_list):  # RF03 ok
-    categoria = input("Insira a categoria que pretende pesquisar: ")
+    categoria = input(f"Insira a categoria que pretende pesquisar: ({', '.join(categorias_turismo)}): ")
     resultados = []
     current = linked_list.head
     while current:
@@ -173,6 +174,7 @@ def pesquisar_ponto_interesse(linked_list):  # RF03 ok
 
     # Mostrar os resultados da pesquisa
     if len(resultados) > 0:
+        print("\n")
         print(f"Resultados para a categoria {categoria}:")
         for ponto in resultados:
             print("-----")
@@ -213,11 +215,6 @@ def avaliar_visita(linked_list, nome_ponto, classificar):
         return
 
     print("A classificação de {} foi avaliada com sucesso!".format(nome_ponto))
-
-
-
-
-
 
 def consultar_estatisticas(linked_list):  # RF05 ok
     opcao = input("Escolha a ordenação (1 - Nome, 2 - Número de Visitas, 3 - Classificação Média): ")
@@ -289,6 +286,7 @@ def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, di
                 pontos_perto.append(ponto)
         current = current.next
     if len(pontos_perto) == 0:
+        print("\n")
         print("Não foram encontrados pontos de interesse dentro da distância máxima introduzida.")
     else:
         # Ordenar pontos_perto em ordem decrescente do número de visitas usando Merge Sort

@@ -44,9 +44,9 @@ def menu():
             elif op == 6:
                 consultar_estatisticas(linkedlist)
             elif op == 7:
-                latitude = float(input("Digite a latitude: "))
-                longitude = float(input("Digite a longitude: "))
-                distancia = float(input("Digite a distância máxima: "))
+                latitude = float(input("Digite a sua latitude: "))
+                longitude = float(input("Digite a sua longitude: "))
+                distancia = float(input("Digite a distância máxima de pesquisa: "))
                 sugestao_pontos_interesse(latitude, longitude, linkedlist, distancia)
             elif op == 0:
                 guardar_ficheiro(linkedlist, FICHEIRO)
