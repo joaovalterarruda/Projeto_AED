@@ -1,4 +1,4 @@
-import webbrowser
+
 
 from Sistema import ler_ficheiro, guardar_ficheiro, fazer_backup, adicionar_ponto_interesse, alterar_ponto_interesse, \
     apagar_ponto_interesse, pesquisar_ponto_interesse, \
@@ -13,16 +13,16 @@ def opcoes_menu():
         "\u2502" + "\033[1;36m" + "\t \t \t \t \t \t   Pontos de Interesse\t \t \t \t \t \t   " + "\033[0m" + "\u2502")
     print("\u2514" + "\u2500" * 70 + "\u2518")
     print("-" * 72)
-    print(" 0 - Ponta Delgada, História e Cultura")
-    print(" 1 - Ver todos os pontos de interesse")
-    print(" 2 - Adicionar um ponto de interesse")
-    print(" 3 - Alterar um ponto de interesse")
-    print(" 4 - Apagar ponto de interesse ")
-    print(" 5 - Pesquisar pontos de interesse ")
-    print(" 6 - Avaliar visita a ponto de interesse")
-    print(" 7 - Consultar estatísticas de visitas aos pontos de interesse")
-    print(" 8 - Obter sugestões de visitas a pontos de interesse ")
-    print(" 9 - Sair ")
+    print(" 1 - Ponta Delgada, História e Cultura")
+    print(" 2 - Ver todos os pontos de interesse")
+    print(" 3 - Adicionar um ponto de interesse")
+    print(" 4 - Alterar um ponto de interesse")
+    print(" 5 - Apagar ponto de interesse ")
+    print(" 6 - Pesquisar pontos de interesse ")
+    print(" 7 - Avaliar visita a ponto de interesse")
+    print(" 8 - Consultar estatísticas de visitas aos pontos de interesse")
+    print(" 9 - Obter sugestões de visitas a pontos de interesse ")
+    print(" 0 - Sair ")
 
 
 def menu():
@@ -32,39 +32,44 @@ def menu():
         print("-" * 72)
         try:
             op = int(input("Opção: "))
-            if op == 0:
-                webbrowser.open("http://www.visitpontadelgada.pt/ponta-delgada/informacoes-sobre-ponta-delgada")
-            elif op == 1:
-                mostrar_pontos_interesse(linkedlist)
+            if op == 1:
+                print("Ponta Delgada é uma cidade portuguesa localizada na ilha de São Miguel\ne pertencente"
+                      " à Região Autónoma dos Açores com uma população\nde 46 102 habitantes."
+                      " Ponta Delgada é a capital económica da \nRegião Autónoma dos Açores "
+                      "e a maior cidade desta região.")
             elif op == 2:
-                adicionar_ponto_interesse(linkedlist)
+                mostrar_pontos_interesse(linkedlist)
             elif op == 3:
-                alterar_ponto_interesse(linkedlist)
+                adicionar_ponto_interesse(linkedlist)
             elif op == 4:
-                apagar_ponto_interesse(linkedlist)
+                alterar_ponto_interesse(linkedlist)
             elif op == 5:
-                pesquisar_ponto_interesse(linkedlist)
+                apagar_ponto_interesse(linkedlist)
             elif op == 6:
+                pesquisar_ponto_interesse(linkedlist)
+            elif op == 7:
                 nome_ponto = str(input("Introduza o nome do ponto a avaliar: "))
                 classificar = int(input("Introduza a classificação que pretende dar ao ponto:"
                                         "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito Satisfeito\n", ))
                 avaliar_visita(linkedlist, nome_ponto, classificar)
-            elif op == 7:
-                consultar_estatisticas(linkedlist)
             elif op == 8:
+                consultar_estatisticas(linkedlist)
+            elif op == 9:
                 latitude = float(input("Digite a sua latitude: "))
                 longitude = float(input("Digite a sua longitude: "))
                 distancia = float(input("Digite a distância máxima de pesquisa: "))
                 sugestao_pontos_interesse(latitude, longitude, linkedlist, distancia)
-            elif op == 9:
+            elif op == 0:
                 guardar_ficheiro(linkedlist, FICHEIRO)
                 fazer_backup(FICHEIRO)
                 fim = True
+                print("Obrigado por utilizar o nosso programa. Até breve!")
         except ValueError:
             print("Opção inválida. Tente outra vez.")
 
+
 if __name__ == '__main__':
-    #Carrega o ficheiro JSON para a LinkedList no inicio do programa
-    linkedlist = ler_ficheiro("pontos_interesse.json")
+    # Carrega o ficheiro JSON para a LinkedList no inicio do programa
+    linkedlist = ler_ficheiro(FICHEIRO)
     fazer_backup(FICHEIRO)
     menu()

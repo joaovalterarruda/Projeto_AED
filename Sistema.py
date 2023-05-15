@@ -10,6 +10,7 @@ classificacao = ("1", "2", "3", "4")
 
 FRASE_INPUT = "Enter para continuar ou (C) para cancelar e voltar ao menu. "
 
+
 def ler_ficheiro(nome_ficheiro):
     """
         Lê o conteúdo de um ficheiro JSON e cria uma lista ligada com os dados lidos.
@@ -22,7 +23,7 @@ def ler_ficheiro(nome_ficheiro):
         """
 
     linked_list = LinkedList()
-    with open(nome_ficheiro, 'r') as file:
+    with open(nome_ficheiro, 'r', encoding="UTF-8") as file:
         conteudo = json.load(file)
         for item in conteudo:
             linked_list.add(item)
@@ -30,13 +31,12 @@ def ler_ficheiro(nome_ficheiro):
     return linked_list
 
 
-
 def guardar_ficheiro(dados, nome_ficheiro):
     linked_list = LinkedList()
     for item in dados:
         linked_list.add(item)
     conteudo = linked_list.to_list()
-    with open(nome_ficheiro, 'w') as file:
+    with open(nome_ficheiro, 'w', encoding="UTF-8") as file:
         json.dump(conteudo, file, indent=4)
     print("Ficheiro " + nome_ficheiro + " guardado com sucesso.")
 
@@ -144,7 +144,8 @@ def adicionar_ponto_interesse(linked_list):  # RF01 OK
         else:
             break
     acessibilidade_fis = str(input("Insira a acessibilidade fisica do ponto de interesse (rampa, elevador, etc.): "))
-    acessibilidade_geo = str(input("Insira a acessibilidade geográfica do ponto de interesse (parque de estacionamento, transp. públicos, ciclovia, etc.): "))
+    acessibilidade_geo = str(input(
+        "Insira a acessibilidade geográfica do ponto de interesse (parque de estacionamento, transp. públicos, ciclovia, etc.): "))
     novo_ponto_interesse = PontoInteresse(designacao, morada, latitude, longitude, categoria_ponto,
                                           acessibilidade_fis, acessibilidade_geo, classificacao=0, visitas=0)
 
@@ -155,8 +156,7 @@ def adicionar_ponto_interesse(linked_list):  # RF01 OK
     print("\n")
 
 
-
-def alterar_ponto_interesse(linked_list): # RF02 ok
+def alterar_ponto_interesse(linked_list):  # RF02 ok
     """
         Altera as informações de um ponto de interesse existente na lista ligada.
 
@@ -319,6 +319,7 @@ def avaliar_visita(linked_list, nome_ponto, classificar):
 
     print("A classificação de {} foi avaliada com sucesso!".format(nome_ponto))
 
+
 def consultar_estatisticas(linked_list):  # RF05 ok
     """
        Consulta estatísticas sobre os pontos turísticos, como ordenar por nome, número de visitas ou classificação média.
@@ -345,7 +346,8 @@ def consultar_estatisticas(linked_list):  # RF05 ok
     pontos_turisticos = linked_list.to_list()
 
     # Ordenar os pontos de interesse com base na opção selecionada
-    pontos_turisticos.sort(key=lambda ponto: ponto.get(ordenar_por), reverse = (ordenar_por in ["visitas", "classificacao"]))
+    pontos_turisticos.sort(key=lambda ponto: ponto.get(ordenar_por),
+                           reverse=(ordenar_por in ["visitas", "classificacao"]))
 
     print("Estatísticas das Visitas nos Pontos Turísticos: ")
     for ponto in pontos_turisticos:
@@ -358,8 +360,6 @@ def consultar_estatisticas(linked_list):  # RF05 ok
         opcao = input(FRASE_INPUT)
         if opcao.lower() == 'c':
             return  # retorna para o menu
-
-
 
 
 def haversine(lat1, lon1, lat2, lon2) -> float:
@@ -377,7 +377,6 @@ def haversine(lat1, lon1, lat2, lon2) -> float:
             float: A distância entre os dois pontos em km.
         """
 
-
     # Raio médio da Terra em km
     radius = 6371
     # Converter graus para radianos
@@ -386,14 +385,11 @@ def haversine(lat1, lon1, lat2, lon2) -> float:
     dlat = lat2 - lat1
     dlon = lon2 - lon1
     # Fórmula de Haversine
-    a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    a = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     distance = radius * c
 
     return distance
-
-
-
 
 
 def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, distancia_maxima: float):
@@ -510,9 +506,3 @@ def merge(left, right, key, reverse=False):
         j += 1
 
     return result
-
-
-
-
-
-
