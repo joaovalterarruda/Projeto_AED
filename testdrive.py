@@ -1,10 +1,16 @@
-from Sistema import ler_ficheiro, guardar_ficheiro, adicionar_ponto_interesse, alterar_ponto_interesse, pesquisar_ponto_interesse, \
+from Sistema import ler_ficheiro, guardar_ficheiro, adicionar_ponto_interesse, alterar_ponto_interesse, \
+    pesquisar_ponto_interesse, \
     mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas, sugestao_pontos_interesse
 
 
-
 def opcoes_menu():
-    print("----------------------------------------------------------------")
+    print("\u250C" + "\u2500" * 70 + "\u2510")
+    print(
+        "\u2502" + "\033[1;36m" + "\t \t \t \t \t \tConcelho de Ponta Delgada\t \t \t \t \t   " + "\033[0m" + "\u2502")
+    print(
+        "\u2502" + "\033[1;36m" + "\t \t \t \t \t \t   Pontos de Interesse\t \t \t \t \t \t   " + "\033[0m" + "\u2502")
+    print("\u2514" + "\u2500" * 70 + "\u2518")
+    print("-" * 72)
     print(" 1 - Ver todos os pontos de interesse")
     print(" 2 - Adicionar um ponto de interesse")
     print(" 3 - Alterar um ponto de interesse")
@@ -19,7 +25,7 @@ def menu():
     fim = False
     while not fim:
         opcoes_menu()
-        print("----------------------------------------------------------------")
+        print("-" * 72)
         try:
             op = int(input("Opção: "))
             if op == 1:
@@ -33,7 +39,7 @@ def menu():
             elif op == 5:
                 nome_ponto = str(input("Introduza o nome do ponto a avaliar: "))
                 classificar = int(input("Introduza a classificação que pretende dar ao ponto:"
-                                        "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito Satisfeito\n",))
+                                        "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito Satisfeito\n", ))
                 avaliar_visita(linkedlist, nome_ponto, classificar)
             elif op == 6:
                 consultar_estatisticas(linkedlist)
