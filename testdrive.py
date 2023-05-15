@@ -1,6 +1,6 @@
-from Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, pesquisar_ponto_interesse, \
-    mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas
-from PontoInteresse import PontoInteresse
+from Sistema import ler_ficheiro, guardar_ficheiro, adicionar_ponto_interesse, alterar_ponto_interesse, pesquisar_ponto_interesse, \
+    mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas, sugestao_pontos_interesse
+
 
 
 def opcoes_menu():
@@ -20,26 +20,42 @@ def menu():
     while not fim:
         opcoes_menu()
         print("----------------------------------------------------------------")
-        op = int(input("Opção: "))
-        if op == 1:
-            mostrar_pontos_interesse()
-        elif op == 2:
-            adicionar_ponto_interesse()
-        elif op == 3:
-            alterar_ponto_interesse()
-        elif op == 4:
-            pesquisar_ponto_interesse()
-        elif op == 5:
-            nome_ponto = str(input("Introduza o nome do ponto a avaliar: "))
-            classificar = int(input("Introduza a classificação que pretende dar ao ponto:"
-                                    "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito Satisfeito\n",))
-            avaliar_visita(FICHEIRO, nome_ponto, classificar)
-        elif op == 6:
-            consultar_estatisticas()
-        elif op == 7:
-            pass
-        elif op == 0:
-            fim = True
+        try:
+            op = int(input("Opção: "))
+            if op == 1:
+                mostrar_pontos_interesse(linkedlist)
+            elif op == 2:
+                adicionar_ponto_interesse(linkedlist)
+            elif op == 3:
+                alterar_ponto_interesse(linkedlist)
+            elif op == 4:
+                pesquisar_ponto_interesse(linkedlist)
+            elif op == 5:
+                nome_ponto = str(input("Introduza o nome do ponto a avaliar: "))
+                classificar = int(input("Introduza a classificação que pretende dar ao ponto:"
+                                        "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito Satisfeito\n",))
+                avaliar_visita(linkedlist, nome_ponto, classificar)
+            elif op == 6:
+                consultar_estatisticas(linkedlist)
+            elif op == 7:
+                latitude = float(input("Introduza a latitude: "))
+                longitude = float(input("Introduza a longitude: "))
+                distancia = float(input("Introduza a distância máxima: "))
+                pontos_sugeridos = sugestao_pontos_interesse(latitude, longitude, FICHEIRO, distancia)
+                if len(pontos_sugeridos) == 0:
+                    print("Não foram encontrados pontos de interesse dentro da distância máxima introduzida.")
+                else:
+                    print("Pontos sugeridos:")
+                    for ponto in pontos_sugeridos:
+                        print(ponto)
+            elif op == 0:
+                guardar_ficheiro(linkedlist, FICHEIRO)
+                fim = True
 
 
+        except ValueError:
+            print("Opção inválida. Tente outra vez.")
+
+
+linkedlist = ler_ficheiro("pontos_interesse.json")
 menu()

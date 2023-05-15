@@ -1,44 +1,91 @@
+import json
+
 class Node:
-    def __init__(self, data):
+    def __init__(self, data=None):
         self.data = data
         self.next = None
-
 class LinkedList:
     def __init__(self):
         self.head = None
+        self.tail = None
+        self.length = 0
 
-    def add_at_front(self, data):
-        new_node = Node(data)
-        new_node.next = self.head
-        self.head = new_node
+    def add(self, data):
+        node = Node(data)
+        if self.head is None:
+            self.head = node
+            self.tail = node
+        else:
+            self.tail.next = node
+            self.tail = node
+        self.length += 1
 
-    def add_at_end(self, data):
-        new_node = Node(data)
-        if not self.head:
-            self.head = new_node
+    def remove(self, data):
+        if self.head is None:
             return
-        current_node = self.head
-        while current_node.next:
-            current_node = current_node.next
-        current_node.next = new_node
-
-    def remove(self, key):
-        current_node = self.head
-        if current_node and current_node.data == key:
-            self.head = current_node.next
-            current_node = None
+        if self.head.data == data:
+            self.head = self.head.next
+            self.length -= 1
+            if self.head is None:
+                self.tail = None
             return
-        prev = None
-        while current_node and current_node.data != key:
-            prev = current_node
-            current_node = current_node.next
-        if current_node is None:
-            return
-        prev.next = current_node.next
-        current_node = None
+        current = self.head
+        while current.next is not None:
+            if current.next.data == data:
+                current.next = current.next.next
+                self.length -= 1
+                if current.next is None:
+                    self.tail = current
+                return
+            current = current.next
 
-    def print_list(self):
-        current_node = self.head
-        while current_node:
-            print(current_node.data)
-            current_node = current_node.next
+    def find(self, data):
+        current = self.head
+        while current is not None:
+            if current.data == data:
+                return current
+            current = current.next
+        return None
+
+    def update(self, old_data, new_data):
+        node = self.find(old_data)
+        if node is not None:
+            node.data = new_data
+
+    def to_list(self):
+        lst = []
+        node = self.head
+        while node is not None:
+            lst.append(node.data)
+            node = node.next
+        return lst
+
+
+    def load_from_json(self, file_name):
+        with open(file_name, 'r') as f:
+            data = json.load(f)
+        for item in data:
+            self.add(item)
+
+    def save_to_json(self, file_name):
+        with open(file_name, 'w') as f:
+            data = []
+            current = self.head
+            while current is not None:
+                data.append(current.data)
+                current = current.next
+            json.dump(data, f, indent=4)
+
+    def __iter__(self):
+        node = self.head
+        while node is not None:
+            yield node.data
+            node = node.next
+
+    def __str__(self):
+        current = self.head
+        items = []
+        while current is not None:
+            items.append(str(current.data))
+            current = current.next
+        return ' -> '.join(items)

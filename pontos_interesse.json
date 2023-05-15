@@ -168,5 +168,45 @@
         "acessibilidade": "1",
         "classificacao": 4.0,
         "visitas": 1
+    },
+    {
+        "designacao": "Esta ok?",
+        "morada": "Rua do esta tudo menos o ultimo ponto",
+        "latitude": 20,
+        "longitude": 10,
+        "categoria_ponto": "Outros",
+        "acessibilidade": "Pessima",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "teste linked",
+        "morada": "asdasdasdas",
+        "latitude": 123,
+        "longitude": 23,
+        "categoria_ponto": "Monumento",
+        "acessibilidade": "facil",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "teste linked2",
+        "morada": "asdasdasdasd",
+        "latitude": 32,
+        "longitude": 32,
+        "categoria_ponto": "Praia",
+        "acessibilidade": "facil",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "teste linked3",
+        "morada": "qwerqweqwe",
+        "latitude": 43,
+        "longitude": 12,
+        "categoria_ponto": "Monumento",
+        "acessibilidade": "dificil",
+        "classificacao": 0,
+        "visitas": 0
     }
 ]
