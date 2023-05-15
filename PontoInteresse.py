@@ -1,19 +1,21 @@
 class PontoInteresse:
     def __init__(self, designacao: str, morada: str, latitude: float, longitude: float, categoria_ponto: str,
-                 acessibilidade: str, classificacao: 0, visitas=0) -> None:
+                 acessibilidade_fis: str, acessibilidade_geo: str, classificacao: 0, visitas=0) -> None:
         self._designacao: str = designacao
         self._morada: str = morada
         self._latitude: float = latitude
         self._longitude: float = longitude
         self._categoria_ponto: str = categoria_ponto
-        self._acessibilidade: str = acessibilidade
+        self._acessibilidade_fis: str = acessibilidade_fis
+        self._acessibilidade_geo: str = acessibilidade_geo
         self._classificacao: int = classificacao
         self._visitas: int = visitas
 
     def __str__(self) -> str:
         return "Designacao: " + str(self._designacao) + "Morada:  " + str(self._morada) \
             + "Latitude:  " + str(self._latitude) + "Longitude: " + str(self._longitude) + "Categoria Turismo: " + \
-            str(self._categoria_ponto) + "Acessiblidade" + str(self._acessibilidade) + "Classificacao" \
+            str(self._categoria_ponto) + "Acessiblidade Física" + str(self._acessibilidade_fis) + \
+            "Acessiblidade Geográfica" + str(self._acessibilidade_geo) +"Classificacao" \
             + str(self._classificacao) + "Visitas" + str(self._visitas)
 
     def __dict__(self):
@@ -23,7 +25,8 @@ class PontoInteresse:
             "latitude": self._latitude,
             "longitude": self._longitude,
             "categoria_ponto": self._categoria_ponto,
-            "acessibilidade": self._acessibilidade,
+            "acessibilidade_fis": self._acessibilidade_fis,
+            "acessibilidade_geo": self._acessibilidade_geo,
             "classificacao": self._classificacao,
             "visitas": self._visitas
         }
@@ -43,8 +46,11 @@ class PontoInteresse:
     def get_categoria_turismo(self) -> str:
         return self._categoria_ponto
 
-    def get_acessibilidade(self) -> str:
-        return self._acessibilidade
+    def get_acessibilidade_fis(self) -> str:
+        return self._acessibilidade_fis
+
+    def get_acessibilidade_geo(self) -> str:
+        return self._acessibilidade_geo
 
     def get_classificacao(self) -> int:
         return self._classificacao
@@ -55,5 +61,8 @@ class PontoInteresse:
     def set_categoria_turismo(self, categoria):
         self._categoria_ponto = categoria
 
-    def set_acessibilidade(self, acessibilidade):
-        self._acessibilidade = acessibilidade
+    def set_acessibilidade_fis(self, acessibilidade_fis):
+        self._acessibilidade_fis = acessibilidade_fis
+
+    def set_acessibilidade_geo(self, acessibilidade_geo):
+        self._acessibilidade_geo = acessibilidade_geo

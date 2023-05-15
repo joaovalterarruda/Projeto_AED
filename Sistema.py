@@ -5,7 +5,7 @@ import json
 from LinkedList import LinkedList
 
 FICHEIRO = "pontos_interesse.json"
-categorias_turismo = ("Praia", "Monumento", "Museu", "Parque", "Miradouro", "Outros")
+categorias_turismo = ("natureza", "cultural", "aventura", "gastronomia", "praia", "outros")
 classificacao = ("1", "2", "3", "4")
 
 
@@ -25,6 +25,7 @@ def guardar_ficheiro(dados, ficheiro):
     conteudo = linked_list.to_list()
     with open(ficheiro, 'w') as file:
         json.dump(conteudo, file, indent=4)
+    print("Ficheiro guardado com sucesso.")
 
 
 def mostrar_pontos_interesse(linked_list):
@@ -35,7 +36,7 @@ def mostrar_pontos_interesse(linked_list):
     elif opcao_ordem.lower() == 'c':
         atributo_ordenacao = 'get_categoria_turismo'
     elif opcao_ordem.lower() == 'a':
-        atributo_ordenacao = 'get_acessibilidade'
+        atributo_ordenacao = 'get_acessibilidade_fis'
     else:
         print("Opção inválida.")
         return
@@ -63,7 +64,8 @@ def mostrar_pontos_interesse(linked_list):
         print("Latitude:", ponto_interesse.get_latitude())
         print("Longitude:", ponto_interesse.get_longitude())
         print("Categoria:", ponto_interesse.get_categoria_turismo())
-        print("Acessibilidade:", ponto_interesse.get_acessibilidade())
+        print("Acessibilidade física:", ponto_interesse.get_acessibilidade_fis())
+        print("Acessibilidade geográfica:", ponto_interesse.get_acessibilidade_geo())
         print("Classificação:", ponto_interesse.get_classificacao())
         print("\n")
         opcao = input("Enter para continuar ou (C) para cancelar e voltar ao menu. ")
@@ -94,9 +96,10 @@ def adicionar_ponto_interesse(linked_list):  # RF01 OK
             print("Categoria inválida! As que se encontram disponíveis são:", categorias_turismo)
         else:
             break
-    acessibilidade = str(input("Insira a acessibilidade do ponto de interesse: "))
+    acessibilidade_fis = str(input("Insira a acessibilidade fisica do ponto de interesse (rampa, elevador, etc.): "))
+    acessibilidade_geo = str(input("Insira a acessibilidade geográfica do ponto de interesse (parque de estacionamento, transp. públicos, ciclovia, etc.): "))
     novo_ponto_interesse = PontoInteresse(designacao, morada, latitude, longitude, categoria_ponto,
-                                          acessibilidade, classificacao=0, visitas=0)
+                                          acessibilidade_fis, acessibilidade_geo, classificacao=0, visitas=0)
 
     linked_list.add(novo_ponto_interesse.__dict__())
 
@@ -114,8 +117,9 @@ def alterar_ponto_interesse(linked_list):  # RF02 ok
         if ponto_interesse.get_designacao() == designacao:
             print("O que pretende alterar?")
             print("1- Categoria")
-            print("2- Acessibilidade")
-            escolha = int(input("Insira a sua escolha (1) ou (2): "))
+            print("2- Acessibilidade física")
+            print("3- Acessibilidade geográfica")
+            escolha = int(input("Insira a sua escolha (1), (2) ou (3): "))
             if escolha == 1:
                 nova_categoria = input(f"Insira a nova categoria ({', '.join(categorias_turismo)}): ")
                 if nova_categoria in categorias_turismo:
@@ -126,10 +130,15 @@ def alterar_ponto_interesse(linked_list):  # RF02 ok
                     print("Categoria inválida!")
                     return
             elif escolha == 2:
-                nova_acessibilidade = input("Insira a nova acessibilidade: ")
-                ponto_interesse.set_acessibilidade(nova_acessibilidade)
+                nova_acessibilidade_fis = input("Insira a nova acessibilidade fisica: ")
+                ponto_interesse.set_acessibilidade_fis(nova_acessibilidade_fis)
                 linked_list.update(current.data, ponto_interesse.__dict__())
-                print("Acessibilidade do ponto de interesse alterada com sucesso!")
+                print("Acessibilidade fisica do ponto de interesse alterada com sucesso!")
+            elif escolha == 3:
+                nova_acessibilidade_geo = input("Insira a nova acessibilidade geográfica: ")
+                ponto_interesse.set_acessibilidade_geo(nova_acessibilidade_geo)
+                linked_list.update(current.data, ponto_interesse.__dict__())
+                print("Acessibilidade geográfica do ponto de interesse alterada com sucesso!")
             else:
                 print("Escolha inválida!")
                 return
@@ -177,10 +186,10 @@ def pesquisar_ponto_interesse(linked_list):  # RF03 ok
         print(f"Não foram encontrados pontos de interesse para a categoria {categoria}!")
 
 
-def avaliar_visita(linked_list, nome_ponto, classificar):  ############# falta completar RF04
+def avaliar_visita(linked_list, nome_ponto, classificar):
     current = linked_list.head
 
-    # É feita a procura pela designação
+    # Verificar se o ponto de interesse existe
     ponto = None
     while current:
         if current.data.get('designacao') == nome_ponto:
@@ -204,6 +213,9 @@ def avaliar_visita(linked_list, nome_ponto, classificar):  ############# falta c
         return
 
     print("A classificação de {} foi avaliada com sucesso!".format(nome_ponto))
+
+
+
 
 
 
@@ -279,6 +291,9 @@ def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, di
     if len(pontos_perto) == 0:
         print("Não foram encontrados pontos de interesse dentro da distância máxima introduzida.")
     else:
+        # Ordenar pontos_perto em ordem decrescente do número de visitas usando Merge Sort
+        merge_sort(pontos_perto, 'visitas', reverse=True)
+
         print("----------------------------------------------------------------")
         print("Pontos sugeridos:")
         for ponto in pontos_perto:
@@ -292,6 +307,52 @@ def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, di
             if opcao.lower() == 'c':
                 return
     return pontos_perto
+
+
+def merge_sort(arr, key, reverse=False):
+    if len(arr) <= 1:
+        return arr
+
+    mid = len(arr) // 2
+    left = arr[:mid]
+    right = arr[mid:]
+
+    left = merge_sort(left, key, reverse)
+    right = merge_sort(right, key, reverse)
+
+    return merge(left, right, key, reverse)
+
+
+def merge(left, right, key, reverse=False):
+    result = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if reverse:
+            if left[i][key] >= right[j][key]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+        else:
+            if left[i][key] <= right[j][key]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+
+    while i < len(left):
+        result.append(left[i])
+        i += 1
+
+    while j < len(right):
+        result.append(right[j])
+        j += 1
+
+    return result
+
 
 
 
