@@ -41,7 +41,7 @@ class PontoInteresse:
         return "Designacao: " + str(self._designacao) + "Morada:  " + str(self._morada) \
             + "Latitude:  " + str(self._latitude) + "Longitude: " + str(self._longitude) + "Categoria Turismo: " + \
             str(self._categoria_ponto) + "Acessiblidade Física" + str(self._acessibilidade_fis) + \
-            "Acessiblidade Geográfica" + str(self._acessibilidade_geo) +"Classificacao" \
+            "Acessiblidade Geográfica" + str(self._acessibilidade_geo) + "Classificacao" \
             + str(self._classificacao) + "Visitas" + str(self._visitas)
 
     def __dict__(self):
