@@ -27,9 +27,36 @@ def guardar_ficheiro(dados, ficheiro):
 
 
 def mostrar_pontos_interesse(linked_list):
+    opcao_ordem = input("Ordenar por: (D)esignação, (C)ategoria ou (A)cessibilidade: ")
+
+    if opcao_ordem.lower() == 'd':
+        atributo_ordenacao = 'get_designacao'
+    elif opcao_ordem.lower() == 'c':
+        atributo_ordenacao = 'get_categoria_turismo'
+    elif opcao_ordem.lower() == 'a':
+        atributo_ordenacao = 'get_acessibilidade'
+    else:
+        print("Opção inválida.")
+        return
+
+    pontos_interesse = []
     current = linked_list.head
+
     while current:
-        ponto_interesse = PontoInteresse(**current.data)  ## Serve para não estar a passar os parâmetros todos um a um..
+        ponto_interesse = PontoInteresse(**current.data)
+        pontos_interesse.append(ponto_interesse)
+        current = current.next
+
+    # Algoritmo Insertion Sort para ordenar os pontos de interesse
+    for i in range(1, len(pontos_interesse)):
+        key = pontos_interesse[i]
+        j = i - 1
+        while j >= 0 and getattr(pontos_interesse[j], atributo_ordenacao)() > getattr(key, atributo_ordenacao)():
+            pontos_interesse[j + 1] = pontos_interesse[j]
+            j -= 1
+        pontos_interesse[j + 1] = key
+
+    for ponto_interesse in pontos_interesse:
         print("Designação:", ponto_interesse.get_designacao())
         print("Morada:", ponto_interesse.get_morada())
         print("Latitude:", ponto_interesse.get_latitude())
@@ -38,11 +65,9 @@ def mostrar_pontos_interesse(linked_list):
         print("Acessibilidade:", ponto_interesse.get_acessibilidade())
         print("Classificação:", ponto_interesse.get_classificacao())
         print("\n")
-        opcao = input("Enter para continuar ou 'c' para cancelar e voltar ao menu. ")
+        opcao = input("Enter para continuar ou (C) para cancelar e voltar ao menu. ")
         if opcao.lower() == 'c':
             return  # retorna para o menu
-        current = current.next
-
 
 
 def adicionar_ponto_interesse(linked_list):  # RF01 OK
@@ -63,7 +88,7 @@ def adicionar_ponto_interesse(linked_list):  # RF01 OK
     latitude = int(input("Insira a latitude do ponto de interesse: "))
     longitude = int(input("Insira a longitude do ponto de interesse: "))
     while True:
-        categoria_ponto = str(input("Insira a categoria do ponto de interesse: "))
+        categoria_ponto = input(f"Insira a categoria do ponto de interesse ({', '.join(categorias_turismo)}): ")
         if categoria_ponto not in categorias_turismo:
             print("Categoria inválida! As que se encontram disponíveis são:", categorias_turismo)
         else:
