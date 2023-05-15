@@ -41,29 +41,10 @@ def menu():
                 latitude = float(input("Digite a latitude: "))
                 longitude = float(input("Digite a longitude: "))
                 distancia = float(input("Digite a distância máxima: "))
-
-                pontos_sugeridos = sugestao_pontos_interesse(latitude, longitude, linkedlist, distancia)
-
-                if len(pontos_sugeridos) == 0:
-                    print("Não foram encontrados pontos de interesse dentro da distância máxima introduzida.")
-                else:
-                    print("----------------------------------------------------------------")
-                    print("Pontos sugeridos:")
-                    for ponto in pontos_sugeridos:
-                        print("Designação:", ponto['designacao'])
-                        print("Morada:", ponto['morada'])
-                        print("Latitude:", ponto['latitude'])
-                        print("Longitude:", ponto['longitude'])
-                        print("Visitas:", ponto['visitas'])
-                        opcao = input("Enter para continuar ou (C) para cancelar e voltar ao menu. ")
-                        print("\n")
-                        if opcao.lower() == 'c':
-                            return
+                sugestao_pontos_interesse(latitude, longitude, linkedlist, distancia)
             elif op == 0:
                 guardar_ficheiro(linkedlist, FICHEIRO)
                 fim = True
-
-
         except ValueError:
             print("Opção inválida. Tente outra vez.")
 

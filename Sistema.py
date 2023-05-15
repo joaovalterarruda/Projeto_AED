@@ -2,7 +2,6 @@ import math
 
 from PontoInteresse import PontoInteresse
 import json
-from math import radians, cos, sin, sqrt, atan2
 from LinkedList import LinkedList
 
 FICHEIRO = "pontos_interesse.json"
@@ -249,14 +248,11 @@ def haversine(lat1, lon1, lat2, lon2) -> float:
 
     # Raio médio da Terra em km
     radius = 6371
-
     # Converter graus para radianos
     lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
-
     # Diferença das latitudes e longitudes
     dlat = lat2 - lat1
     dlon = lon2 - lon1
-
     # Fórmula de Haversine
     a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
@@ -265,10 +261,7 @@ def haversine(lat1, lon1, lat2, lon2) -> float:
     return distance
 
 
-# coord1 = (37.4359, -25)
-# coord2 = (37.752745973611226, -25)
-# distancia = formula_de_haversine(coord1, coord2)
-# print(distancia)
+
 
 
 def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, distancia_maxima: float):
@@ -283,11 +276,24 @@ def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, di
             if dist < distancia_maxima:
                 pontos_perto.append(ponto)
         current = current.next
+    if len(pontos_perto) == 0:
+        print("Não foram encontrados pontos de interesse dentro da distância máxima introduzida.")
+    else:
+        print("----------------------------------------------------------------")
+        print("Pontos sugeridos:")
+        for ponto in pontos_perto:
+            print("Designação:", ponto['designacao'])
+            print("Morada:", ponto['morada'])
+            print("Latitude:", ponto['latitude'])
+            print("Longitude:", ponto['longitude'])
+            print("Visitas:", ponto['visitas'])
+            opcao = input("Enter para continuar ou (C) para cancelar e voltar ao menu. ")
+            print("\n")
+            if opcao.lower() == 'c':
+                return
     return pontos_perto
 
 
 
-# pontos_sugeridos = sugestao_pontos_interesse(38.7072, -9.1362, FICHEIRO, 5)
-# print("Pontos sugeridos:")
-# for ponto in pontos_sugeridos:
-#     print(ponto)
+
+
