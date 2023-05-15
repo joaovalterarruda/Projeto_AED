@@ -1,3 +1,5 @@
+import webbrowser
+
 from Sistema import ler_ficheiro, guardar_ficheiro, fazer_backup, adicionar_ponto_interesse, alterar_ponto_interesse, \
     apagar_ponto_interesse, pesquisar_ponto_interesse, \
     mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas, sugestao_pontos_interesse
@@ -11,6 +13,7 @@ def opcoes_menu():
         "\u2502" + "\033[1;36m" + "\t \t \t \t \t \t   Pontos de Interesse\t \t \t \t \t \t   " + "\033[0m" + "\u2502")
     print("\u2514" + "\u2500" * 70 + "\u2518")
     print("-" * 72)
+    print(" 0 - Ponta Delgada, Historia e Cultura")
     print(" 1 - Ver todos os pontos de interesse")
     print(" 2 - Adicionar um ponto de interesse")
     print(" 3 - Alterar um ponto de interesse")
@@ -19,7 +22,7 @@ def opcoes_menu():
     print(" 6 - Avaliar visita a ponto de interesse")
     print(" 7 - Consultar estátisticas de visitas aos pontos de interesse")
     print(" 8 - Obter sugestões de visitas a pontos de interesse ")
-    print(" 0 - Sair ")
+    print(" 9 - Sair ")
 
 
 def menu():
@@ -29,7 +32,9 @@ def menu():
         print("-" * 72)
         try:
             op = int(input("Opção: "))
-            if op == 1:
+            if op == 0:
+                webbrowser.open("http://www.visitpontadelgada.pt/ponta-delgada/informacoes-sobre-ponta-delgada")
+            elif op == 1:
                 mostrar_pontos_interesse(linkedlist)
             elif op == 2:
                 adicionar_ponto_interesse(linkedlist)
@@ -51,7 +56,7 @@ def menu():
                 longitude = float(input("Digite a sua longitude: "))
                 distancia = float(input("Digite a distância máxima de pesquisa: "))
                 sugestao_pontos_interesse(latitude, longitude, linkedlist, distancia)
-            elif op == 0:
+            elif op == 9:
                 guardar_ficheiro(linkedlist, FICHEIRO)
                 fazer_backup(FICHEIRO)
                 fim = True
