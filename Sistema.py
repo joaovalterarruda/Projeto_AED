@@ -145,7 +145,8 @@ def adicionar_ponto_interesse(linked_list):  # RF01 OK
             break
     acessibilidade_fis = str(input("Insira a acessibilidade fisica do ponto de interesse (rampa, elevador, etc.): "))
     acessibilidade_geo = str(input(
-        "Insira a acessibilidade geográfica do ponto de interesse (parque de estacionamento, transp. públicos, ciclovia, etc.): "))
+        "Insira a acessibilidade geográfica do ponto de interesse (parque de estacionamento, transp. públicos, "
+        "ciclovia, etc.): "))
     novo_ponto_interesse = PontoInteresse(designacao, morada, latitude, longitude, categoria_ponto,
                                           acessibilidade_fis, acessibilidade_geo, classificacao=0, visitas=0)
 
@@ -322,7 +323,7 @@ def avaliar_visita(linked_list, nome_ponto, classificar):
 
 def consultar_estatisticas(linked_list):  # RF05 ok
     """
-       Consulta estatísticas sobre os pontos turísticos, como ordenar por nome, número de visitas ou classificação média.
+    Consulta estatísticas sobre os pontos turísticos, como ordenar por nome, número de visitas ou classificação média.
 
        Args:
            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.

@@ -50,7 +50,8 @@ def menu():
             elif op == 7:
                 nome_ponto = str(input("Introduza o nome do ponto a avaliar: "))
                 classificar = int(input("Introduza a classificação que pretende dar ao ponto:"
-                                        "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito Satisfeito\n", ))
+                                        "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito "
+                                        "Satisfeito\n", ))
                 avaliar_visita(linkedlist, nome_ponto, classificar)
             elif op == 8:
                 consultar_estatisticas(linkedlist)
