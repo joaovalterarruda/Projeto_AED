@@ -61,6 +61,7 @@ def mostrar_pontos_interesse(linked_list):
         pontos_interesse[j + 1] = key
 
     for ponto_interesse in pontos_interesse:
+        print("\n")
         print("Designação:", ponto_interesse.get_designacao())
         print("Morada:", ponto_interesse.get_morada())
         print("Latitude:", ponto_interesse.get_latitude())
@@ -155,6 +156,25 @@ def alterar_ponto_interesse(linked_list):  # RF02 ok
     print("\n")
 
 
+def apagar_ponto_interesse(linked_list):
+    designacao = input("Insira a designação do ponto de interesse que pretende apagar: ")
+    current = linked_list.head
+    previous = None
+    while current:
+        ponto_interesse = PontoInteresse(**current.data)
+        if ponto_interesse.get_designacao() == designacao:
+            if previous is None:
+                linked_list.head = current.next
+            else:
+                previous.next = current.next
+            print("Ponto de interesse apagado com sucesso!")
+            return
+        previous = current
+        current = current.next
+
+    print("Não existe nenhum ponto de interesse com essa designação!")
+
+
 def pesquisar_ponto_interesse(linked_list):  # RF03 ok
     categoria = input(f"Insira a categoria que pretende pesquisar: ({', '.join(categorias_turismo)}): ")
     resultados = []
@@ -242,7 +262,7 @@ def consultar_estatisticas(linked_list):  # RF05 ok
         print(f"Número de Visitantes: {num_visitas}")
         print(f"Classificação Média: {classificacao_media}\n")
 
-        opcao = input("Enter para continuar ou 'c' para cancelar e voltar ao menu. ")
+        opcao = input("Enter para continuar ou (C) para cancelar e voltar ao menu. ")
         if opcao.lower() == 'c':
             return  # retorna para o menu
 

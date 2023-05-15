@@ -1,5 +1,5 @@
 from Sistema import ler_ficheiro, guardar_ficheiro, adicionar_ponto_interesse, alterar_ponto_interesse, \
-    pesquisar_ponto_interesse, \
+    apagar_ponto_interesse, pesquisar_ponto_interesse, \
     mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas, sugestao_pontos_interesse
 
 
@@ -14,10 +14,11 @@ def opcoes_menu():
     print(" 1 - Ver todos os pontos de interesse")
     print(" 2 - Adicionar um ponto de interesse")
     print(" 3 - Alterar um ponto de interesse")
-    print(" 4 - Pesquisar pontos de interesse ")
-    print(" 5 - Avaliar visita a ponto de interesse")
-    print(" 6 - Consultar estátisticas de visitas aos pontos de interesse")
-    print(" 7 - Obter sugestões de visitas a pontos de interesse ")
+    print(" 4 - Apagar ponto de interesse ")
+    print(" 5 - Pesquisar pontos de interesse ")
+    print(" 6 - Avaliar visita a ponto de interesse")
+    print(" 7 - Consultar estátisticas de visitas aos pontos de interesse")
+    print(" 8 - Obter sugestões de visitas a pontos de interesse ")
     print(" 0 - Sair ")
 
 
@@ -35,15 +36,17 @@ def menu():
             elif op == 3:
                 alterar_ponto_interesse(linkedlist)
             elif op == 4:
-                pesquisar_ponto_interesse(linkedlist)
+                apagar_ponto_interesse(linkedlist)
             elif op == 5:
+                pesquisar_ponto_interesse(linkedlist)
+            elif op == 6:
                 nome_ponto = str(input("Introduza o nome do ponto a avaliar: "))
                 classificar = int(input("Introduza a classificação que pretende dar ao ponto:"
                                         "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito Satisfeito\n", ))
                 avaliar_visita(linkedlist, nome_ponto, classificar)
-            elif op == 6:
-                consultar_estatisticas(linkedlist)
             elif op == 7:
+                consultar_estatisticas(linkedlist)
+            elif op == 8:
                 latitude = float(input("Digite a sua latitude: "))
                 longitude = float(input("Digite a sua longitude: "))
                 distancia = float(input("Digite a distância máxima de pesquisa: "))
