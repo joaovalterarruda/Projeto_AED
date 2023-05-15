@@ -68,6 +68,7 @@ def menu():
             print("Opção inválida. Tente outra vez.")
 
 
+
 if __name__ == '__main__':
     # Carrega o ficheiro JSON para a LinkedList no inicio do programa
     linkedlist = ler_ficheiro(FICHEIRO)
