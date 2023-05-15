@@ -1,10 +1,10 @@
 class PontoInteresse:
-    def __init__(self, designacao: str, morada: str, latitude: int, longitude: int, categoria_ponto: str,
+    def __init__(self, designacao: str, morada: str, latitude: float, longitude: float, categoria_ponto: str,
                  acessibilidade: str, classificacao: 0, visitas=0) -> None:
         self._designacao: str = designacao
         self._morada: str = morada
-        self._latitude: int = latitude
-        self._longitude: int = longitude
+        self._latitude: float = latitude
+        self._longitude: float = longitude
         self._categoria_ponto: str = categoria_ponto
         self._acessibilidade: str = acessibilidade
         self._classificacao: int = classificacao
@@ -34,10 +34,10 @@ class PontoInteresse:
     def get_morada(self) -> str:
         return self._morada
 
-    def get_latitude(self) -> int:
+    def get_latitude(self) -> float:
         return self._latitude
 
-    def get_longitude(self) -> int:
+    def get_longitude(self) -> float:
         return self._longitude
 
     def get_categoria_turismo(self) -> str:

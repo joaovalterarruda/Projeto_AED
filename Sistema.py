@@ -1,3 +1,5 @@
+import math
+
 from PontoInteresse import PontoInteresse
 import json
 from math import radians, cos, sin, sqrt, atan2
@@ -85,8 +87,8 @@ def adicionar_ponto_interesse(linked_list):  # RF01 OK
             current = current.next
 
     morada = str(input("Insira a morada do ponto de interesse: "))
-    latitude = int(input("Insira a latitude do ponto de interesse: "))
-    longitude = int(input("Insira a longitude do ponto de interesse: "))
+    latitude = float(input("Insira a latitude do ponto de interesse: "))
+    longitude = float(input("Insira a longitude do ponto de interesse: "))
     while True:
         categoria_ponto = input(f"Insira a categoria do ponto de interesse ({', '.join(categorias_turismo)}): ")
         if categoria_ponto not in categorias_turismo:
@@ -239,17 +241,28 @@ def consultar_estatisticas(linked_list):  # RF05 ok
 
 
 
-def formula_de_haversine(coord1, coord2):
-    r = 6371  # raio da Terra em km
-    lat1, lon1 = coord1
-    lat2, lon2 = coord2
-    dlat = radians(lat2 - lat1)
-    dlon = radians(lon2 - lon1)
-    a = sin(dlat / 2) * sin(dlat / 2) + cos(radians(lat1)) \
-        * cos(radians(lat2)) * sin(dlon / 2) * sin(dlon / 2)
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    d = r * c
-    return d
+def haversine(lat1, lon1, lat2, lon2) -> float:
+    """
+    Calcula a distância em km entre dois pontos na Terra utilizando a fórmula de Haversine.
+    Os pontos são especificados em latitude e longitude.
+    """
+
+    # Raio médio da Terra em km
+    radius = 6371
+
+    # Converter graus para radianos
+    lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
+
+    # Diferença das latitudes e longitudes
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    # Fórmula de Haversine
+    a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    distance = radius * c
+
+    return distance
 
 
 # coord1 = (37.4359, -25)
@@ -258,18 +271,21 @@ def formula_de_haversine(coord1, coord2):
 # print(distancia)
 
 
-def sugestao_pontos_interesse(latitude, longitude, ficheiro, distancia_maxima):
-    pontos = ler_ficheiro(ficheiro)
+def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, distancia_maxima: float):
     pontos_perto = []
-    for ponto in pontos:
-        if isinstance(ponto, dict) and 'latitude' in ponto and 'longitude' in ponto and 'visitas' in ponto:
-            coord_ponto = (ponto['latitude'], ponto['longitude'])
+    current = linked_list.head
+    while current:
+        ponto = current.data
+        if isinstance(ponto, dict) and 'latitude' in ponto and 'longitude' in ponto:
+            coord_ponto = (float(ponto['latitude']), float(ponto['longitude']))
             coord_localizacao = (latitude, longitude)
-            dist = formula_de_haversine(coord_ponto, coord_localizacao)
+            dist = haversine(coord_ponto[0], coord_ponto[1], coord_localizacao[0], coord_localizacao[1])
             if dist < distancia_maxima:
                 pontos_perto.append(ponto)
-    pontos_perto = sorted(pontos_perto, key=lambda x: x['visitas'], reverse=True)
+        current = current.next
     return pontos_perto
+
+
 
 # pontos_sugeridos = sugestao_pontos_interesse(38.7072, -9.1362, FICHEIRO, 5)
 # print("Pontos sugeridos:")
