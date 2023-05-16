@@ -1,7 +1,7 @@
 [
     {
         "designacao": "Praia das Milicias",
-        "morada": "S\u00e3o Roque",
+        "morada": "São Roque",
         "latitude": 37.750964,
         "longitude": -25.623417000000018,
         "categoria_ponto": "praia",
@@ -11,7 +11,7 @@
         "visitas": 0
     },
     {
-        "designacao": "Praia do P\u00f3pulo",
+        "designacao": "Praia do Pópulo",
         "morada": "Livramento",
         "latitude": 37.7503986,
         "longitude": -25.618265399999927,
