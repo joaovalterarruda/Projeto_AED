@@ -13,14 +13,12 @@ FRASE_INPUT = "Enter para continuar ou (C) para cancelar e voltar ao menu. "
 
 def ler_ficheiro(nome_ficheiro):
     """
-        Lê o conteúdo de um ficheiro JSON e cria uma lista ligada com os dados lidos.
+    Lê o conteúdo de um ficheiro JSON e cria uma lista ligada com os dados lidos.
 
-        Args:
-            nome_ficheiro (str): O nome do ficheiro a ser lido.
-
-        Returns:
-            LinkedList: A lista ligada criada a partir dos dados do ficheiro.
-        """
+    Args: nome_ficheiro (str): O nome do ficheiro a ser lido.
+    Returns:
+    LinkedList: A lista ligada criada a partir dos dados do ficheiro.
+    """
 
     linked_list = LinkedList()
     with open(nome_ficheiro, 'r', encoding="UTF-8") as file:
@@ -32,6 +30,12 @@ def ler_ficheiro(nome_ficheiro):
 
 
 def guardar_ficheiro(dados, nome_ficheiro):
+    """
+    Guardar os dados num ficheiro.json
+    :param dados: Os dados a serem guardados no arquivo. Deve ser uma lista de itens.
+    :param nome_ficheiro: O nome do arquivo de destino. Deve ter a extensão .json.
+    :return:
+    """
     linked_list = LinkedList()
     for item in dados:
         linked_list.add(item)
@@ -43,13 +47,9 @@ def guardar_ficheiro(dados, nome_ficheiro):
 
 def fazer_backup(nome_ficheiro):
     """
-        Faz uma cópia de backup do ficheiro JSON.
-
-        Args:
-            nome_ficheiro (str): O nome do ficheiro a ser feito o backup.
-
-        Returns:
-            None
+    Faz uma cópia de backup do ficheiro JSON.
+    :param nome_ficheiro: O nome do ficheiro a ser feito o backup.
+    :return:
     """
     nome_backup = nome_ficheiro + ".backup"
     shutil.copy(nome_ficheiro, nome_backup)
@@ -58,14 +58,10 @@ def fazer_backup(nome_ficheiro):
 
 def mostrar_pontos_interesse(linked_list):
     """
-        Mostra os pontos de interesse de uma lista ligada, ordenados por critério definido pelo utilizador.
-
-        Args:
-            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
-
-        Returns:
-            None
-        """
+    Mostra os pontos de interesse de uma lista ligada, ordenados por critério definido pelo utilizador.
+    :param linked_list:  A lista ligada contendo os pontos de interesse.
+    :return:
+    """
     opcao_ordem = input("Ordenar por: (D)esignação, (C)ategoria ou (A)cessibilidade: ")
 
     if opcao_ordem.lower() == 'd':
@@ -113,14 +109,10 @@ def mostrar_pontos_interesse(linked_list):
 
 def adicionar_ponto_interesse(linked_list):  # RF01 OK
     """
-       Adiciona um novo ponto de interesse à LinkedList.
-
-       Args:
-           linked_list (LinkedList): A lista ligada onde o ponto de interesse será adicionado.
-
-       Returns:
-           None
-       """
+    Adiciona um novo ponto de interesse à LinkedList.
+    :param linked_list:  A lista ligada onde o ponto de interesse será adicionado.
+    :return:
+    """
     designacao = str(input("Insira uma designação do ponto de interesse: "))
 
     # Verificar se a designação já existe na lista de pontos de interesse
@@ -159,14 +151,10 @@ def adicionar_ponto_interesse(linked_list):  # RF01 OK
 
 def alterar_ponto_interesse(linked_list):  # RF02 ok
     """
-        Altera as informações de um ponto de interesse existente na lista ligada.
-
-        Args:
-            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
-
-        Returns:
-            None
-        """
+    Altera as informações de um ponto de interesse existente na lista ligada.
+    :param linked_list: A lista ligada contendo os pontos de interesse.
+    :return:
+    """
     designacao = input("Insira a designação do ponto de interesse que pretende alterar: ")
     current = linked_list.head
     while current:
@@ -212,14 +200,10 @@ def alterar_ponto_interesse(linked_list):  # RF02 ok
 
 def apagar_ponto_interesse(linked_list):
     """
-        Remove um ponto de interesse da lista ligada.
-
-        Args:
-            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
-
-        Returns:
-            None
-        """
+    Remove um ponto de interesse da lista ligada.
+    :param linked_list: A lista ligada contendo os pontos de interesse.
+    :return:
+    """
     designacao = input("Insira a designação do ponto de interesse que pretende apagar: ")
     current = linked_list.head
     previous = None
@@ -240,15 +224,10 @@ def apagar_ponto_interesse(linked_list):
 
 def pesquisar_ponto_interesse(linked_list):  # RF03 ok
     """
-        Pesquisa pontos de interesse com base na categoria especificada.
-
-        Args:
-            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
-
-        Returns:
-            None
-        """
-
+    Pesquisa pontos de interesse com base na categoria especificada.
+    :param linked_list:  A lista ligada contendo os pontos de interesse.
+    :return:
+    """
     categoria = input(f"Insira a categoria que pretende pesquisar: ({', '.join(categorias_turismo)}): ")
     resultados = []
     current = linked_list.head
@@ -283,16 +262,12 @@ def pesquisar_ponto_interesse(linked_list):  # RF03 ok
 
 def avaliar_visita(linked_list, nome_ponto, classificar):
     """
-       Avalia uma visita a um ponto de interesse, atualizando o número de visitas e a classificação média.
-
-       Args:
-           linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
-           nome_ponto (str): O nome do ponto de interesse a ser avaliado.
-           classificar (int): A classificação atribuída à visita (1 a 4).
-
-       Returns:
-           None
-       """
+    Avalia uma visita a um ponto de interesse, atualizando o número de visitas e a classificação média.
+    :param linked_list: A lista ligada contendo os pontos de interesse.
+    :param nome_ponto: O nome do ponto de interesse a ser avaliado.
+    :param classificar: A classificação atribuída à visita (1 a 4).
+    :return:
+    """
     current = linked_list.head
 
     # Verificar se o ponto de interesse existe
@@ -324,14 +299,9 @@ def avaliar_visita(linked_list, nome_ponto, classificar):
 def consultar_estatisticas(linked_list):  # RF05 ok
     """
     Consulta estatísticas sobre os pontos turísticos, como ordenar por nome, número de visitas ou classificação média.
-
-       Args:
-           linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
-
-       Returns:
-           None
-       """
-
+    :param linked_list: A lista ligada contendo os pontos de interesse.
+    :return:
+    """
     opcao = input("Escolha a ordenação (1 - Nome, 2 - Número de Visitas, 3 - Classificação Média): ")
 
     if opcao == "1":
@@ -365,19 +335,14 @@ def consultar_estatisticas(linked_list):  # RF05 ok
 
 def haversine(lat1, lon1, lat2, lon2) -> float:
     """
-        Calcula a distância em km entre dois pontos na Terra utilizando a fórmula de Haversine.
-        Os pontos são especificados em latitude e longitude.
-
-        Args:
-            lat1 (float): Latitude do primeiro ponto.
-            lon1 (float): Longitude do primeiro ponto.
-            lat2 (float): Latitude do segundo ponto.
-            lon2 (float): Longitude do segundo ponto.
-
-        Returns:
-            float: A distância entre os dois pontos em km.
-        """
-
+    Calcula a distância em km entre dois pontos na Terra utilizando a fórmula de Haversine.
+    Os pontos são especificados em latitude e longitude.
+    :param lat1: Latitude do primeiro ponto.
+    :param lon1: Longitude do primeiro ponto.
+    :param lat2: Latitude do segundo ponto.
+    :param lon2: Longitude do segundo ponto.
+    :return:
+    """
     # Raio médio da Terra em km
     radius = 6371
     # Converter graus para radianos
@@ -395,18 +360,13 @@ def haversine(lat1, lon1, lat2, lon2) -> float:
 
 def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, distancia_maxima: float):
     """
-        Retorna uma lista de pontos de interesse próximos a uma localização específica, dentro de uma distância máxima.
-
-        Args:
-            latitude (float): Latitude da localização de referência.
-            longitude (float): Longitude da localização de referência.
-            linked_list (LinkedList): A lista ligada contendo os pontos de interesse.
-            distancia_maxima (float): A distância máxima em km.
-
-        Returns:
-            List[Dict]: Uma lista de dicionários representando os pontos de interesse próximos.
-        """
-
+    Retorna uma lista de pontos de interesse próximos a uma localização específica, dentro de uma distância máxima.
+    :param latitude: Latitude da localização de referência.
+    :param longitude: Longitude da localização de referência.
+    :param linked_list: A lista ligada contendo os pontos de interesse.
+    :param distancia_maxima:  A distância máxima em km.
+    :return:
+    """
     pontos_perto = []
     current = linked_list.head
     while current:
@@ -442,16 +402,12 @@ def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, di
 
 def merge_sort(arr, key, reverse=False):
     """
-        Ordena uma lista usando o algoritmo de ordenação merge sort.
-
-        Args:
-            arr (List[Dict]): A lista a ser ordenada.
-            key (str): A chave do dicionário a ser usada como critério de ordenação.
-            reverse (bool): Indica se a ordenação deve ser em ordem decrescente. O padrão é False (ordem crescente).
-
-        Returns:
-            List[Dict]: A lista ordenada.
-        """
+    Ordena uma lista usando o algoritmo de ordenação merge sort.
+    :param arr: A lista a ser ordenada.
+    :param key: A chave do dicionário a ser usada como critério de ordenação.
+    :param reverse: Indica se a ordenação deve ser em ordem decrescente. O padrão é False (ordem crescente).
+    :return:
+    """
     if len(arr) <= 1:
         return arr
 
@@ -467,18 +423,13 @@ def merge_sort(arr, key, reverse=False):
 
 def merge(left, right, key, reverse=False):
     """
-        Combina duas listas ordenadas em uma única lista ordenada.
-
-        Args:
-            left (List[Dict]): A primeira lista ordenada.
-            right (List[Dict]): A segunda lista ordenada.
-            key (str): A chave do dicionário a ser usada como critério de ordenação.
-            reverse (bool): Indica se a ordenação deve ser em ordem decrescente. O padrão é False (ordem crescente).
-
-        Returns:
-            List[Dict]: A lista combinada e ordenada.
-        """
-
+    Combina duas listas ordenadas em uma única lista ordenada.
+    :param left: A primeira lista ordenada.
+    :param right: A segunda lista ordenada.
+    :param key: A chave do dicionário a ser usada como critério de ordenação.
+    :param reverse: Indica se a ordenação deve ser em ordem decrescente. O padrão é False (ordem crescente).
+    :return:
+    """
     result = []
     i = j = 0
 
