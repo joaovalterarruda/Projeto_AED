@@ -71,8 +71,30 @@
         "latitude": 37.74588065027564,
         "longitude": -25.663613965021664,
         "categoria_ponto": "cultural",
-        "acessibilidade_fis": "rampa",
+        "acessibilidade_fis": "Elevador",
         "acessibilidade_geo": "parque de estacionamento",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Igreja da Matriz",
+        "morada": "Largo da Matriz",
+        "latitude": 37.7399875,
+        "longitude": -25.668544200000042,
+        "categoria_ponto": "cultural",
+        "acessibilidade_fis": "reduzida",
+        "acessibilidade_geo": "pedonal",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Ermida da M\u00e3e de Deus",
+        "morada": "Rua M\u00e3e de Deus",
+        "latitude": 37.743817220597066,
+        "longitude": -25.660897493362427,
+        "categoria_ponto": "cultural",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "outro",
         "classificacao": 0,
         "visitas": 0
     }

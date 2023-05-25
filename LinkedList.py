@@ -116,12 +116,13 @@ class LinkedList:
         current = self.head
         while current:
             next_node = current.next
-            sorted_head = self.__insert_sorted(sorted_head, current, key)
+            sorted_head = self.insert_sorted(sorted_head, current, key)
             current = next_node
 
         self.head = sorted_head
 
-    def __insert_sorted(self, sorted_head, node, key):
+    @staticmethod
+    def insert_sorted(sorted_head, node, key):
         if sorted_head is None or key(node.data) <= key(sorted_head.data):
             node.next = sorted_head
             return node
@@ -150,45 +151,48 @@ class LinkedList:
         return lst
 
 
-    def load_from_json(self, file_name):
+    def load_from_json(self, nome_ficheiro):
         """
         Carrega os dados da lista a partir de um arquivo JSON.
 
         Args:
-           file_name (str): O nome do arquivo JSON.
+           nome_ficheiro (str): O nome do arquivo JSON.
 
         Returns:
            None
         """
-        with open(file_name, 'r') as f:
-            data = json.load(f)
-        for item in data:
+        with open(nome_ficheiro, 'r', encoding="UTF-8") as f:
+            conteudo = json.load(f)
+        for item in conteudo:
             self.add(item)
+        print("Ficheiro " + nome_ficheiro + " carregado com sucesso.")
 
-    def save_to_json(self, file_name):
+
+    def save_to_json(self, nome_ficheiro):
         """
-        Salva os dados da lista em um arquivo JSON.
+        Salva os dados da lista num arquivo JSON.
 
         Args:
-            file_name (str): O nome do arquivo JSON.
+            nome_ficheiro (str): O nome do arquivo JSON.
 
         Returns:
             None
         """
-        with open(file_name, 'w') as f:
-            data = []
+        with open(nome_ficheiro, 'w', encoding="UTF-8") as f:
+            conteudo = []
             current = self.head
             while current is not None:
-                data.append(current.data)
+                conteudo.append(current.data)
                 current = current.next
-            json.dump(data, f, indent=4)
+            json.dump(conteudo, f, indent=4)
+        print("Ficheiro " + nome_ficheiro + " guardado com sucesso.")
 
     def __iter__(self):
         """
         Retorna um iterador para percorrer os elementos da lista.
 
         Returns:
-            iterator: Um iterador para percorrer os elementos da lista.
+            iterator: um iterador para percorrer os elementos da lista.
         """
         node = self.head
         while node is not None:
