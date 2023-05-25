@@ -1,9 +1,9 @@
-
-
-from Sistema import ler_ficheiro, guardar_ficheiro, fazer_backup, adicionar_ponto_interesse, alterar_ponto_interesse, \
+from Sistema import fazer_backup, adicionar_ponto_interesse, alterar_ponto_interesse, \
     apagar_ponto_interesse, pesquisar_ponto_interesse, \
     mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas, sugestao_pontos_interesse
+from LinkedList import LinkedList
 
+linkedlist = LinkedList()
 
 def opcoes_menu():
     print("\u250C" + "\u2500" * 70 + "\u2510")
@@ -61,7 +61,7 @@ def menu():
                 distancia = float(input("Digite a distância máxima de pesquisa: "))
                 sugestao_pontos_interesse(latitude, longitude, linkedlist, distancia)
             elif op == 0:
-                guardar_ficheiro(linkedlist, FICHEIRO)
+                linkedlist.save_to_json(FICHEIRO)
                 fazer_backup(FICHEIRO)
                 fim = True
                 print("Obrigado por utilizar o nosso programa. Até breve!")
@@ -71,7 +71,8 @@ def menu():
 
 
 if __name__ == '__main__':
-    # Carrega o ficheiro JSON para a LinkedList no inicio do programa
-    linkedlist = ler_ficheiro(FICHEIRO)
+    # Carrega o ficheiro JSON para a LinkedList no início do programa
+    linkedlist.load_from_json(FICHEIRO)
     fazer_backup(FICHEIRO)
     menu()
+

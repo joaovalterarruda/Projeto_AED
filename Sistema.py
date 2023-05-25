@@ -1,8 +1,7 @@
 import math
 import shutil
 from PontoInteresse import PontoInteresse
-import json
-from LinkedList import LinkedList
+
 
 FICHEIRO = "pontos_interesse.json"
 categorias_turismo = ("natureza", "cultural", "aventura", "gastronomia", "praia", "outros")
@@ -11,38 +10,6 @@ classificacao = ("1", "2", "3", "4")
 FRASE_INPUT = "Enter para continuar ou (C) para cancelar e voltar ao menu. "
 
 
-def ler_ficheiro(nome_ficheiro):
-    """
-    Lê o conteúdo de um ficheiro JSON e cria uma lista ligada com os dados lidos.
-
-    Args: nome_ficheiro (str): O nome do ficheiro a ser lido.
-    Returns:
-    LinkedList: A lista ligada criada a partir dos dados do ficheiro.
-    """
-
-    linked_list = LinkedList()
-    with open(nome_ficheiro, 'r', encoding="UTF-8") as file:
-        conteudo = json.load(file)
-        for item in conteudo:
-            linked_list.add(item)
-        print("Ficheiro " + nome_ficheiro + " carregado com sucesso.")
-    return linked_list
-
-
-def guardar_ficheiro(dados, nome_ficheiro):
-    """
-    Guardar os dados num ficheiro.json
-    :param dados: Os dados a serem guardados no arquivo. Deve ser uma lista de itens.
-    :param nome_ficheiro: O nome do arquivo de destino. Deve ter a extensão .json.
-    :return:
-    """
-    linked_list = LinkedList()
-    for item in dados:
-        linked_list.add(item)
-    conteudo = linked_list.to_list()
-    with open(nome_ficheiro, 'w', encoding="UTF-8") as file:
-        json.dump(conteudo, file, indent=4)
-    print("Ficheiro " + nome_ficheiro + " guardado com sucesso.")
 
 
 def fazer_backup(nome_ficheiro):
@@ -82,14 +49,7 @@ def mostrar_pontos_interesse(linked_list):
         pontos_interesse.append(ponto_interesse)
         current = current.next
 
-    # Algoritmo Insertion Sort para ordenar os pontos de interesse
-    for i in range(1, len(pontos_interesse)):
-        key = pontos_interesse[i]
-        j = i - 1
-        while j >= 0 and getattr(pontos_interesse[j], atributo_ordenacao)() > getattr(key, atributo_ordenacao)():
-            pontos_interesse[j + 1] = pontos_interesse[j]
-            j -= 1
-        pontos_interesse[j + 1] = key
+    pontos_interesse = insertion_sort(pontos_interesse, atributo_ordenacao)
 
     for ponto_interesse in pontos_interesse:
         print("\n")
@@ -317,8 +277,15 @@ def consultar_estatisticas(linked_list):  # RF05 ok
     pontos_turisticos = linked_list.to_list()
 
     # Ordenar os pontos de interesse com base na opção selecionada
-    pontos_turisticos.sort(key=lambda ponto: ponto.get(ordenar_por),
-                           reverse=(ordenar_por in ["visitas", "classificacao"]))
+    if ordenar_por == "designacao":
+        pontos_turisticos = merge_sort(pontos_turisticos, "designacao")
+    elif ordenar_por == "visitas":
+        pontos_turisticos = merge_sort(pontos_turisticos, "visitas", reverse=True)
+    elif ordenar_por == "classificacao":
+        pontos_turisticos = merge_sort(pontos_turisticos, "classificacao", reverse=True)
+    else:
+        print("Opção inválida!")
+        return
 
     print("Estatísticas das Visitas nos Pontos Turísticos: ")
     for ponto in pontos_turisticos:
@@ -458,3 +425,20 @@ def merge(left, right, key, reverse=False):
         j += 1
 
     return result
+
+def insertion_sort(pontos_interesse, atributo_ordenacao):
+    """
+    Implementa o algoritmo de ordenação Insertion Sort para ordenar uma lista de pontos de interesse.
+    :param pontos_interesse: A lista de pontos de interesse.
+    :param atributo_ordenacao: O atributo utilizado para a ordenação.
+    :return: A lista de pontos de interesse ordenada.
+    """
+    for i in range(1, len(pontos_interesse)):
+        key = pontos_interesse[i]
+        j = i - 1
+        while j >= 0 and getattr(pontos_interesse[j], atributo_ordenacao)() > getattr(key, atributo_ordenacao)():
+            pontos_interesse[j + 1] = pontos_interesse[j]
+            j -= 1
+        pontos_interesse[j + 1] = key
+
+    return pontos_interesse
