@@ -1,21 +1,59 @@
 import math
 import shutil
-from PontoInteresse import PontoInteresse
-
+import time
+import json
+from projeto_aed.sistema.PontoInteresse import PontoInteresse
+from projeto_aed.sistema.LinkedList import LinkedList
+from projeto_aed.sistema.localize import obter_localizacao_atual
+# from Grafo_teste import Grafo
 
 FICHEIRO = "pontos_interesse.json"
 categorias_turismo = ("natureza", "cultural", "aventura", "gastronomia", "praia", "outros")
 classificacao = ("1", "2", "3", "4")
+LAT = "Latitude:"
+LONG = "Longitude:"
+FRASE_INPUT = "------------\n" \
+              "Enter para continuar ou (C) para cancelar e voltar ao menu. "
 
-FRASE_INPUT = "Enter para continuar ou (C) para cancelar e voltar ao menu. "
+
+def ler_ficheiro(nome_ficheiro):
+    """
+    Lê o conteúdo de um ficheiro JSON e cria uma lista ligada com os dados lidos.
+
+    Args: nome_ficheiro (str): O nome do ficheiro a ser lido.
+    Returns:
+    LinkedList: A lista ligada criada a partir dos dados do ficheiro.
+    """
+
+    linked_list = LinkedList()
+    with open(nome_ficheiro, 'r', encoding="UTF-8") as file:
+        conteudo = json.load(file)
+        for item in conteudo:
+            linked_list.add(item)
+        print("Ficheiro " + nome_ficheiro + " carregado com sucesso.")
+    return linked_list
 
 
+def guardar_ficheiro(dados, nome_ficheiro):
+    """
+    Guardar os dados num ficheiro.json
+    :param dados: Os dados a serem guardados no arquivo. Deve ser uma lista de itens.
+    :param nome_ficheiro: O nome do arquivo de destino. Deve ter a extensão json.
+    :return:
+    """
+    linked_list = LinkedList()
+    for item in dados:
+        linked_list.add(item)
+    conteudo = linked_list.to_list()
+    with open(nome_ficheiro, 'w', encoding="UTF-8") as file:
+        json.dump(conteudo, file, indent=4)
+    print("Ficheiro " + nome_ficheiro + " guardado com sucesso.")
 
 
 def fazer_backup(nome_ficheiro):
     """
-    Faz uma cópia de backup do ficheiro JSON.
-    :param nome_ficheiro: O nome do ficheiro a ser feito o backup.
+    Faz uma cópia de ‘backup’ do ficheiro JSON.
+    :param nome_ficheiro: O nome do ficheiro a ser feito o ‘backup’.
     :return:
     """
     nome_backup = nome_ficheiro + ".backup"
@@ -39,7 +77,9 @@ def mostrar_pontos_interesse(linked_list):
         atributo_ordenacao = 'get_acessibilidade_fis'
     else:
         print("Opção inválida.")
+        time.sleep(2)
         return
+    print("\n\033[4mLISTA DE PONTOS DE INTERESSE\033[0m:")
 
     pontos_interesse = []
     current = linked_list.head
@@ -49,25 +89,31 @@ def mostrar_pontos_interesse(linked_list):
         pontos_interesse.append(ponto_interesse)
         current = current.next
 
-    pontos_interesse = insertion_sort(pontos_interesse, atributo_ordenacao)
+    # Algoritmo Insertion Sort para ordenar os pontos de interesse
+    for i in range(1, len(pontos_interesse)):
+        key = pontos_interesse[i]
+        j = i - 1
+        while j >= 0 and getattr(pontos_interesse[j], atributo_ordenacao)() > getattr(key, atributo_ordenacao)():
+            pontos_interesse[j + 1] = pontos_interesse[j]
+            j -= 1
+        pontos_interesse[j + 1] = key
 
     for ponto_interesse in pontos_interesse:
-        print("\n")
+        print("------------")
         print("Designação:", ponto_interesse.get_designacao())
         print("Morada:", ponto_interesse.get_morada())
-        print("Latitude:", ponto_interesse.get_latitude())
-        print("Longitude:", ponto_interesse.get_longitude())
+        print(LAT, ponto_interesse.get_latitude())
+        print(LONG, ponto_interesse.get_longitude())
         print("Categoria:", ponto_interesse.get_categoria_turismo())
         print("Acessibilidade física:", ponto_interesse.get_acessibilidade_fis())
         print("Acessibilidade geográfica:", ponto_interesse.get_acessibilidade_geo())
         print("Classificação:", ponto_interesse.get_classificacao())
-        print("\n")
         opcao = input(FRASE_INPUT)
         if opcao.lower() == 'c':
             return  # retorna para o menu
 
 
-def adicionar_ponto_interesse(linked_list):  # RF01 OK
+def adicionar_ponto_interesse(linked_list):
     """
     Adiciona um novo ponto de interesse à LinkedList.
     :param linked_list:  A lista ligada onde o ponto de interesse será adicionado.
@@ -87,75 +133,124 @@ def adicionar_ponto_interesse(linked_list):  # RF01 OK
             current = current.next
 
     morada = str(input("Insira a morada do ponto de interesse: "))
-    latitude = float(input("Insira a latitude do ponto de interesse: "))
-    longitude = float(input("Insira a longitude do ponto de interesse: "))
+
+    latitude = input("Insira a latitude do ponto de interesse: ")
+    latitude = float(latitude.replace(",", "."))
+
+    longitude = input("Insira a longitude do ponto de interesse: ")
+    longitude = float(longitude.replace(",", "."))
+
     while True:
         categoria_ponto = input(f"Insira a categoria do ponto de interesse ({', '.join(categorias_turismo)}): ")
+        categoria_ponto = categoria_ponto.lower()
         if categoria_ponto not in categorias_turismo:
             print("Categoria inválida! As que se encontram disponíveis são:", categorias_turismo)
         else:
             break
-    acessibilidade_fis = str(input("Insira a acessibilidade fisica do ponto de interesse (rampa, elevador, etc.): "))
+
+    acessibilidade_fis = str(input("Insira a acessibilidade física do ponto de interesse (rampa, elevador, etc.): "))
     acessibilidade_geo = str(input(
         "Insira a acessibilidade geográfica do ponto de interesse (parque de estacionamento, transp. públicos, "
         "ciclovia, etc.): "))
+
     novo_ponto_interesse = PontoInteresse(designacao, morada, latitude, longitude, categoria_ponto,
                                           acessibilidade_fis, acessibilidade_geo, classificacao=0, visitas=0)
 
     linked_list.add(novo_ponto_interesse.__dict__())
 
     print("\n")
-    print("Ponto interesse criado com sucesso!")
+    print("Ponto de interesse criado com sucesso!")
     print("\n")
 
 
-def alterar_ponto_interesse(linked_list):  # RF02 ok
+def obter_ponto_interesse(linked_list):
+    """
+       Obtém um ponto de interesse na lista ligada.
+       :param linked_list: A lista ligada contendo os pontos de interesse.
+       :return: O ponto de interesse encontrado ou None se não for encontrado.
+       """
+    designacao = input("Insira a designação do ponto de interesse que pretende alterar: ").capitalize()
+    current = linked_list.head
+    while current:
+        ponto_interesse = PontoInteresse(**current.data)
+        if ponto_interesse.get_designacao().lower() == designacao.lower():
+            return ponto_interesse, current.data
+        current = current.next
+    return None, None
+
+
+def alterar_ponto_interesse(linked_list):
     """
     Altera as informações de um ponto de interesse existente na lista ligada.
     :param linked_list: A lista ligada contendo os pontos de interesse.
     :return:
     """
-    designacao = input("Insira a designação do ponto de interesse que pretende alterar: ")
-    current = linked_list.head
-    while current:
-        ponto_interesse = PontoInteresse(**current.data)
-        if ponto_interesse.get_designacao() == designacao:
-            print("O que pretende alterar?")
-            print("1- Categoria")
-            print("2- Acessibilidade física")
-            print("3- Acessibilidade geográfica")
-            escolha = int(input("Insira a sua escolha (1), (2) ou (3): "))
-            if escolha == 1:
-                nova_categoria = input(f"Insira a nova categoria ({', '.join(categorias_turismo)}): ")
-                if nova_categoria in categorias_turismo:
-                    ponto_interesse.set_categoria_turismo(nova_categoria)
-                    linked_list.update(current.data, ponto_interesse.__dict__())
-                    print("Categoria do ponto de interesse alterada com sucesso!")
-                else:
-                    print("Categoria inválida!")
-                    return
-            elif escolha == 2:
-                nova_acessibilidade_fis = input("Insira a nova acessibilidade fisica: ")
-                ponto_interesse.set_acessibilidade_fis(nova_acessibilidade_fis)
-                linked_list.update(current.data, ponto_interesse.__dict__())
-                print("Acessibilidade fisica do ponto de interesse alterada com sucesso!")
-            elif escolha == 3:
-                nova_acessibilidade_geo = input("Insira a nova acessibilidade geográfica: ")
-                ponto_interesse.set_acessibilidade_geo(nova_acessibilidade_geo)
-                linked_list.update(current.data, ponto_interesse.__dict__())
-                print("Acessibilidade geográfica do ponto de interesse alterada com sucesso!")
-            else:
-                print("Escolha inválida!")
-                return
-            break
-        current = current.next
-    else:
+
+    ponto_interesse, data = obter_ponto_interesse(linked_list)
+
+    if ponto_interesse is None:
         print("Não existe nenhum ponto de interesse com essa designação!")
+        time.sleep(2)
         return
 
-    print("\n")
+    while True:
+        print(f"O que pretende alterar no ponto de interesse '{ponto_interesse.get_designacao()}'?")
+        print("--------")
+        print("1 - Categoria")
+        print("2 - Acessibilidade física")
+        print("3 - Acessibilidade geográfica")
+        print("4 - Morada")
+        print("5 - Latitude")
+        print("6 - Longitude")
+        print("0 - Voltar ao menu principal")
+        escolha = int(input("Insira a sua escolha (0 a 6): "))
+
+        if escolha == 0:
+            break
+
+        elif escolha == 1:
+            nova_categoria = input(f"Insira a nova categoria ({', '.join(categorias_turismo)}): ").lower()
+            if nova_categoria in categorias_turismo:
+                ponto_interesse.set_categoria_turismo(nova_categoria)
+                linked_list.update(data, ponto_interesse.__dict__())
+                print("Categoria do ponto de interesse alterada com sucesso!\n")
+            else:
+                print("Categoria inválida!")
+                return
+        elif escolha == 2:
+            nova_acessibilidade_fis = input("Insira a nova acessibilidade física: ").capitalize()
+            ponto_interesse.set_acessibilidade_fis(nova_acessibilidade_fis)
+            linked_list.update(data, ponto_interesse.__dict__())
+            print("Acessibilidade física do ponto de interesse alterada com sucesso!\n")
+        elif escolha == 3:
+            nova_acessibilidade_geo = input("Insira a nova acessibilidade geográfica: ").capitalize()
+            ponto_interesse.set_acessibilidade_geo(nova_acessibilidade_geo)
+            linked_list.update(data, ponto_interesse.__dict__())
+            print("Acessibilidade geográfica do ponto de interesse alterada com sucesso!\n")
+        elif escolha == 4:
+            nova_morada = input("Insira a nova morada do ponto de interesse: ")
+            ponto_interesse.set_morada(nova_morada)
+            linked_list.update(data, ponto_interesse.__dict__())
+            print("Morada do ponto de interesse alterada com sucesso!\n")
+        elif escolha == 5:
+            nova_latitude = input("Insira a nova latitude do ponto de interesse: ")
+            nova_latitude = float(nova_latitude.replace(",", "."))
+            ponto_interesse.set_latitude(nova_latitude)
+            linked_list.update(data, ponto_interesse.__dict__())
+            print("Latitude do ponto de interesse alterada com sucesso!\n")
+        elif escolha == 6:
+            nova_longitude = input("Insira a nova longitude do ponto de interesse: ")
+            nova_longitude = float(nova_longitude.replace(",", "."))
+            ponto_interesse.set_longitude(nova_longitude)
+            linked_list.update(data, ponto_interesse.__dict__())
+            print("Longitude do ponto de interesse alterada com sucesso!\n")
+        else:
+            print("Escolha inválida!")
+            return
+
     print("Ponto de interesse alterado com sucesso!")
     print("\n")
+    time.sleep(2)
 
 
 def apagar_ponto_interesse(linked_list):
@@ -164,37 +259,45 @@ def apagar_ponto_interesse(linked_list):
     :param linked_list: A lista ligada contendo os pontos de interesse.
     :return:
     """
-    designacao = input("Insira a designação do ponto de interesse que pretende apagar: ")
+    designacao = input("Insira a designação do ponto de interesse que pretende apagar: ").capitalize()
     current = linked_list.head
     previous = None
     while current:
         ponto_interesse = PontoInteresse(**current.data)
-        if ponto_interesse.get_designacao() == designacao:
+        if ponto_interesse.get_designacao().lower() == designacao.lower():
             if previous is None:
                 linked_list.head = current.next
             else:
                 previous.next = current.next
             print("Ponto de interesse apagado com sucesso!")
+            time.sleep(2)
             return
         previous = current
         current = current.next
 
     print("Não existe nenhum ponto de interesse com essa designação!")
+    time.sleep(2)
 
 
-def pesquisar_ponto_interesse(linked_list):  # RF03 ok
+def pesquisar_ponto_interesse(linked_list):
     """
-    Pesquisa pontos de interesse com base na categoria especificada.
-    :param linked_list:  A lista ligada contendo os pontos de interesse.
+    Pesquisa pontos de interesse com base numa palavra-chave e/ou categoria.
+    :param linked_list: A lista ligada contendo os pontos de interesse.
     :return:
     """
-    categoria = input(f"Insira a categoria que pretende pesquisar: ({', '.join(categorias_turismo)}): ")
+    palavra_chave = input("Insira a palavra-chave para a pesquisa (ou deixe em branco para ignorar): ")
+    categoria = input(
+        f"Insira a categoria para a pesquisa ({', '.join(categorias_turismo)}) (ou deixe em branco para ignorar): ")
+
     resultados = []
     current = linked_list.head
     while current:
         ponto_interesse = PontoInteresse(**current.data)
-        if ponto_interesse.get_categoria_turismo() == categoria:
-            resultados.append(ponto_interesse)
+
+        if palavra_chave.lower() in ponto_interesse.get_designacao().lower():
+            if categoria.lower() == ponto_interesse.get_categoria_turismo().lower() or not categoria:
+                resultados.append(ponto_interesse)
+
         current = current.next
 
     # Ordena os pontos de interesse por ordem alfabética da designação (utilizando Insertion Sort)
@@ -207,33 +310,41 @@ def pesquisar_ponto_interesse(linked_list):  # RF03 ok
     # Mostrar os resultados da pesquisa
     if len(resultados) > 0:
         print("\n")
-        print(f"Resultados para a categoria {categoria}:")
+        print(f"Resultados para a palavra-chave '{palavra_chave}' e categoria '{categoria}':")
         for ponto in resultados:
-            print("-----")
+            print("------------")
             print(f"Designação: {ponto.get_designacao()}")
             print(f"Morada: {ponto.get_morada()}")
             print(f"Latitude: {ponto.get_latitude()}")
             print(f"Longitude: {ponto.get_longitude()}")
             print(f"Categoria: {ponto.get_categoria_turismo()}")
+            print("------------")
             input("Prima Enter para continuar.")
+            print("\n")
     else:
-        print(f"Não foram encontrados pontos de interesse para a categoria {categoria}!")
+        print(
+            f"Não foram encontrados pontos de interesse para a palavra-chave '{palavra_chave}' e categoria '{categoria}"
+            f"'!")
+        time.sleep(2)
 
 
-def avaliar_visita(linked_list, nome_ponto, classificar):
+def avaliar_visita(linked_list):
     """
     Avalia uma visita a um ponto de interesse, atualizando o número de visitas e a classificação média.
     :param linked_list: A lista ligada contendo os pontos de interesse.
-    :param nome_ponto: O nome do ponto de interesse a ser avaliado.
-    :param classificar: A classificação atribuída à visita (1 a 4).
     :return:
     """
+    nome_ponto = str(input("Introduza o nome do ponto a avaliar: ")).capitalize()
+    classificar = int(input("Introduza a classificação que pretende dar ao ponto:"
+                            "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito "
+                            "Satisfeito\n", ))
+
     current = linked_list.head
 
     # Verificar se o ponto de interesse existe
     ponto = None
     while current:
-        if current.data.get('designacao') == nome_ponto:
+        if current.data.get('designacao').lower() == nome_ponto.lower():
             ponto = current.data
             break
         current = current.next
@@ -262,7 +373,7 @@ def consultar_estatisticas(linked_list):  # RF05 ok
     :param linked_list: A lista ligada contendo os pontos de interesse.
     :return:
     """
-    opcao = input("Escolha a ordenação (1 - Nome, 2 - Número de Visitas, 3 - Classificação Média): ")
+    opcao = input("Escolha a ordenação (1 - Designação, 2 - Número de Visitas, 3 - Classificação Média): ")
 
     if opcao == "1":
         ordenar_por = "designacao"
@@ -272,20 +383,14 @@ def consultar_estatisticas(linked_list):  # RF05 ok
         ordenar_por = "classificacao"
     else:
         print("Opção inválida!")
+        time.sleep(2)
         return
 
     pontos_turisticos = linked_list.to_list()
 
     # Ordenar os pontos de interesse com base na opção selecionada
-    if ordenar_por == "designacao":
-        pontos_turisticos = merge_sort(pontos_turisticos, "designacao")
-    elif ordenar_por == "visitas":
-        pontos_turisticos = merge_sort(pontos_turisticos, "visitas", reverse=True)
-    elif ordenar_por == "classificacao":
-        pontos_turisticos = merge_sort(pontos_turisticos, "classificacao", reverse=True)
-    else:
-        print("Opção inválida!")
-        return
+    pontos_turisticos.sort(key=lambda p: p.get(ordenar_por),
+                           reverse=(ordenar_por in ["visitas", "classificacao"]))
 
     print("Estatísticas das Visitas nos Pontos Turísticos: ")
     for ponto in pontos_turisticos:
@@ -325,15 +430,30 @@ def haversine(lat1, lon1, lat2, lon2) -> float:
     return distance
 
 
-def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, distancia_maxima: float):
+def obter_localizacao():
+    localizacao = obter_localizacao_atual()
+    if localizacao:
+        latitude, longitude = localizacao
+        print("Sua localização atual:")
+        print(LAT, latitude)
+        print(LONG, longitude)
+        return latitude, longitude
+    else:
+        latitude = float(input("Digite a sua latitude: "))
+        longitude = float(input("Digite a sua longitude: "))
+        return latitude, longitude
+
+
+def sugestao_pontos_interesse(linked_list):
     """
-    Retorna uma lista de pontos de interesse próximos a uma localização específica, dentro de uma distância máxima.
-    :param latitude: Latitude da localização de referência.
-    :param longitude: Longitude da localização de referência.
+    Retorna uma lista de pontos de interesse próximos a uma localização específica, numa distância máxima.
     :param linked_list: A lista ligada contendo os pontos de interesse.
-    :param distancia_maxima:  A distância máxima em km.
     :return:
     """
+    latitude, longitude = obter_localizacao()
+
+    distancia_maxima = float(input("Digite a distância máxima de pesquisa: "))
+
     pontos_perto = []
     current = linked_list.head
     while current:
@@ -348,18 +468,22 @@ def sugestao_pontos_interesse(latitude: float, longitude: float, linked_list, di
     if len(pontos_perto) == 0:
         print("\n")
         print("Não foram encontrados pontos de interesse dentro da distância máxima introduzida.")
+        time.sleep(2)
     else:
         # Ordenar pontos_perto em ordem decrescente do número de visitas usando Merge Sort
         merge_sort(pontos_perto, 'visitas', reverse=True)
 
         print("----------------------------------------------------------------")
-        print("Pontos sugeridos:")
+        print("\033[4mPontos sugeridos\033[0m:")
         for ponto in pontos_perto:
             print("Designação:", ponto['designacao'])
             print("Morada:", ponto['morada'])
-            print("Latitude:", ponto['latitude'])
-            print("Longitude:", ponto['longitude'])
+            print("Acessibilidade física: ", ponto['acessibilidade_fis'])
+            print("Acessibilidade geográfica: ", ponto['acessibilidade_geo'])
+            print(LAT, ponto['latitude'])
+            print(LONG, ponto['longitude'])
             print("Visitas:", ponto['visitas'])
+            print("------------")
             opcao = input("Enter para continuar ou (C) para cancelar e voltar ao menu. ")
             print("\n")
             if opcao.lower() == 'c':
@@ -390,10 +514,10 @@ def merge_sort(arr, key, reverse=False):
 
 def merge(left, right, key, reverse=False):
     """
-    Combina duas listas ordenadas em uma única lista ordenada.
-    :param left: A primeira lista ordenada.
-    :param right: A segunda lista ordenada.
-    :param key: A chave do dicionário a ser usada como critério de ordenação.
+    Combina duas listas ordenadas numa única lista ordenada.
+    :param left: Primeira lista ordenada.
+    :param right: Segunda lista ordenada.
+    :param key: Chave do dicionário a ser usada como critério de ordenação.
     :param reverse: Indica se a ordenação deve ser em ordem decrescente. O padrão é False (ordem crescente).
     :return:
     """
@@ -425,20 +549,3 @@ def merge(left, right, key, reverse=False):
         j += 1
 
     return result
-
-def insertion_sort(pontos_interesse, atributo_ordenacao):
-    """
-    Implementa o algoritmo de ordenação Insertion Sort para ordenar uma lista de pontos de interesse.
-    :param pontos_interesse: A lista de pontos de interesse.
-    :param atributo_ordenacao: O atributo utilizado para a ordenação.
-    :return: A lista de pontos de interesse ordenada.
-    """
-    for i in range(1, len(pontos_interesse)):
-        key = pontos_interesse[i]
-        j = i - 1
-        while j >= 0 and getattr(pontos_interesse[j], atributo_ordenacao)() > getattr(key, atributo_ordenacao)():
-            pontos_interesse[j + 1] = pontos_interesse[j]
-            j -= 1
-        pontos_interesse[j + 1] = key
-
-    return pontos_interesse

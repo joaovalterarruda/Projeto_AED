@@ -98,3 +98,12 @@ class PontoInteresse:
 
     def set_acessibilidade_geo(self, acessibilidade_geo):
         self._acessibilidade_geo = acessibilidade_geo
+
+    def set_morada(self, morada):
+        self._morada = morada
+
+    def set_latitude(self, new_latitude):
+        self._latitude = new_latitude
+
+    def set_longitude(self, new_longitude):
+        self._longitude = new_longitude

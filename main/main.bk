@@ -1,10 +1,6 @@
-from Sistema import fazer_backup, adicionar_ponto_interesse, alterar_ponto_interesse, \
-    apagar_ponto_interesse, pesquisar_ponto_interesse, \
-    mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas, sugestao_pontos_interesse
-from LinkedList import LinkedList
+from sistema import Sistema
 
-linkedlist = LinkedList()
-
+s = Sistema()
 def opcoes_menu():
     print("\u250C" + "\u2500" * 70 + "\u2510")
     print(
@@ -25,7 +21,7 @@ def opcoes_menu():
     print(" 0 - Sair ")
 
 
-def menu():
+def menu(s):
     fim = False
     while not fim:
         opcoes_menu()
@@ -38,31 +34,31 @@ def menu():
                       " Ponta Delgada é a capital económica da \nRegião Autónoma dos Açores "
                       "e a maior cidade desta região.")
             elif op == 2:
-                mostrar_pontos_interesse(linkedlist)
+                s.mostrar_pontos_interesse(s)
             elif op == 3:
-                adicionar_ponto_interesse(linkedlist)
+                s.adicionar_ponto_interesse(linkedlist)
             elif op == 4:
-                alterar_ponto_interesse(linkedlist)
+                s.alterar_ponto_interesse(linkedlist)
             elif op == 5:
-                apagar_ponto_interesse(linkedlist)
+                s.apagar_ponto_interesse(linkedlist)
             elif op == 6:
-                pesquisar_ponto_interesse(linkedlist)
+                s.pesquisar_ponto_interesse(linkedlist)
             elif op == 7:
                 nome_ponto = str(input("Introduza o nome do ponto a avaliar: "))
                 classificar = int(input("Introduza a classificação que pretende dar ao ponto:"
                                         "\n1- Nada satisfeito\n2- Pouco satisfeito\n3- Satisfeito\n4- Muito "
                                         "Satisfeito\n", ))
-                avaliar_visita(linkedlist, nome_ponto, classificar)
+                s.avaliar_visita(linkedlist, nome_ponto, classificar)
             elif op == 8:
-                consultar_estatisticas(linkedlist)
+                s.consultar_estatisticas(linkedlist)
             elif op == 9:
                 latitude = float(input("Digite a sua latitude: "))
                 longitude = float(input("Digite a sua longitude: "))
                 distancia = float(input("Digite a distância máxima de pesquisa: "))
-                sugestao_pontos_interesse(latitude, longitude, linkedlist, distancia)
+                s.sugestao_pontos_interesse(latitude, longitude, linkedlist, distancia)
             elif op == 0:
-                linkedlist.save_to_json(FICHEIRO)
-                fazer_backup(FICHEIRO)
+                s.guardar_ficheiro(linkedlist, "..\sistema\pontosinteresse.json")
+                s.fazer_backup("..\sistema\pontosinteresse.json")
                 fim = True
                 print("Obrigado por utilizar o nosso programa. Até breve!")
         except ValueError:
@@ -71,8 +67,8 @@ def menu():
 
 
 if __name__ == '__main__':
-    # Carrega o ficheiro JSON para a LinkedList no início do programa
-    linkedlist.load_from_json(FICHEIRO)
-    fazer_backup(FICHEIRO)
-    menu()
-
+    s = Sistema()
+    # Carrega o ficheiro JSON para a LinkedList no inicio do programa
+    linkedlist = s.ler_ficheiro("..\sistema\pontosinteresse.json")
+    s.fazer_backup("..\sistema\pontosinteresse.json")
+    menu(s)
