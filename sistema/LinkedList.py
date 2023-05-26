@@ -149,7 +149,6 @@ class LinkedList:
             node = node.next
         return lst
 
-
     def __iter__(self):
         """
         Retorna um iterador para percorrer os elementos da lista.

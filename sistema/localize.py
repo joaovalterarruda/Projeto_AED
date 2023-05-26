@@ -12,7 +12,7 @@ def obter_localizacao_atual():
 localizacao = obter_localizacao_atual()
 if localizacao:
     latitude, longitude = localizacao
-    print("Latitude:", latitude)
-    print("Longitude:", longitude)
+    print("A sua Latitude é:", latitude)
+    print("A sua Longitude é:", longitude)
 else:
     print("Não foi possível obter a localização atual.")
