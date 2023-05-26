@@ -1,0 +1,101 @@
+[
+    {
+        "designacao": "Praia das Milicias",
+        "morada": "S\u00e3o Roque",
+        "latitude": 37.750964,
+        "longitude": -25.623417000000018,
+        "categoria_ponto": "praia",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "parque de estacionamento",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Praia do P\u00f3pulo",
+        "morada": "Livramento",
+        "latitude": 37.7503986,
+        "longitude": -25.618265399999927,
+        "categoria_ponto": "praia",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "parque de estacionamento",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Portas do Mar",
+        "morada": "Avenida Infante D. Henrique",
+        "latitude": 37.73935282483711,
+        "longitude": -25.662707267150836,
+        "categoria_ponto": "outros",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "parque de estacionamento",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Vista do Rei",
+        "morada": "Sete Cidades",
+        "latitude": 37.839233,
+        "longitude": -25.794891300000018,
+        "categoria_ponto": "natureza",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "parque de estacionamento",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Lagoa das Sete Cidades",
+        "morada": "Sete Cidades",
+        "latitude": 37.86128473395813,
+        "longitude": -25.79628476415881,
+        "categoria_ponto": "natureza",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "parque de estacionamento",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Ponta da Ferraria",
+        "morada": "Ginetes",
+        "latitude": 37.86082765045781,
+        "longitude": -25.852460861206055,
+        "categoria_ponto": "praia",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "parque de estacionamento",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Universidade dos A\u00e7ores",
+        "morada": "Rua M\u00e3e de Deus",
+        "latitude": 37.74588065027564,
+        "longitude": -25.663613965021664,
+        "categoria_ponto": "cultural",
+        "acessibilidade_fis": "Elevador",
+        "acessibilidade_geo": "parque de estacionamento",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Igreja da Matriz",
+        "morada": "Largo da Matriz",
+        "latitude": 37.7399875,
+        "longitude": -25.668544200000042,
+        "categoria_ponto": "cultural",
+        "acessibilidade_fis": "reduzida",
+        "acessibilidade_geo": "pedonal",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "Ermida da M\u00e3e de Deus",
+        "morada": "Rua M\u00e3e de Deus",
+        "latitude": 37.743817220597066,
+        "longitude": -25.660897493362427,
+        "categoria_ponto": "cultural",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "outro",
+        "classificacao": 0,
+        "visitas": 0
+    }
+]

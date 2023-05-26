@@ -9,6 +9,9 @@ from projeto_aed.sistema.algortimos import merge_sort
 linked_list = LinkedList()
 
 
+## Primeira Entrega
+
+
 def mostrar_pontos_interesse(linked_list):
     """
     Mostra os pontos de interesse de uma lista ligada, ordenados por critério definido pelo utilizador.
@@ -437,3 +440,5 @@ def sugestao_pontos_interesse(linked_list):  # RF06
             if opcao.lower() == 'c':
                 return
     return pontos_perto
+
+# Segunda Entrega

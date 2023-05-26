@@ -6,6 +6,7 @@ from projeto_aed.sistema.Sistema import adicionar_ponto_interesse, alterar_ponto
 from projeto_aed.sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup
 from projeto_aed.interface.input import opcoes_menu
 from projeto_aed.sistema.constantes import FICHEIRO
+from projeto_aed.rascunhos.graph import Graph
 
 
 def menu():
@@ -40,6 +41,9 @@ def menu():
                 consultar_estatisticas(linkedlist)
             elif op == 9:
                 sugestao_pontos_interesse(linkedlist)
+            elif op == 10:
+                graph = Graph()
+                graph.map_network()
             elif op == 0:
                 guardar_ficheiro(linkedlist, FICHEIRO)
                 fazer_backup(FICHEIRO)

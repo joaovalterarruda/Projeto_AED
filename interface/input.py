@@ -16,6 +16,7 @@ def opcoes_menu():
     print(" 7 - Avaliar visita")
     print(" 8 - Consultar estatísticas de visitas")
     print(" 9 - Obter sugestões de visitas")
+    print("10 - Consultar a rede de circulação")
     print(" 0 - Sair ")
 
 

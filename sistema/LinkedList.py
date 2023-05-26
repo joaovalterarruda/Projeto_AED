@@ -174,3 +174,4 @@ class LinkedList:
             items.append(str(current.data))
             current = current.next
         return ' -> '.join(items)
+
