@@ -1,9 +1,9 @@
-import json
-
 class Node:
     def __init__(self, data=None):
         self.data = data
         self.next = None
+
+
 class LinkedList:
     """
         Uma lista ligada simples.
@@ -149,39 +149,6 @@ class LinkedList:
             node = node.next
         return lst
 
-
-    def load_from_json(self, file_name):
-        """
-        Carrega os dados da lista a partir de um arquivo JSON.
-
-        Args:
-           file_name (str): O nome do arquivo JSON.
-
-        Returns:
-           None
-        """
-        with open(file_name, 'r') as f:
-            data = json.load(f)
-        for item in data:
-            self.add(item)
-
-    def save_to_json(self, file_name):
-        """
-        Salva os dados da lista em um arquivo JSON.
-
-        Args:
-            file_name (str): O nome do arquivo JSON.
-
-        Returns:
-            None
-        """
-        with open(file_name, 'w') as f:
-            data = []
-            current = self.head
-            while current is not None:
-                data.append(current.data)
-                current = current.next
-            json.dump(data, f, indent=4)
 
     def __iter__(self):
         """

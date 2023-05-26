@@ -2,8 +2,10 @@ import time
 
 from projeto_aed.sistema.Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, apagar_ponto_interesse, \
     pesquisar_ponto_interesse, mostrar_pontos_interesse, avaliar_visita, consultar_estatisticas, \
-    sugestao_pontos_interesse, FICHEIRO, ler_ficheiro, guardar_ficheiro, fazer_backup
+    sugestao_pontos_interesse
+from projeto_aed.sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup
 from projeto_aed.interface.input import opcoes_menu
+from projeto_aed.sistema.constantes import FICHEIRO
 
 
 def menu():

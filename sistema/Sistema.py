@@ -1,64 +1,12 @@
 import math
-import shutil
 import time
-import json
 from projeto_aed.sistema.PontoInteresse import PontoInteresse
 from projeto_aed.sistema.LinkedList import LinkedList
 from projeto_aed.sistema.localize import obter_localizacao_atual
-# from Grafo_teste import Grafo
+from projeto_aed.sistema.constantes import categorias_turismo, LAT, LONG, FRASE_INPUT
+from projeto_aed.sistema.algortimos import merge_sort
 
-FICHEIRO = "pontos_interesse.json"
-categorias_turismo = ("natureza", "cultural", "aventura", "gastronomia", "praia", "outros")
-classificacao = ("1", "2", "3", "4")
-LAT = "Latitude:"
-LONG = "Longitude:"
-FRASE_INPUT = "------------\n" \
-              "Enter para continuar ou (C) para cancelar e voltar ao menu. "
-
-
-def ler_ficheiro(nome_ficheiro):
-    """
-    Lê o conteúdo de um ficheiro JSON e cria uma lista ligada com os dados lidos.
-
-    Args: nome_ficheiro (str): O nome do ficheiro a ser lido.
-    Returns:
-    LinkedList: A lista ligada criada a partir dos dados do ficheiro.
-    """
-
-    linked_list = LinkedList()
-    with open(nome_ficheiro, 'r', encoding="UTF-8") as file:
-        conteudo = json.load(file)
-        for item in conteudo:
-            linked_list.add(item)
-        print("Ficheiro " + nome_ficheiro + " carregado com sucesso.")
-    return linked_list
-
-
-def guardar_ficheiro(dados, nome_ficheiro):
-    """
-    Guardar os dados num ficheiro.json
-    :param dados: Os dados a serem guardados no arquivo. Deve ser uma lista de itens.
-    :param nome_ficheiro: O nome do arquivo de destino. Deve ter a extensão json.
-    :return:
-    """
-    linked_list = LinkedList()
-    for item in dados:
-        linked_list.add(item)
-    conteudo = linked_list.to_list()
-    with open(nome_ficheiro, 'w', encoding="UTF-8") as file:
-        json.dump(conteudo, file, indent=4)
-    print("Ficheiro " + nome_ficheiro + " guardado com sucesso.")
-
-
-def fazer_backup(nome_ficheiro):
-    """
-    Faz uma cópia de ‘backup’ do ficheiro JSON.
-    :param nome_ficheiro: O nome do ficheiro a ser feito o ‘backup’.
-    :return:
-    """
-    nome_backup = nome_ficheiro + ".backup"
-    shutil.copy(nome_ficheiro, nome_backup)
-    print("Backup do ficheiro " + nome_ficheiro + " criado com sucesso.")
+linked_list = LinkedList()
 
 
 def mostrar_pontos_interesse(linked_list):
@@ -113,7 +61,7 @@ def mostrar_pontos_interesse(linked_list):
             return  # retorna para o menu
 
 
-def adicionar_ponto_interesse(linked_list):
+def adicionar_ponto_interesse(linked_list):  # RF01
     """
     Adiciona um novo ponto de interesse à LinkedList.
     :param linked_list:  A lista ligada onde o ponto de interesse será adicionado.
@@ -179,7 +127,7 @@ def obter_ponto_interesse(linked_list):
     return None, None
 
 
-def alterar_ponto_interesse(linked_list):
+def alterar_ponto_interesse(linked_list):  # RF02
     """
     Altera as informações de um ponto de interesse existente na lista ligada.
     :param linked_list: A lista ligada contendo os pontos de interesse.
@@ -279,7 +227,7 @@ def apagar_ponto_interesse(linked_list):
     time.sleep(2)
 
 
-def pesquisar_ponto_interesse(linked_list):
+def pesquisar_ponto_interesse(linked_list):  # RF03
     """
     Pesquisa pontos de interesse com base numa palavra-chave e/ou categoria.
     :param linked_list: A lista ligada contendo os pontos de interesse.
@@ -328,7 +276,7 @@ def pesquisar_ponto_interesse(linked_list):
         time.sleep(2)
 
 
-def avaliar_visita(linked_list):
+def avaliar_visita(linked_list):  # RF04
     """
     Avalia uma visita a um ponto de interesse, atualizando o número de visitas e a classificação média.
     :param linked_list: A lista ligada contendo os pontos de interesse.
@@ -444,7 +392,7 @@ def obter_localizacao():
         return latitude, longitude
 
 
-def sugestao_pontos_interesse(linked_list):
+def sugestao_pontos_interesse(linked_list):  # RF06
     """
     Retorna uma lista de pontos de interesse próximos a uma localização específica, numa distância máxima.
     :param linked_list: A lista ligada contendo os pontos de interesse.
@@ -489,63 +437,3 @@ def sugestao_pontos_interesse(linked_list):
             if opcao.lower() == 'c':
                 return
     return pontos_perto
-
-
-def merge_sort(arr, key, reverse=False):
-    """
-    Ordena uma lista usando o algoritmo de ordenação merge sort.
-    :param arr: A lista a ser ordenada.
-    :param key: A chave do dicionário a ser usada como critério de ordenação.
-    :param reverse: Indica se a ordenação deve ser em ordem decrescente. O padrão é False (ordem crescente).
-    :return:
-    """
-    if len(arr) <= 1:
-        return arr
-
-    mid = len(arr) // 2
-    left = arr[:mid]
-    right = arr[mid:]
-
-    left = merge_sort(left, key, reverse)
-    right = merge_sort(right, key, reverse)
-
-    return merge(left, right, key, reverse)
-
-
-def merge(left, right, key, reverse=False):
-    """
-    Combina duas listas ordenadas numa única lista ordenada.
-    :param left: Primeira lista ordenada.
-    :param right: Segunda lista ordenada.
-    :param key: Chave do dicionário a ser usada como critério de ordenação.
-    :param reverse: Indica se a ordenação deve ser em ordem decrescente. O padrão é False (ordem crescente).
-    :return:
-    """
-    result = []
-    i = j = 0
-
-    while i < len(left) and j < len(right):
-        if reverse:
-            if left[i][key] >= right[j][key]:
-                result.append(left[i])
-                i += 1
-            else:
-                result.append(right[j])
-                j += 1
-        else:
-            if left[i][key] <= right[j][key]:
-                result.append(left[i])
-                i += 1
-            else:
-                result.append(right[j])
-                j += 1
-
-    while i < len(left):
-        result.append(left[i])
-        i += 1
-
-    while j < len(right):
-        result.append(right[j])
-        j += 1
-
-    return result

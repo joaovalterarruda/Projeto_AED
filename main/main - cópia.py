@@ -1,5 +1,5 @@
-
-from projeto_aed.sistema.Sistema import ler_ficheiro, guardar_ficheiro, fazer_backup, adicionar_ponto_interesse, alterar_ponto_interesse, \
+from projeto_aed.sistema.Sistema import ler_ficheiro, guardar_ficheiro, fazer_backup, adicionar_ponto_interesse, \
+    alterar_ponto_interesse, \
     apagar_ponto_interesse, pesquisar_ponto_interesse, \
     mostrar_pontos_interesse, FICHEIRO, avaliar_visita, consultar_estatisticas, sugestao_pontos_interesse
 
@@ -32,11 +32,11 @@ def menu():
         try:
             op = int(input("Opção: "))
             if op == 1:
-                print("\n""\033[4mPonta Delgada\033[0m"
-                      "\nPonta Delgada é uma cidade portuguesa localizada na ilha de São Miguel\ne pertencente"
-                      " à Região Autónoma dos Açores com uma população\nde 46 102 habitantes."
-                      " Ponta Delgada é a capital económica da \nRegião Autónoma dos Açores "
-                      "e a maior cidade desta região.")
+                print("\n", "\033[4mPonta Delgada\033[0m"
+                            "\nPonta Delgada é uma cidade portuguesa localizada na ilha de São Miguel\ne pertencente"
+                            " à Região Autónoma dos Açores com uma população\nde 46 102 habitantes."
+                            " Ponta Delgada é a capital económica da \nRegião Autónoma dos Açores "
+                            "e a maior cidade desta região.")
                 input("\nPrima Enter para voltar ao menu principal.")
 
             elif op == 2:
@@ -64,9 +64,8 @@ def menu():
             print("Opção inválida. Tente outra vez.")
 
 
-
 if __name__ == '__main__':
-    # Carrega o ficheiro JSON para a LinkedList no inicio do programa
+    # Carrega o ficheiro JSON para a LinkedList no início do programa
     linkedlist = ler_ficheiro(FICHEIRO)
     fazer_backup(FICHEIRO)
     menu()
