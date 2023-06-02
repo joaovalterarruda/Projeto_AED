@@ -1,3 +1,5 @@
+import os
+
 FICHEIRO = "pontos_interesse.json"
 categorias_turismo = ("natureza", "cultural", "aventura", "gastronomia", "praia", "outros")
 classificacao = ("1", "2", "3", "4")

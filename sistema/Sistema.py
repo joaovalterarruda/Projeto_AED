@@ -1,10 +1,10 @@
 import math
 import time
-from projeto_aed.sistema.PontoInteresse import PontoInteresse
-from projeto_aed.sistema.LinkedList import LinkedList
-from projeto_aed.sistema.localize import obter_localizacao_atual
-from projeto_aed.sistema.constantes import categorias_turismo, LAT, LONG, FRASE_INPUT
-from projeto_aed.sistema.algortimos import merge_sort
+from sistema.PontoInteresse import PontoInteresse
+from sistema.LinkedList import LinkedList
+from sistema.localize import obter_localizacao_atual
+from sistema.constantes import categorias_turismo, LAT, LONG, FRASE_INPUT
+from sistema.algortimos import merge_sort
 
 linked_list = LinkedList()
 

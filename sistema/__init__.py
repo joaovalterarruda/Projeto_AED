@@ -1,3 +1,5 @@
+from main import *
+
 
 class PontoInteresse:
     pass
