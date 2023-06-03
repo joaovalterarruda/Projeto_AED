@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 import itertools
 import random
 import json
+
+
 class Grafo:
     def __init__(self):
         self.vertices = {}
@@ -70,6 +72,7 @@ for i in range(len(comb_selecionada) - 1):
     destino = comb_selecionada[i + 1]['designacao']
     grafo.adicionar_aresta(origem, destino)
 
+
 # Função para exibir o grafo
 def exibir_grafo(grafo):
     fig, ax = plt.subplots()
@@ -85,13 +88,15 @@ def exibir_grafo(grafo):
         for destino in grafo.vertices[origem]:
             coordenadas_origem = grafo.consultar_coordenadas(origem)
             coordenadas_destino = grafo.consultar_coordenadas(destino)
-            ax.plot([coordenadas_origem[1], coordenadas_destino[1]], [coordenadas_origem[0], coordenadas_destino[0]], 'b-')
+            ax.plot([coordenadas_origem[1], coordenadas_destino[1]], [coordenadas_origem[0], coordenadas_destino[0]],
+                    'b-')
 
     ax.set_xlabel('Longitude')
     ax.set_ylabel('Latitude')
     ax.set_title('Grafo')
 
     plt.show()
+
 
 # Exibir o grafo
 exibir_grafo(grafo)
