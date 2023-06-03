@@ -1,12 +1,12 @@
 import time
 
-from sistema.Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, apagar_ponto_interesse, \
+from projeto_aed.sistema.Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, apagar_ponto_interesse, \
     pesquisar_ponto_interesse, mostrar_pontos_interesse, avaliar_visita, consultar_estatisticas, \
     sugestao_pontos_interesse
-from sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup
-from interface.input import opcoes_menu
-from sistema.constantes import FICHEIRO
-from rascunhos.graph import Graph
+from projeto_aed.sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup
+from projeto_aed.interface.input import opcoes_menu, sub_menu, interromper_via_circulacao
+from projeto_aed.sistema.constantes import FICHEIRO
+from projeto_aed.rascunhos.graph import Graph
 
 
 def menu():
@@ -42,8 +42,7 @@ def menu():
             elif op == 9:
                 sugestao_pontos_interesse(linkedlist)
             elif op == 10:
-                graph = Graph()
-                graph.map_network()
+                menu_sec()
             elif op == 0:
                 guardar_ficheiro(linkedlist, FICHEIRO)
                 fazer_backup(FICHEIRO)
@@ -52,6 +51,30 @@ def menu():
         except ValueError:
             print("Opção inválida. Tente outra vez.")
             time.sleep(2)
+
+
+def menu_sec():
+    voltar_menu_principal = False
+    while not voltar_menu_principal:
+        sub_menu()
+        print("-" * 72)
+        try:
+            op = int(input("Opção: "))
+            if op == 1:
+                grafo = Graph()
+                grafo.mostrar_grafo_from_json(FICHEIRO)
+            elif op == 2:
+                print("consultar os pontos criticos ")
+            elif op == 3:
+                interromper_via_circulacao(FICHEIRO)
+            elif op == 4:
+                print("obter itenerrario")
+            elif op == 5:
+                print("não fazer!! ")
+            elif op == 0:
+                voltar_menu_principal = True
+        except ValueError:
+            print("Opção inválida. Tente outra vez.")
 
 
 linkedlist = ler_ficheiro(FICHEIRO)
