@@ -78,6 +78,70 @@ def obter_itinerario():
     desenhar_grafo(GRAFO)
 
 
+def obter_arvore_rotas_carro(ponto_interesse):
+    grafo = Grafo()
+
+    # Adicionar vértices e arestas ao grafo
+    with open(GRAFO) as json_file:
+        dados = json.load(json_file)
+
+    for vertice in dados['vertices']:
+        grafo.adicionar_vertice(vertice['nome'], vertice['latitude'], vertice['longitude'])
+
+    for aresta in dados['arestas']:
+        grafo.adicionar_aresta(aresta['origem'], aresta['destino'], aresta['peso'])
+
+    # Obter árvore de caminhos de carro a partir do ponto de interesse
+    arvore = nx.DiGraph()
+    visitados = set()
+    visitados.add(ponto_interesse)
+    obter_subarvore_carro(grafo, arvore, ponto_interesse, visitados)
+
+    # Desenhar a árvore
+    desenhar_arvore(arvore)
+
+
+def obter_subarvore_carro(grafo, arvore, vertice, visitados):
+    for adjacente, _ in grafo.adjacencias[vertice]:
+        if adjacente not in visitados:
+            visitados.add(adjacente)
+            arvore.add_edge(vertice, adjacente)
+            obter_subarvore_carro(grafo, arvore, adjacente, visitados)
+
+
+def desenhar_arvore(arvore):
+    G = nx.DiGraph()
+
+    cores = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan']
+
+    # Adicionar vértices ao grafo
+    for i, vertice in enumerate(arvore.nodes):
+        G.add_node(vertice, cor=cores[i % len(cores)])
+
+    # Adicionar arestas ao grafo
+    for origem, destino in arvore.edges:
+        peso = arvore[origem][destino].get('weight', 1)  # Obtém o peso ou usa 1 como valor padrão
+        peso_arredondado = round(peso, 2)
+        G.add_edge(origem, destino, weight=peso_arredondado)
+
+    pos = nx.spring_layout(G)
+
+    plt.figure(figsize=(12, 10))
+    node_colors = [G.nodes[vertice]['cor'] for vertice in G.nodes]
+    nx.draw_networkx_nodes(G, pos, node_size=200, node_color=node_colors)
+    nx.draw_networkx_edges(G, pos, node_size=200,
+                           edge_color='gray', width=1, arrowsize=15, arrowstyle='->')
+    edge_labels = nx.get_edge_attributes(G, 'weight')
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8)
+    nx.draw_networkx_labels(G, pos, font_size=1, font_color='black', font_weight='bold')
+    handles = [mpatches.Patch(color=color, label=vertice) for vertice, color in zip(G.nodes, node_colors)]
+    plt.legend(handles=handles, title='Vértices', loc='upper right')
+    plt.suptitle('Rotas de percursos de carro:')
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    plt.show()
+
+
 class Grafo:
     def __init__(self):
         self.vertices = {}

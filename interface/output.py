@@ -8,7 +8,8 @@ from projeto_aed.sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backu
 from projeto_aed.interface.input import opcoes_menu, sub_menu  # , interromper_via_circulacao
 from projeto_aed.sistema.constantes import FICHEIRO, GRAFO
 from projeto_aed.rascunhos.graph import Graph
-from projeto_aed.rascunhos.Grafo_teste import Grafo, desenhar_grafo, testar_caminho,obter_itinerario
+from projeto_aed.rascunhos.Grafo_teste import Grafo, desenhar_grafo, testar_caminho,obter_itinerario,\
+    obter_arvore_rotas_carro
 
 
 def menu():
@@ -71,7 +72,8 @@ def menu_sec():
             elif op == 4:
                 obter_itinerario()
             elif op == 5:
-                print("não fazer!! ")
+                ponto_interesse = input("Digite o ponto de interesse: ")
+                obter_arvore_rotas_carro(ponto_interesse)
             elif op == 0:
                 voltar_menu_principal = True
         except ValueError:
