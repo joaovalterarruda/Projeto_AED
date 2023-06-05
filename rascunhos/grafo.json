@@ -1,0 +1,116 @@
+{
+    "vertices": [
+        {
+            "nome": "Praia das Milicias",
+            "latitude": 37.750964,
+            "longitude": -25.623417000000018
+        },
+        {
+            "nome": "Praia do P\u00f3pulo",
+            "latitude": 37.7503986,
+            "longitude": -25.618265399999927
+        },
+        {
+            "nome": "Portas do Mar",
+            "latitude": 37.73935282483711,
+            "longitude": -25.662707267150836
+        },
+        {
+            "nome": "Vista do Rei",
+            "latitude": 37.839233,
+            "longitude": -25.794891300000018
+        },
+        {
+            "nome": "Lagoa das Sete Cidades",
+            "latitude": 37.86128473395813,
+            "longitude": -25.79628476415881
+        },
+        {
+            "nome": "Ponta da Ferraria",
+            "latitude": 37.86082765045781,
+            "longitude": -25.852460861206055
+        },
+        {
+            "nome": "Universidade dos A\u00e7ores",
+            "latitude": 37.74588065027564,
+            "longitude": -25.663613965021664
+        },
+        {
+            "nome": "Igreja da Matriz",
+            "latitude": 37.7399875,
+            "longitude": -25.668544200000042
+        },
+        {
+            "nome": "Ermida da M\u00e3e de Deus",
+            "latitude": 37.743817220597066,
+            "longitude": -25.660897493362427
+        }
+    ],
+    "arestas": [
+        {
+            "origem": "Praia das Milicias",
+            "destino": "Praia do P\u00f3pulo",
+            "peso": 0.45727050531667823
+        },
+        {
+            "origem": "Portas do Mar",
+            "destino": "Praia das Milicias",
+            "peso": 3.68803106402101
+        },
+        {
+            "origem": "Portas do Mar",
+            "destino": "Praia do P\u00f3pulo",
+            "peso": 4.096110981698397
+        },
+        {
+            "origem": "Praia do P\u00f3pulo",
+            "destino": "Vista do Rei",
+            "peso": 18.396552923273692
+        },
+        {
+            "origem": "Portas do Mar",
+            "destino": "Vista do Rei",
+            "peso": 16.07070362214414
+        },
+        {
+            "origem": "Vista do Rei",
+            "destino": "Lagoa das Sete Cidades",
+            "peso": 2.4550914103540276
+        },
+        {
+            "origem": "Vista do Rei",
+            "destino": "Ponta da Ferraria",
+            "peso": 5.5960586128182
+        },
+        {
+            "origem": "Ponta da Ferraria",
+            "destino": "Lagoa das Sete Cidades",
+            "peso": 4.931880133310971
+        },
+        {
+            "origem": "Igreja da Matriz",
+            "destino": "Universidade dos A\u00e7ores",
+            "peso": 0.7857064613718737
+        },
+        {
+            "origem": "Universidade dos A\u00e7ores",
+            "destino": "Ermida da M\u00e3e de Deus",
+            "peso": 0.33120035228836636
+        },
+        {
+            "origem": "Igreja da Matriz",
+            "destino": "Ermida da M\u00e3e de Deus",
+            "peso": 0.795886544489784
+        },
+        {
+            "origem": "Portas do Mar",
+            "destino": "Ponta da Ferraria",
+            "peso": 21.457013124692008
+        },
+        {
+            "origem": "Portas do Mar",
+            "destino": "Igreja da Matriz",
+            "peso": 0.5180877959987971
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 from typing import Optional
-from sistema.node import Node
+
+from TDA.LinkedNodes.node import Node
 
 
 class LinkedQueue:

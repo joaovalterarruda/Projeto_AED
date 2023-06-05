@@ -17,6 +17,7 @@ for ponto in data:
     longitude = ponto['longitude']
     graph.add_vertex(designacao, {'latitude': latitude, 'longitude': longitude})
 
+
 # Visualize the graph
 graph.map_network()
 

@@ -1,12 +1,12 @@
 import time
 
-from projeto_aed.sistema.Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, apagar_ponto_interesse, \
+from sistema.Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, apagar_ponto_interesse, \
     pesquisar_ponto_interesse, mostrar_pontos_interesse, avaliar_visita, consultar_estatisticas, \
     sugestao_pontos_interesse
-from projeto_aed.sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup
-from projeto_aed.interface.input import opcoes_menu, sub_menu, interromper_via_circulacao
-from projeto_aed.sistema.constantes import FICHEIRO
-from projeto_aed.rascunhos.graph import Graph
+from sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup
+from interface.input import opcoes_menu, sub_menu #, interromper_via_circulacao
+from sistema.constantes import FICHEIRO
+from rascunhos.graph import Graph
 
 
 def menu():
@@ -66,7 +66,7 @@ def menu_sec():
             elif op == 2:
                 print("consultar os pontos criticos ")
             elif op == 3:
-                interromper_via_circulacao(FICHEIRO)
+                pass# interromper_via_circulacao(FICHEIRO)
             elif op == 4:
                 print("obter itenerrario")
             elif op == 5:

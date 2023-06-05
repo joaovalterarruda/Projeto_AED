@@ -1,4 +1,4 @@
-from projeto_aed.sistema.LinkedList import LinkedList
+from sistema.LinkedList import LinkedList
 import json
 import shutil
 

@@ -5,9 +5,9 @@ from typing import List
 import networkx as nx
 import matplotlib.pyplot as plt
 from itertools import combinations
-from projeto_aed.sistema.json import ler_ficheiro
-from projeto_aed.sistema.constantes import FICHEIRO
-from projeto_aed.sistema.LinkedQueue import LinkedQueue
+from sistema.json import ler_ficheiro
+from sistema.constantes import FICHEIRO
+from sistema.LinkedQueue import LinkedQueue
 
 
 def criar_e_visualizar_grafo():
@@ -61,9 +61,13 @@ def criar_e_visualizar_grafo():
     graph.map_network()
 
 
+
+
+
+
 class Graph:
     def __init__(self):
-        self._graph = nx.Graph()
+        self._graph = nx.DiGraph()
 
     def __str__(self) -> str:
         return str(self._graph)
@@ -102,8 +106,12 @@ class Graph:
 
         nx.draw_networkx_labels(self._graph, pos)
 
-        nx.draw_networkx_edges(self._graph, pos)
-        nx.draw_networkx_edge_labels(self._graph, pos, edge_labels=labels, font_size=12)
+        nx.draw_networkx_edges(self._graph, pos, arrows=True)  # Desenhar as arestas com setas
+
+        for (source, target), label in labels.items():
+            x = (pos[source][0] + pos[target][0]) / 2  # Coordenada x média
+            y = (pos[source][1] + pos[target][1]) / 2  # Coordenada y média
+            plt.text(x, y, label, fontsize=12, ha='center', va='center')  # Exibir rótulo na posição média
 
         plt.xlabel('Longitude')
         plt.ylabel('Latitude')
@@ -119,66 +127,66 @@ class Graph:
         plt.show()
 
 
-def obter_caminhos_alternativos(self, ponto_inicial: str, ponto_final: str):
-    """
-    Procura todos os caminhos alternativos entre o ponto inicial e o ponto final, utilizando a travessia em largura
-    :param ponto_inicial: ponto inicial
-    :param ponto_final: ponto final
-    :return: uma lista com os caminhos alternativos
-    """
-    caminhos = []
-    caminhos_visitados = set()
-    queue = LinkedQueue()
-    queue.add([ponto_inicial])
+    def obter_caminhos_alternativos(self, ponto_inicial: str, ponto_final: str):
+        """
+        Procura todos os caminhos alternativos entre o ponto inicial e o ponto final, utilizando a travessia em largura
+        :param ponto_inicial: ponto inicial
+        :param ponto_final: ponto final
+        :return: uma lista com os caminhos alternativos
+        """
+        caminhos = []
+        caminhos_visitados = set()
+        queue = LinkedQueue()
+        queue.add([ponto_inicial])
 
-    while not queue.is_empty():
-        path = queue.pop()
-        last_vertex = path[-1]
+        while not queue.is_empty():
+            path = queue.pop()
+            last_vertex = path[-1]
 
-        if last_vertex == ponto_final:
-            caminhos.append(path)
+            if last_vertex == ponto_final:
+                caminhos.append(path)
 
-        if last_vertex not in caminhos_visitados:
-            caminhos_visitados.add(last_vertex)
-            adjacent_vertices = self.adjacents(last_vertex)
-            for vertex in adjacent_vertices:
-                if vertex not in caminhos_visitados:
-                    new_path = path + [vertex]
-                    queue.add(new_path)
+            if last_vertex not in caminhos_visitados:
+                caminhos_visitados.add(last_vertex)
+                adjacent_vertices = self.adjacents(last_vertex)
+                for vertex in adjacent_vertices:
+                    if vertex not in caminhos_visitados:
+                        new_path = path + [vertex]
+                        queue.add(new_path)
 
-    return caminhos
-
-
-def interromper_via_circulacao(self, via_interrompida: str, ponto_inicial: str, ponto_final: str):
-    """
-    Encontrar os caminhos alternativos entre o ponto inicial e o ponto final, e remove do grafo
-    :param via_interrompida: via interrompida
-    :param ponto_inicial: ponto inicial
-    :param ponto_final: ponto final
-    :return: uma lista com os caminhos alternativos
-    """
-    # Faz uma copia do grafo original
-    backup_grafo = Graph()
-    for vertex in self.get_vertices():
-        if vertex != via_interrompida:
-            backup_grafo.add_vertex(vertex)
-
-    for from_vertex, to_vertex in self.get_edges():
-        if from_vertex != via_interrompida and to_vertex != via_interrompida:
-            backup_grafo.add_edge(from_vertex, to_vertex)
-
-    # Encontrar caminhos alternativos para o grafo
-    caminhos_alternativos = obter_caminhos_alternativos(ponto_inicial, ponto_final)
-
-    return caminhos_alternativos
+        return caminhos
 
 
-def interromper_via_circulacao_menu(self):
-    via_interrompida = input("Informe a via de circulação a ser interrompida: ")
-    ponto_inicial = input("Informe o ponto inicial: ")
-    ponto_final = input("Informe o ponto final: ")
+    def interromper_via_circulacao(self, via_interrompida: str, ponto_inicial: str, ponto_final: str):
+        """
+        Encontrar os caminhos alternativos entre o ponto inicial e o ponto final, e remove do grafo
+        :param via_interrompida: via interrompida
+        :param ponto_inicial: ponto inicial
+        :param ponto_final: ponto final
+        :return: uma lista com os caminhos alternativos
+        """
+        # Faz uma copia do grafo original
+        backup_grafo = Graph()
+        for vertex in self.get_vertices():
+            if vertex != via_interrompida:
+                backup_grafo.add_vertex(vertex)
 
-    caminhos_alternativos = self.interromper_via_circulacao(via_interrompida, ponto_inicial, ponto_final)
-    print("Caminhos alternativos:")
-    for caminho in caminhos_alternativos:
-        print(caminho)
+        for from_vertex, to_vertex in self.get_edges():
+            if from_vertex != via_interrompida and to_vertex != via_interrompida:
+                backup_grafo.add_edge(from_vertex, to_vertex)
+
+        # Encontrar caminhos alternativos para o grafo
+        caminhos_alternativos = self.obter_caminhos_alternativos(ponto_inicial, ponto_final)
+
+        return caminhos_alternativos
+
+
+    def interromper_via_circulacao_menu(self):
+        via_interrompida = input("Informe a via de circulação a ser interrompida: ")
+        ponto_inicial = input("Informe o ponto inicial: ")
+        ponto_final = input("Informe o ponto final: ")
+
+        caminhos_alternativos = self.interromper_via_circulacao(via_interrompida, ponto_inicial, ponto_final)
+        print("Caminhos alternativos:")
+        for caminho in caminhos_alternativos:
+            print(caminho)
