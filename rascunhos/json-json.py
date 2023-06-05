@@ -45,7 +45,7 @@ for i in range(len(dados_json) - 1):
 grafo = {'vertices': vertices, 'arestas': arestas}
 
 # Gravar o resultado em um arquivo JSON
-with open('grafo.json', 'w') as arquivo:
+with open('../main/grafo.json', 'w') as arquivo:
     json.dump(grafo, arquivo, indent=4)
 
 print("Grafo gravado em grafo.json.")

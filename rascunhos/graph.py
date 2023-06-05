@@ -5,9 +5,9 @@ from typing import List
 import networkx as nx
 import matplotlib.pyplot as plt
 from itertools import combinations
-from sistema.json import ler_ficheiro
-from sistema.constantes import FICHEIRO
-from sistema.LinkedQueue import LinkedQueue
+from projeto_aed.sistema.json import ler_ficheiro
+from projeto_aed.sistema.constantes import FICHEIRO
+from projeto_aed.sistema.LinkedQueue import LinkedQueue
 
 
 def criar_e_visualizar_grafo():

@@ -1,12 +1,14 @@
+import json
 import time
 
-from sistema.Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, apagar_ponto_interesse, \
+from projeto_aed.sistema.Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, apagar_ponto_interesse, \
     pesquisar_ponto_interesse, mostrar_pontos_interesse, avaliar_visita, consultar_estatisticas, \
     sugestao_pontos_interesse
-from sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup
-from interface.input import opcoes_menu, sub_menu #, interromper_via_circulacao
-from sistema.constantes import FICHEIRO
-from rascunhos.graph import Graph
+from projeto_aed.sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup
+from projeto_aed.interface.input import opcoes_menu, sub_menu  # , interromper_via_circulacao
+from projeto_aed.sistema.constantes import FICHEIRO, GRAFO
+from projeto_aed.rascunhos.graph import Graph
+from projeto_aed.rascunhos.Grafo_teste import Grafo, desenhar_grafo, testar_caminho,obter_itinerario
 
 
 def menu():
@@ -61,14 +63,13 @@ def menu_sec():
         try:
             op = int(input("Opção: "))
             if op == 1:
-                grafo = Graph()
-                grafo.mostrar_grafo_from_json(FICHEIRO)
+                desenhar_grafo(GRAFO)
             elif op == 2:
                 print("consultar os pontos criticos ")
             elif op == 3:
-                pass# interromper_via_circulacao(FICHEIRO)
+                testar_caminho()
             elif op == 4:
-                print("obter itenerrario")
+                obter_itinerario()
             elif op == 5:
                 print("não fazer!! ")
             elif op == 0:

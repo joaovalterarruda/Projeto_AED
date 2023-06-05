@@ -1,4 +1,4 @@
-from interface.output import menu
+from projeto_aed.interface.output import menu
 
 
 if __name__ == "__main__":

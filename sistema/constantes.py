@@ -7,3 +7,4 @@ LAT = "Latitude:"
 LONG = "Longitude:"
 FRASE_INPUT = "------------\n" \
               "Enter para continuar ou (C) para cancelar e voltar ao menu. "
+GRAFO = "grafo.json"
