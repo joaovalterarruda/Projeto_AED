@@ -29,7 +29,7 @@ def sub_menu():
     print("\u2514" + "\u2500" * 70 + "\u2518")
     print("-" * 72)
     print("1- Consultar a rede de circulação: ")
-    print("2- Consultar pontos críticos da vida de circullação: ")
+    print("2- Consultar pontos críticos da vida de circulação: ")
     print("3- Interromper via de circulação: ")
     print("4- Obter itenerário (caminho mais curto): ")
     print("5- Consultar rotas para percursos de carro: ")

@@ -6,6 +6,11 @@ from projeto_aed.sistema.constantes import GRAFO
 
 
 def desenhar_grafo(nome_arquivo):
+    """
+    Desenha o grafo a partir de um determinado ficheiro json
+    :param nome_arquivo: Nome do ficheiro json
+    :return:
+    """
     with open(nome_arquivo) as file:
         data = json.load(file)
 
@@ -45,6 +50,10 @@ def desenhar_grafo(nome_arquivo):
 
 # RF10 para testar
 def testar_caminho():
+    """
+    Input para testar o caminho alternativo
+    :return:
+    """
     grafo = Grafo()
     origem = input("Digite o nome do ponto de partida: ")
     destino = input("Digite o nome do ponto de destino: ")
@@ -57,6 +66,10 @@ def testar_caminho():
 
 # RF11
 def obter_itinerario():
+    """
+    Obter inforomaçoes sobre o itenerário entre os dois pontos
+    :return:
+    """
     grafo = Grafo()
     origem = input("Digite o nome do ponto de partida: ")
     destino = input("Digite o nome do ponto de destino: ")
@@ -75,10 +88,15 @@ def obter_itinerario():
     print(f"Tempo estimado a pé: {tempo_estimado_a_pe} minutos")
     print(f"Tempo estimado de carro: {tempo_estimado_de_carro} minutos")
 
-    desenhar_grafo(GRAFO)
+    grafo.desenhar_grafo()
 
 
 def obter_arvore_rotas_carro(ponto_interesse):
+    """
+    Obtém a subarvore de caminhos a partir de um ponto de interesse
+    :param ponto_interesse: Ponto onde a árvore de caminhos de carro será obtida
+    :return:
+    """
     grafo = Grafo()
 
     # Adicionar vértices e arestas ao grafo
@@ -102,6 +120,14 @@ def obter_arvore_rotas_carro(ponto_interesse):
 
 
 def obter_subarvore_carro(grafo, arvore, vertice, visitados):
+    """
+    Obtém a subarvore de caminhos de carro a partir de um vértice do grafo
+    :param grafo: Grafo pela qual vai ser obtido a subarvore
+    :param arvore: Subarvore de caminhos que está a ser construida
+    :param vertice: Vértice onde a pesquisa é realizada
+    :param visitados: Conjunto de vértices já visitados
+    :return:
+    """
     for adjacente, _ in grafo.adjacencias[vertice]:
         if adjacente not in visitados:
             visitados.add(adjacente)
@@ -110,6 +136,11 @@ def obter_subarvore_carro(grafo, arvore, vertice, visitados):
 
 
 def desenhar_arvore(arvore):
+    """
+    Desenha um grafo que representa a árvore de um grafo
+    :param arvore:
+    :return:
+    """
     G = nx.DiGraph()
 
     cores = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan']
@@ -148,28 +179,61 @@ class Grafo:
         self.adjacencias = {}
 
     def adicionar_vertice(self, nome, latitude, longitude):
+        """
+        Adiciona um vértice ao grafo com as coordenadas de latitude e longitude
+        :param nome:
+        :param latitude:
+        :param longitude:
+        :return:
+        """
         self.vertices[nome] = (latitude, longitude)
         self.adjacencias[nome] = []
 
     def adicionar_aresta(self, origem, destino, peso):
+        """
+        Adiciona uma aresta ao grafo, ligando os dois vértices com um determinado peso
+        :param origem: Nome do vértice de origem
+        :param destino: Nome do vértice de destino
+        :param peso: O peso da aresta
+        :return:
+        """
         if origem != destino:  # Verificar se os vértices são diferentes
             if origem not in self.adjacencias[destino] and destino not in self.adjacencias[origem]:
                 self.adjacencias[origem].append((destino, peso))
 
     def remover_vertice(self, nome):
+        """
+        Remove um vértice e todas as arestas adjacentes do grafo
+        :param nome: Nome do vértice a ser removido
+        :return:
+        """
         del self.vertices[nome]
         del self.adjacencias[nome]
         for adjacencias in self.adjacencias.values():
             adjacencias = [(v, p) for v, p in adjacencias if v != nome]
 
     def remover_aresta(self, origem, destino):
+        """
+        Remove uma aresta entre dois vértices no grafo
+        :param origem: Nome do vértice inicial
+        :param destino: Nome do vértice de destino
+        :return:
+        """
         if origem in self.adjacencias and destino in self.adjacencias[origem]:
             self.adjacencias[origem] = [(v, p) for v, p in self.adjacencias[origem] if v != destino]
 
     def get_vertices(self):
+        """
+        Obtém todos os vértices do grafo
+        :return:
+        """
         return self.vertices.keys()
 
     def get_arestas(self):
+        """
+        Obtém todas as arestas do grafo
+        :return:
+        """
         arestas = []
         for origem, adjacencias in self.adjacencias.items():
             for destino, peso in adjacencias:
@@ -177,6 +241,11 @@ class Grafo:
         return arestas
 
     def bfs(self, origem):
+        """
+        Faz a pesquisa em largura (BFS) a partir de um vértice
+        :param origem: Nome do vértice inicial
+        :return:
+        """
         visitados = set()
         fila = [origem]
         while fila:
@@ -188,10 +257,21 @@ class Grafo:
                     fila.append(adjacente)
 
     def dfs(self, origem):
+        """
+        Faz a pesquisa em profundidade (DFS) a partir de um vértice
+        :param origem: Nome do vértice inicial
+        :return:
+        """
         visitados = set()
         self._dfs_recursivo(origem, visitados)
 
     def _dfs_recursivo(self, vertice, visitados):
+        """
+        Faz a pesquisa em profunidade (DFS) recursivamente a partir de um vértice
+        :param vertice: Nome do vértice inicial
+        :param visitados: Cojunto de vértices visitados até ao momento
+        :return:
+        """
         visitados.add(vertice)
         print(vertice)
         for adjacente, _ in self.adjacencias[vertice]:
@@ -199,6 +279,11 @@ class Grafo:
                 self._dfs_recursivo(adjacente, visitados)
 
     def dijkstra(self, origem):
+        """
+        Algoritmo de disjkstra para encontrar o caminho mais curto
+        :param origem: Nome do vertice inicial
+        :return:
+        """
         distancia = {v: float('inf') for v in self.vertices}
         distancia[origem] = 0
         visitados = set()
@@ -220,6 +305,12 @@ class Grafo:
 
     # RF10
     def interromper_via(self, origem, destino):
+        """
+        Função para interromper uma via no grafo entre dois vértices e para encontrar um/ou mais caminhos alternativos
+        :param origem: O nome do vértice inicial
+        :param destino: O nome do vértice de destino
+        :return:
+        """
         if origem in self.adjacencias and destino in self.adjacencias[origem]:
             self.remover_aresta(origem, destino)
             caminhos_alternativos = self.encontrar_caminhos_alternativos(origem, destino)
@@ -228,6 +319,12 @@ class Grafo:
             return []
 
     def encontrar_caminhos_alternativos(self, origem, destino):
+        """
+        Função para encontrar os caminhos alternativos entre dois vértices
+        :param origem: O nome do vértice de origem
+        :param destino: O nome do vértice de destino
+        :return:
+        """
         # Código para ler o JSON e adicionar vértices/arestas ao grafo
         with open(GRAFO) as json_file:
             dados = json.load(json_file)
@@ -246,6 +343,15 @@ class Grafo:
         return caminhos
 
     def _encontrar_caminhos_recursivo(self, atual, destino, caminho, caminhos, visitados):
+        """
+        Função recursiva para ajudar a encontrar caminhos entre os vertices do grafo
+        :param atual: O vértice atual
+        :param destino: O vértice do destino
+        :param caminho: O caminho percorrido até ao momento
+        :param caminhos: Lista de caminhos encontrados
+        :param visitados: Conjunto de vértices visitados
+        :return:
+        """
         if atual == destino:
             caminhos.append(caminho.copy())
         else:
