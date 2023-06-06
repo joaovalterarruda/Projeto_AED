@@ -1,8 +1,7 @@
 from projeto_aed.sistema.LinkedList import LinkedList
 import json
 import shutil
-from projeto_aed.sistema.constantes import GRAFO
-from projeto_aed.rascunhos.Grafo_teste import Grafo
+from projeto_aed.sistema.Grafo import Grafo
 
 
 def ler_ficheiro(nome_ficheiro):
@@ -48,3 +47,29 @@ def fazer_backup(nome_ficheiro):
     nome_backup = nome_ficheiro + ".backup"
     shutil.copy(nome_ficheiro, nome_backup)
     print("Backup do ficheiro " + nome_ficheiro + " criado com sucesso.")
+
+
+def carregar_dados_grafo(file):
+    """
+    Carrega dos dados de um determinado ficheiro json
+    :param file: Nome do ficheiro json
+    :return:
+    """
+    grafo = Grafo()
+
+    with open(file) as f:
+        dados = json.load(f)
+
+    for vertice in dados['vertices']:
+        nome = vertice['nome']
+        latitude = vertice['latitude']
+        longitude = vertice['longitude']
+        grafo.adicionar_vertice(nome, latitude, longitude)
+
+    for aresta in dados['arestas']:
+        origem = aresta['origem']
+        destino = aresta['destino']
+        peso = aresta['peso']
+        grafo.adicionar_aresta(origem, destino, peso)
+
+    return grafo

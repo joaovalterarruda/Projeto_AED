@@ -201,6 +201,69 @@ class Grafo:
             if origem not in self.adjacencias[destino] and destino not in self.adjacencias[origem]:
                 self.adjacencias[origem].append((destino, peso))
 
+    def calcular_centralidade_grau_interno(self, vertice):
+        """
+        Calculo do grau de centralidade interno de um vértice
+        :param vertice:  Nome do vértice
+        :return:
+        """
+        grau_interno = len(self.adjacencias[vertice])
+        return grau_interno
+
+    def calcular_centralidade_grau_externo(self, vertice):
+        """
+        Calculo do grau de centralidade extreno de um vértice
+        :param vertice: Nome do vértice
+        :return:
+        """
+        grau_externo = 0
+        for v in self.vertices:
+            if v != vertice:
+                if any(aresta[0] == vertice for aresta in self.adjacencias[v]):
+                    grau_externo += 1
+        return grau_externo
+
+    def calcular_proximidade_closeness(self, vertice):
+        """
+        Calculo da medida de proximidade de um vertice
+        :param vertice: Nome do vértice
+        :return:
+        """
+        distancias = self.dijkstra(vertice)
+        soma_distancias = sum(distancias.values())
+        return soma_distancias
+
+    def identificar_pontos_criticos(self):
+        """
+        Indentificar os pontos criticos do grafo
+        :return:
+        """
+        pontos_criticos = []
+        maior_centralidade_interno = max(self.calcular_centralidade_grau_interno(vertice) for vertice in self.vertices)
+        maior_centralidade_externo = max(self.calcular_centralidade_grau_externo(vertice) for vertice in self.vertices)
+        maior_closeness = max(self.calcular_proximidade_closeness(vertice) for vertice in self.vertices)
+
+        for vertice in self.vertices:
+            if self.calcular_centralidade_grau_interno(vertice) == maior_centralidade_interno:
+                pontos_criticos.append(vertice)
+            elif self.calcular_centralidade_grau_externo(vertice) == maior_centralidade_externo:
+                pontos_criticos.append(vertice)
+            elif self.calcular_proximidade_closeness(vertice) == maior_closeness:
+                pontos_criticos.append(vertice)
+
+        return pontos_criticos
+
+    def obter_grafo(self):
+        """
+        Mostra o grafo
+        :return:
+        """
+        G = nx.Graph()
+        for origem, adjacencias in self.adjacencias.items():
+            for destino, peso in adjacencias:
+                G.add_edge(origem, destino, weight=peso)
+        return G
+
     def remover_vertice(self, nome):
         """
         Remove um vértice e todas as arestas adjacentes do grafo
@@ -363,38 +426,3 @@ class Grafo:
                     caminho.pop()
             visitados.remove(atual)
 
-# # Carregar dados do arquivo JSON
-# with open('grafo.json') as json_file:
-#     dados = json.load(json_file)
-#
-# # Criar instância da classe Grafo
-# grafo = Grafo()
-#
-# # Adicionar vértices
-# for vertice in dados['vertices']:
-#     grafo.adicionar_vertice(vertice['nome'], vertice['latitude'], vertice['longitude'])
-#
-# # Adicionar arestas
-# for aresta in dados['arestas']:
-#     grafo.adicionar_aresta(aresta['origem'], aresta['destino'], aresta['peso'])
-
-# # Exemplo de uso dos métodos
-# print("Lista de vértices:")
-# print(grafo.get_vertices())
-#
-# print("Lista de arestas:")
-# print(grafo.get_arestas())
-#
-# print("BFS:")
-# grafo.bfs('Portas do Mar')
-#
-# print("DFS:")
-# grafo.dfs('Portas do Mar')
-#
-# print("Dijkstra:")
-# distancias = grafo.dijkstra('Portas do Mar')
-# for vertice, distancia in distancias.items():
-#     print(f'Distância de Portas do Mar a {vertice}: {distancia}')
-#
-# # Desenhar grafo
-# grafo.desenhar_grafo()

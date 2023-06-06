@@ -3,14 +3,14 @@ import time
 
 from projeto_aed.sistema.Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, apagar_ponto_interesse, \
     pesquisar_ponto_interesse, mostrar_pontos_interesse, avaliar_visita, consultar_estatisticas, \
-    sugestao_pontos_interesse
-from projeto_aed.sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup
+    sugestao_pontos_interesse, pontos_criticos
+from projeto_aed.sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup, carregar_dados_grafo
 from projeto_aed.interface.input import opcoes_menu, sub_menu  # , interromper_via_circulacao
 from projeto_aed.sistema.constantes import FICHEIRO, GRAFO
 from projeto_aed.rascunhos.graph import Graph
-from projeto_aed.rascunhos.Grafo_teste import Grafo, desenhar_grafo, testar_caminho,obter_itinerario,\
+from projeto_aed.sistema.Grafo import Grafo, desenhar_grafo, testar_caminho,obter_itinerario,\
     obter_arvore_rotas_carro
-
+grafo = carregar_dados_grafo(GRAFO)
 
 def menu():
     fim = False
@@ -66,7 +66,7 @@ def menu_sec():
             if op == 1:
                 desenhar_grafo(GRAFO)
             elif op == 2:
-                print("consultar os pontos criticos ")
+                pontos_criticos()
             elif op == 3:
                 testar_caminho()
             elif op == 4:

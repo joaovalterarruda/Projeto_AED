@@ -1,13 +1,18 @@
 import math
 import time
+
+import networkx as nx
+
 from projeto_aed.sistema.PontoInteresse import PontoInteresse
 from projeto_aed.sistema.LinkedList import LinkedList
 from projeto_aed.sistema.localize import obter_localizacao_atual
-from projeto_aed.sistema.constantes import categorias_turismo, LAT, LONG, FRASE_INPUT
+from projeto_aed.sistema.constantes import categorias_turismo, LAT, LONG, FRASE_INPUT, GRAFO
 from projeto_aed.sistema.algortimos import merge_sort
+from projeto_aed.sistema.Grafo import Grafo
+from projeto_aed.sistema.json import carregar_dados_grafo
 
 linked_list = LinkedList()
-
+grafo = carregar_dados_grafo(GRAFO)
 
 ## Primeira Entrega
 
@@ -442,3 +447,25 @@ def sugestao_pontos_interesse(linked_list):  # RF06
     return pontos_perto
 
 # Segunda Entrega
+
+
+def pontos_criticos():
+    # Identificar pontos críticos
+    pontos_criticos = grafo.identificar_pontos_criticos()
+
+    # Calcular centralidade de proximidade (closeness) para cada vértice
+    centralidade_closeness = nx.closeness_centrality(grafo.obter_grafo())
+
+    # Exibir descrições dos pontos críticos, valores de closeness e graus
+    for vertice, valor_closeness in centralidade_closeness.items():
+        descricao = "Ponto crítico" if vertice in pontos_criticos else "Não crítico"
+        grau_interno = grafo.calcular_centralidade_grau_interno(vertice)
+        grau_externo = grafo.calcular_centralidade_grau_externo(vertice)
+
+        print(f"Vértice: {vertice}")
+        print(f"Descrição: {descricao}")
+        print(f"Centralidade de Closeness: {valor_closeness}")
+        print(f"Grau Interno: {grau_interno}")
+        print(f"Grau Externo: {grau_externo}")
+        print()
+
