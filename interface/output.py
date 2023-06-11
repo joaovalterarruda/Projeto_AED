@@ -4,7 +4,7 @@ import time
 
 from sistema.json import carregar_dados_grafo
 from interface.input import opcoes_menu, sub_menu  # , interromper_via_circulacao
-from sistema.constantes import FICHEIRO, GRAFO, FREGUESIAS
+from sistema.constantes import GRAFO, FREGUESIAS
 from sistema.sistema import Sistema
 grafo = carregar_dados_grafo(GRAFO)
 sist = Sistema()
@@ -42,6 +42,8 @@ def menu():
                 sist.sugestao_pontos_interesse()
             elif op == 10:
                 menu_sec()
+            elif op == 11:
+                sist.inserir_pontos_interesse_json()
             elif op == 0:
                 sist.guardar_ficheiro()
                 sist.backup_dados()

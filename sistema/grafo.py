@@ -5,9 +5,6 @@ import matplotlib.patches as mpatches
 from sistema.constantes import GRAFO
 
 
-
-
-
 class Grafo:
     def __init__(self):
         self.vertices = {}
@@ -94,11 +91,11 @@ class Grafo:
         Mostra o grafo
         :return:
         """
-        G = nx.DiGraph()
+        g = nx.DiGraph()
         for origem, adjacencias in self.adjacencias.items():
             for destino, peso in adjacencias:
-                G.add_edge(origem, destino, weight=peso)
-        return G
+                g.add_edge(origem, destino, weight=peso)
+        return g
 
     def remover_vertice(self, nome):
         """
@@ -106,10 +103,14 @@ class Grafo:
         :param nome: Nome do vértice a ser removido
         :return:
         """
+        if nome not in self.vertices:
+            return
+
         del self.vertices[nome]
         del self.adjacencias[nome]
+
         for adjacencias in self.adjacencias.values():
-            adjacencias = [(v, p) for v, p in adjacencias if v != nome]
+            adjacencias[:] = [(v, p) for v, p in adjacencias if v != nome]
 
     def remover_aresta(self, origem, destino):
         """
@@ -262,10 +263,8 @@ class Grafo:
                     caminho.pop()
             visitados.remove(atual)
 
-    import matplotlib.pyplot as plt
-    import matplotlib.patches as mpatches
-    import networkx as nx
-    import json
+
+
 
     def desenhar_grafo(self, nome_ficheiro_grafo, nome_ficheiro_freguesias):
         """
@@ -280,16 +279,16 @@ class Grafo:
         with open(nome_ficheiro_freguesias) as file:
             freguesias_data = json.load(file)
 
-        G = nx.DiGraph()
+        g = nx.DiGraph()
 
         # Adicionar Freguesias ao grafo
         for freguesia in freguesias_data['freguesias']:
-            G.add_node(freguesia['nome'], cor="lightgreen", tamanho=1000)
+            g.add_node(freguesia['nome'], cor="lightgreen", tamanho=1000)
 
         # Adicionar vértices ao grafo
         cores = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan']
         for i, vertice in enumerate(grafo_data['vertices']):
-            G.add_node(vertice['nome'], cor=cores[i % len(cores)], tamanho=200)
+            g.add_node(vertice['nome'], cor=cores[i % len(cores)], tamanho=200)
 
         # Adicionar arestas ao grafo
         for aresta in grafo_data['arestas']:
@@ -297,7 +296,7 @@ class Grafo:
             destino = aresta['destino']
             peso = aresta['peso']
             peso_arredondado = round(peso, 2)
-            G.add_edge(origem, destino, weight=peso_arredondado)
+            g.add_edge(origem, destino, weight=peso_arredondado)
 
         vertices = [vertice['nome'] for vertice in grafo_data['vertices']]
         freguesias = [freguesia['nome'] for freguesia in freguesias_data['freguesias']]
@@ -320,10 +319,10 @@ class Grafo:
         plt.figure(figsize=(20, 20))
 
         # Desenhar nós de freguesia em primeiro plano
-        node_colors_freguesia = [G.nodes[freguesia]['cor'] for freguesia in freguesias]
-        node_sizes_freguesia = [G.nodes[freguesia]['tamanho'] for freguesia in freguesias]
+        node_colors_freguesia = [g.nodes[freguesia]['cor'] for freguesia in freguesias]
+        node_sizes_freguesia = [g.nodes[freguesia]['tamanho'] for freguesia in freguesias]
 
-        nx.draw_networkx_nodes(G, pos_freguesias, nodelist=freguesias,
+        nx.draw_networkx_nodes(g, pos_freguesias, nodelist=freguesias,
                                node_size=node_sizes_freguesia, node_color=node_colors_freguesia)
 
         for node, (x, y) in pos.items(): # Ciclo para verificar como aplocar o tamanho da fonte nos rótlos dos nós
@@ -331,17 +330,17 @@ class Grafo:
                 font_size = font_sizes_freguesia[node]
             else:
                 font_size = font_sizes_vertice[node]
-            nx.draw_networkx_labels(G, {node: (x, y)}, labels={node: node}, font_size=font_size)
+            nx.draw_networkx_labels(g, {node: (x, y)}, labels={node: node}, font_size=font_size)
 
         # Desenhar nós de vértice em segundo plano
-        node_colors_vertice = [G.nodes[vertice]['cor'] for vertice in vertices]
-        node_sizes_vertice = [G.nodes[vertice]['tamanho'] for vertice in vertices]
-        nx.draw_networkx_nodes(G, pos_vertices, nodelist=vertices,
+        node_colors_vertice = [g.nodes[vertice]['cor'] for vertice in vertices]
+        node_sizes_vertice = [g.nodes[vertice]['tamanho'] for vertice in vertices]
+        nx.draw_networkx_nodes(g, pos_vertices, nodelist=vertices,
                                node_size=node_sizes_vertice, node_color=node_colors_vertice, node_shape= "s")
 
-        nx.draw_networkx_edges(G, pos_vertices, edge_color='gray', width=1, arrowsize=15, arrowstyle='->')
-        edge_labels = nx.get_edge_attributes(G, 'weight')
-        nx.draw_networkx_edge_labels(G, pos_vertices, edge_labels=edge_labels, font_size=10)
+        nx.draw_networkx_edges(g, pos_vertices, edge_color='gray', width=1, arrowsize=15, arrowstyle='->')
+        edge_labels = nx.get_edge_attributes(g, 'weight')
+        nx.draw_networkx_edge_labels(g, pos_vertices, edge_labels=edge_labels, font_size=10)
 
 
         # Criar lista de handles para vértices e freguesias
@@ -396,7 +395,8 @@ class Grafo:
     def obter_arvore_rotas_carro(self, ponto_interesse, nome_ficheiro):
         """
         Obtém a subarvore de caminhos a partir de um ponto de interesse
-        :param ponto_interesse: Ponto onde a árvore de caminhos de carro será obtida
+        :param ponto_interesse: Ponto onde a árvore de caminhos de carro será obtida.
+        :param nome_ficheiro: Ficheiro onde estão localizados os dados.
         :return:
         """
 
@@ -440,31 +440,31 @@ class Grafo:
         :param arvore:
         :return:
         """
-        G = nx.DiGraph()
+        g = nx.DiGraph()
 
         cores = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan']
 
         # Adicionar vértices ao grafo
         for i, vertice in enumerate(arvore.nodes):
-            G.add_node(vertice, cor=cores[i % len(cores)])
+            g.add_node(vertice, cor=cores[i % len(cores)])
 
         # Adicionar arestas ao grafo
         for origem, destino in arvore.edges:
             peso = arvore[origem][destino].get('weight', 1)  # Obtém o peso ou usa 1 como valor padrão
             peso_arredondado = round(peso, 2)
-            G.add_edge(origem, destino, weight=peso_arredondado)
+            g.add_edge(origem, destino, weight=peso_arredondado)
 
-        pos = nx.spring_layout(G)
+        pos = nx.spring_layout(g)
 
         plt.figure(figsize=(12, 10))
-        node_colors = [G.nodes[vertice]['cor'] for vertice in G.nodes]
-        nx.draw_networkx_nodes(G, pos, node_size=200, node_color=node_colors)
-        nx.draw_networkx_edges(G, pos, node_size=200,
+        node_colors = [g.nodes[vertice]['cor'] for vertice in g.nodes]
+        nx.draw_networkx_nodes(g, pos, node_size=200, node_color=node_colors)
+        nx.draw_networkx_edges(g, pos, node_size=200,
                                edge_color='gray', width=1, arrowsize=15, arrowstyle='->')
-        edge_labels = nx.get_edge_attributes(G, 'weight')
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=8)
-        nx.draw_networkx_labels(G, pos, font_size=1, font_color='black', font_weight='bold')
-        handles = [mpatches.Patch(color=color, label=vertice) for vertice, color in zip(G.nodes, node_colors)]
+        edge_labels = nx.get_edge_attributes(g, 'weight')
+        nx.draw_networkx_edge_labels(g, pos, edge_labels=edge_labels, font_size=8)
+        nx.draw_networkx_labels(g, pos, font_size=1, font_color='black', font_weight='bold')
+        handles = [mpatches.Patch(color=color, label=vertice) for vertice, color in zip(g.nodes, node_colors)]
         plt.legend(handles=handles, title='Vértices', loc='upper right')
         plt.suptitle('Rotas de percursos de carro:')
         plt.xlabel('Longitude')

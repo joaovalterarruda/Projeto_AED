@@ -17,6 +17,7 @@ def opcoes_menu():
     print(" 8 - Consultar estatísticas de visitas")
     print(" 9 - Obter sugestões de visitas")
     print("10 - Submenu Grafo")
+    print("11 - Inserir Pontos de Interesse no Grafo")
     print(" 0 - Sair do programa")
 
 

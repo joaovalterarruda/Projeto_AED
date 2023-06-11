@@ -3,11 +3,9 @@ import math
 import time
 import networkx as nx
 from sistema.PontoInteresse import PontoInteresse
-from sistema.LinkedList import LinkedList
 from sistema.localize import obter_localizacao_atual
-from sistema.constantes import categorias_turismo, LAT, LONG, FRASE_INPUT, GRAFO, FREGUESIAS, FICHEIRO, FICHEIRO_BCK
+from sistema.constantes import categorias_turismo, LAT, LONG, FRASE_INPUT, GRAFO, FREGUESIAS, FICHEIRO
 from sistema.algortimos import merge_sort
-from sistema.grafo import Grafo
 from sistema.json import carregar_dados_grafo, ler_ficheiro, guardar_ficheiro, fazer_backup
 
 
@@ -427,6 +425,29 @@ class Sistema:
                     return
         return pontos_perto
 
+    def inserir_pontos_interesse_json(self):
+        """
+        Insere dados dos pontos de interesse como vértices num arquivo JSON.
+        """
+        current = self.linked_list.head
+        vertices = []
+
+        while current:
+            ponto = current.data
+            ponto = {
+                "nome": ponto['designacao'],  # Acesso aos valores do dicionário usando chaves
+                "latitude": ponto['latitude'],
+                "longitude": ponto['longitude']
+            }
+            vertices.append(ponto)
+            current = current.next
+
+        pontos_int = {"vertices":vertices}
+        # Salvar os pontos de interesse num arquivo JSON
+        with open("grafo_teste.json", "w") as file:
+            json.dump(pontos_int, file, indent=4)
+
+        print("Dados dos pontos de interesse foram salvos em pontos_interesse.json.")
 # Segunda Entrega
 
 
