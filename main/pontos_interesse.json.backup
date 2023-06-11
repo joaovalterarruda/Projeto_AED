@@ -97,5 +97,16 @@
         "acessibilidade_geo": "outro",
         "classificacao": 0,
         "visitas": 0
+    },
+    {
+        "designacao": "AA",
+        "morada": "morada de teste",
+        "latitude": 37.0,
+        "longitude": -25.0,
+        "categoria_ponto": "natureza",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "parque",
+        "classificacao": 0,
+        "visitas": 0
     }
 ]

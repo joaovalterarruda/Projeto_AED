@@ -45,7 +45,130 @@
       "latitude": 37.743817220597066,
       "longitude": -25.660897493362427
     }
-    ],
+
+  ],
+  "freguesias": [
+    {
+      "nome": "Ajuda da Bretanha",
+      "latitude": 37.898056,
+      "longitude": -25.756667
+    },
+    {
+      "nome": "Arrifes",
+      "latitude": 37.766667,
+      "longitude": -25.7
+    },
+    {
+      "nome": "Candelária",
+      "latitude": 37.783333,
+      "longitude": -25.816667
+    },
+    {
+      "nome": "Capelas",
+      "latitude": 37.833333,
+      "longitude": -25.7
+    },
+    {
+      "nome": "Covoada",
+      "latitude": 37.785556,
+      "longitude": -25.733056
+    },
+    {
+      "nome": "Fajã de Baixo",
+      "latitude": 37.761389,
+      "longitude": -25.653889
+    },
+    {
+      "nome": "Fajã de Cima",
+      "latitude": 37.77,
+      "longitude": -25.66
+    },
+    {
+      "nome": "Fenais da Luz",
+      "latitude": 37.823333,
+      "longitude": -25.641389
+    },
+    {
+      "nome": "Feteiras",
+      "latitude": 37.800833,
+      "longitude": -25.784167
+    },
+    {
+      "nome": "Ginetes",
+      "latitude": 37.850833,
+      "longitude": -25.843889
+    },
+    {
+      "nome": "Livramento",
+      "latitude": 37.764722,
+      "longitude": -25.603611
+    },
+    {
+      "nome": "Mosteiros",
+      "latitude": 37.893056,
+      "longitude": -25.816944
+    },
+    {
+      "nome": "Pilar da Bretanha",
+      "latitude": 37.905278,
+      "longitude": -25.781111
+    },
+    {
+      "nome": "Relva",
+      "latitude": 37.754722,
+      "longitude": -25.720556
+    },
+    {
+      "nome": "Remédios",
+      "latitude": 37.886111,
+      "longitude": -25.736111
+    },
+    {
+      "nome": "Santa Bárbara",
+      "latitude": 37.875,
+      "longitude": -25.726389
+    },
+    {
+      "nome": "Santa Clara",
+      "latitude": 37.734444,
+      "longitude": -25.683333
+    },
+    {
+      "nome": "Santo António",
+      "latitude": 37.854444,
+      "longitude": -25.703056
+    },
+    {
+      "nome": "São José",
+      "latitude": 37.7386,
+      "longitude": -25.6768
+    },
+    {
+      "nome": "São Pedro",
+      "latitude": 37.740556,
+      "longitude": -25.663611
+    },
+    {
+      "nome": "São Roque",
+      "latitude": 37.748889,
+      "longitude": -25.633333
+    },
+    {
+      "nome": "São Sebastião",
+      "latitude": 37.742222,
+      "longitude": -25.675
+    },
+    {
+      "nome": "São Vicente Ferreira",
+      "latitude": 37.818333,
+      "longitude": -25.665833
+    },
+    {
+      "nome": "Sete Cidades",
+      "latitude": 37.858889,
+      "longitude": -25.794444
+    }
+  ],
   "arestas": [
     {
       "origem": "Praia das Milicias",

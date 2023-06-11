@@ -1,6 +1,4 @@
 
-
-
 class PontoInteresse:
     pass
 

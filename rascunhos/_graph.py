@@ -5,9 +5,9 @@ from typing import List
 import networkx as nx
 import matplotlib.pyplot as plt
 from itertools import combinations
-from projeto_aed.sistema.json import ler_ficheiro
-from projeto_aed.sistema.constantes import FICHEIRO
-from projeto_aed.sistema.LinkedQueue import LinkedQueue
+from sistema.json import ler_ficheiro
+from sistema.constantes import FICHEIRO
+from sistema.LinkedQueue import LinkedQueue
 
 
 def criar_e_visualizar_grafo():
@@ -173,7 +173,7 @@ class Graph:
 
         for from_vertex, to_vertex in self.get_edges():
             if from_vertex != via_interrompida and to_vertex != via_interrompida:
-                backup_grafo.add_edge(from_vertex, to_vertex)
+                backup_grafo.add_edge(from_vertex, to_vertex, peso)
 
         # Encontrar caminhos alternativos para o grafo
         caminhos_alternativos = self.obter_caminhos_alternativos(ponto_inicial, ponto_final)

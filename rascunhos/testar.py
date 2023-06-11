@@ -1,6 +1,6 @@
 import json
 import matplotlib.pyplot as plt
-from graph import Graph
+from _graph import Graph
 
 
 # Create an instance of the Graph class

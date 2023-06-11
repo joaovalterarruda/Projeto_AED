@@ -1,7 +1,7 @@
-from projeto_aed.sistema.LinkedList import LinkedList
+from sistema.LinkedList import LinkedList
 import json
 import shutil
-from projeto_aed.sistema.Grafo import Grafo
+from sistema.grafo import Grafo
 
 
 def ler_ficheiro(nome_ficheiro):

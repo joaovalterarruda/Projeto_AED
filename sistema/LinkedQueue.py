@@ -1,5 +1,5 @@
 from typing import Optional
-from projeto_aed.sistema.node import Node
+from sistema.node import Node
 
 
 class LinkedQueue:

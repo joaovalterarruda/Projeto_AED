@@ -1,17 +1,13 @@
-import json
+
 import time
 
-from projeto_aed.sistema.Sistema import adicionar_ponto_interesse, alterar_ponto_interesse, apagar_ponto_interesse, \
-    pesquisar_ponto_interesse, mostrar_pontos_interesse, avaliar_visita, consultar_estatisticas, \
-    sugestao_pontos_interesse, pontos_criticos
-from projeto_aed.sistema.json import ler_ficheiro, guardar_ficheiro, fazer_backup, carregar_dados_grafo
-from projeto_aed.interface.input import opcoes_menu, sub_menu  # , interromper_via_circulacao
-from projeto_aed.sistema.constantes import FICHEIRO, GRAFO
-from projeto_aed.rascunhos.graph import Graph
-from projeto_aed.sistema.Grafo import Grafo, desenhar_grafo, testar_caminho,obter_itinerario,\
-    obter_arvore_rotas_carro
-grafo = carregar_dados_grafo(GRAFO)
 
+from sistema.json import carregar_dados_grafo
+from interface.input import opcoes_menu, sub_menu  # , interromper_via_circulacao
+from sistema.constantes import FICHEIRO, GRAFO, FREGUESIAS
+from sistema.sistema import Sistema
+grafo = carregar_dados_grafo(GRAFO)
+sist = Sistema()
 def menu():
     fim = False
     while not fim:
@@ -29,26 +25,26 @@ def menu():
                 input("Prima Enter para voltar ao menu principal.")
 
             elif op == 2:
-                mostrar_pontos_interesse(linkedlist)
+                sist.mostrar_pontos_interesse()
             elif op == 3:
-                adicionar_ponto_interesse(linkedlist)
+                sist.adicionar_ponto_interesse()
             elif op == 4:
-                alterar_ponto_interesse(linkedlist)
+                sist.alterar_ponto_interesse()
             elif op == 5:
-                apagar_ponto_interesse(linkedlist)
+                sist.apagar_ponto_interesse()
             elif op == 6:
-                pesquisar_ponto_interesse(linkedlist)
+                sist.pesquisar_ponto_interesse()
             elif op == 7:
-                avaliar_visita(linkedlist)
+                sist.avaliar_visita()
             elif op == 8:
-                consultar_estatisticas(linkedlist)
+                sist.consultar_estatisticas()
             elif op == 9:
-                sugestao_pontos_interesse(linkedlist)
+                sist.sugestao_pontos_interesse()
             elif op == 10:
                 menu_sec()
             elif op == 0:
-                guardar_ficheiro(linkedlist, FICHEIRO)
-                fazer_backup(FICHEIRO)
+                sist.guardar_ficheiro()
+                sist.backup_dados()
                 fim = True
                 print("Obrigado por utilizar o nosso programa. Até breve!")
         except ValueError:
@@ -64,20 +60,20 @@ def menu_sec():
         try:
             op = int(input("Opção: "))
             if op == 1:
-                desenhar_grafo(GRAFO)
+                grafo.desenhar_grafo(GRAFO, FREGUESIAS)
+
             elif op == 2:
-                pontos_criticos()
+                sist.pontos_criticos()
             elif op == 3:
-                testar_caminho()
+                grafo.testar_caminho()
             elif op == 4:
-                obter_itinerario()
+                grafo.obter_itinerario()
             elif op == 5:
                 ponto_interesse = input("Digite o ponto de interesse: ")
-                obter_arvore_rotas_carro(ponto_interesse)
+                grafo.obter_arvore_rotas_carro(ponto_interesse, GRAFO)
             elif op == 0:
                 voltar_menu_principal = True
         except ValueError:
             print("Opção inválida. Tente outra vez.")
 
 
-linkedlist = ler_ficheiro(FICHEIRO)

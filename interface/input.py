@@ -1,10 +1,10 @@
-
+MENU = "\033[1;36m"
 def opcoes_menu():
     print("\u250C" + "\u2500" * 70 + "\u2510")
     print(
-        "\u2502" + "\033[1;36m" + "\t \t \t \t \t \tConcelho de Ponta Delgada\t \t \t \t \t   " + "\033[0m" + "\u2502")
+        "\u2502" + MENU + "\t \t \t \t \t \tConcelho de Ponta Delgada\t \t \t \t \t   " + "\033[0m" + "\u2502")
     print(
-        "\u2502" + "\033[1;36m" + "\t \t \t \t \t \t   Pontos de Interesse\t \t \t \t \t \t   " + "\033[0m" + "\u2502")
+        "\u2502" + MENU + "\t \t \t \t \t \t   Pontos de Interesse\t \t \t \t \t \t   " + "\033[0m" + "\u2502")
     print("\u2514" + "\u2500" * 70 + "\u2518")
     print("-" * 72)
     print(" 1 - Ponta Delgada, História e Cultura")
@@ -23,9 +23,9 @@ def opcoes_menu():
 def sub_menu():
     print("\u250C" + "\u2500" * 70 + "\u2510")
     print(
-        "\u2502" + "\033[1;36m" + "\t \t \t \t \t \tConcelho de Ponta Delgada\t \t \t \t \t   " + "\033[0m" + "\u2502")
+        "\u2502" + MENU + "\t \t \t \t \t \tConcelho de Ponta Delgada\t \t \t \t \t   " + "\033[0m" + "\u2502")
     print(
-        "\u2502" + "\033[1;36m" + "\t \t \t \t \t \t   Pontos de Interesse\t \t \t \t \t \t   " + "\033[0m" + "\u2502")
+        "\u2502" + MENU + "\t \t \t \t \t \t   Pontos de Interesse\t \t \t \t \t \t   " + "\033[0m" + "\u2502")
     print("\u2514" + "\u2500" * 70 + "\u2518")
     print("-" * 72)
     print("1- Consultar a rede de circulação: ")
@@ -34,7 +34,6 @@ def sub_menu():
     print("4- Obter itenerário (caminho mais curto): ")
     print("5- Consultar rotas para percursos de carro: ")
     print("0- Sair do submenu")
-
 
 
 
