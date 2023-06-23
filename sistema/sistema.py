@@ -1,12 +1,44 @@
 import json
 import math
 import time
+import webbrowser
+
 import networkx as nx
 from sistema.PontoInteresse import PontoInteresse
 from sistema.localize import obter_localizacao_atual
 from sistema.constantes import categorias_turismo, LAT, LONG, FRASE_INPUT, GRAFO, FREGUESIAS, FICHEIRO
 from sistema.algortimos import merge_sort
 from sistema.json import carregar_dados_grafo, ler_ficheiro, guardar_ficheiro, fazer_backup
+
+
+def mostrar_info_conselho():
+    print("\n", "\033[4mPonta Delgada\033[0m"
+                "\nPonta Delgada é uma cidade portuguesa localizada na ilha de São Miguel\ne pertencente"
+                " à Região Autónoma dos Açores com uma população\nde 46 102 habitantes."
+                " Ponta Delgada é a capital económica da \nRegião Autónoma dos Açores "
+                "e a maior cidade desta região.")
+    print("\nLinks úteis:")
+    print("1. Website Visit Azores: https://www.visitazores.com")
+    print("2. Câmara de Ponta Delgada: https://www.cm-pontadelgada.pt/")
+    print("3. Mais informação: https://pt.wikipedia.org/wiki/Ponta_Delgada")
+    while True:
+        link_op = input(
+            "Selecione uma das opções para abrir no navegador ou pressione (ENTER) para sair: ")
+        if link_op.isdigit():
+            link_op = int(link_op)
+            if link_op == 1:
+                webbrowser.open("https://www.visitazores.com")
+                break
+            elif link_op == 2:
+                webbrowser.open("https://www.exemplo.com")
+                break
+            elif link_op == 3:
+                webbrowser.open("https://www.exemplo2.com")
+                break
+            else:
+                print("Opção inválida. Por favor, selecione um número válido.")
+        else:
+            break
 
 
 class Sistema:
@@ -469,5 +501,4 @@ class Sistema:
             print(f"Grau Interno: {grau_interno}")
             print(f"Grau Externo: {grau_externo}")
             print()
-
 

@@ -5,7 +5,7 @@ import time
 from sistema.json import carregar_dados_grafo
 from interface.input import opcoes_menu, sub_menu  # , interromper_via_circulacao
 from sistema.constantes import GRAFO, FREGUESIAS
-from sistema.sistema import Sistema
+from sistema.sistema import Sistema, mostrar_info_conselho
 grafo = carregar_dados_grafo(GRAFO)
 sist = Sistema()
 def menu():
@@ -16,14 +16,7 @@ def menu():
         try:
             op = int(input("Opção: "))
             if op == 1:
-                print("\n", "\033[4mPonta Delgada\033[0m"
-                            "\nPonta Delgada é uma cidade portuguesa localizada na ilha de São Miguel\ne pertencente"
-                            " à Região Autónoma dos Açores com uma população\nde 46 102 habitantes."
-                            " Ponta Delgada é a capital económica da \nRegião Autónoma dos Açores "
-                            "e a maior cidade desta região.")
-                print("\n------------")
-                input("Prima Enter para voltar ao menu principal.")
-
+                mostrar_info_conselho()
             elif op == 2:
                 sist.mostrar_pontos_interesse()
             elif op == 3:
