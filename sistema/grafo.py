@@ -1,7 +1,12 @@
+from typing import Dict, List, Tuple
+import heapq
 import json
 import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+from math import radians, sin, cos, sqrt, atan2
+
+from TDA.Stacks.StackBasedList import StackListBased
 from sistema.constantes import GRAFO
 
 
@@ -33,58 +38,6 @@ class Grafo:
             if origem not in self.adjacencias[destino] and destino not in self.adjacencias[origem]:
                 self.adjacencias[origem].append((destino, peso))
 
-    def calcular_centralidade_grau_interno(self, vertice):
-        """
-        Calculo do grau de centralidade interno de um vértice
-        :param vertice:  Nome do vértice
-        :return:
-        """
-        grau_interno = len(self.adjacencias[vertice])
-        return grau_interno
-
-    def calcular_centralidade_grau_externo(self, vertice):
-        """
-        Calculo do grau de centralidade extreno de um vértice
-        :param vertice: Nome do vértice
-        :return:
-        """
-        grau_externo = 0
-        for v in self.vertices:
-            if v != vertice:
-                if any(aresta[0] == vertice for aresta in self.adjacencias[v]):
-                    grau_externo += 1
-        return grau_externo
-
-    def calcular_proximidade_closeness(self, vertice):
-        """
-        Calculo da medida de proximidade de um vertice
-        :param vertice: Nome do vértice
-        :return:
-        """
-        distancias = self.dijkstra(vertice)
-        soma_distancias = sum(distancias.values())
-        return soma_distancias
-
-    def identificar_pontos_criticos(self):
-        """
-        Indentificar os pontos criticos do grafo
-        :return:
-        """
-        maior_centralidade_interno = max(self.calcular_centralidade_grau_interno(vertice) for vertice in self.vertices)
-        maior_centralidade_externo = max(self.calcular_centralidade_grau_externo(vertice) for vertice in self.vertices)
-        maior_closeness = max(self.calcular_proximidade_closeness(vertice) for vertice in self.vertices)
-
-        pontos_criticos = []
-
-        for vertice in self.vertices:
-            centralidade_interno = self.calcular_centralidade_grau_interno(vertice)
-            centralidade_externo = self.calcular_centralidade_grau_externo(vertice)
-            closeness = self.calcular_proximidade_closeness(vertice)
-
-            if centralidade_interno == maior_centralidade_interno or centralidade_externo == maior_centralidade_externo or closeness == maior_closeness:
-                pontos_criticos.append(vertice)
-
-        return pontos_criticos
 
     def obter_grafo(self):
         """
@@ -180,43 +133,62 @@ class Grafo:
 
     def dijkstra(self, origem):
         """
-        Algoritmo de disjkstra para encontrar o caminho mais curto
-        :param origem: Nome do vertice inicial
-        :return:
+        Algoritmo de Dijkstra para encontrar o caminho mais curto
+        :param origem: Nome do vértice inicial
+        :return: Dicionário com as distâncias mais curtas e os predecessores
         """
         distancia = {v: float('inf') for v in self.vertices}
         distancia[origem] = 0
-        visitados = set()
+        predecessores = {}
 
-        while len(visitados) < len(self.vertices):
-            vertice = min(
-                {v: distancia[v] for v in self.vertices if v not in visitados},
-                key=distancia.get
-            )
-            visitados.add(vertice)
+        fila_prioridade = [(0, origem)]
+
+        while fila_prioridade:
+            _, vertice = heapq.heappop(fila_prioridade)
 
             for adjacente, peso in self.adjacencias[vertice]:
-                if adjacente not in visitados:
-                    peso_total = distancia[vertice] + peso
-                    if peso_total < distancia[adjacente]:
-                        distancia[adjacente] = peso_total
+                peso_total = distancia[vertice] + peso
+                if peso_total < distancia[adjacente]:
+                    distancia[adjacente] = peso_total
+                    predecessores[adjacente] = vertice
+                    heapq.heappush(fila_prioridade, (peso_total, adjacente))
 
-        return distancia
+        return distancia, predecessores
 
     # RF10
-    def interromper_via(self, origem, destino):
+    def interromper_via(self):
         """
         Função para interromper uma via no grafo entre dois vértices e para encontrar um/ou mais caminhos alternativos
-        :param origem: O nome do vértice inicial
-        :param destino: O nome do vértice de destino
-        :return:
+        :return: Uma lista de caminhos alternativos entre a origem e o destino no grafo modificado
         """
-        if origem in self.adjacencias and destino in self.adjacencias[origem]:
-            self.remover_aresta(origem, destino)
-            caminhos_alternativos = self.encontrar_caminhos_alternativos(origem, destino)
-            return caminhos_alternativos
-        else:
+        arestas_disponiveis = []
+
+        for origem, adjacencias in self.adjacencias.items():
+            for adjacente, peso in adjacencias:
+                arestas_disponiveis.append((origem, adjacente, peso))
+
+        if not arestas_disponiveis:
             return []
+
+        print("Arestas disponíveis para interromper:")
+        for i, (origem, destino, peso) in enumerate(arestas_disponiveis):
+            print(f"{i+1}. {origem} - {destino} (Peso: {peso})")
+
+        opcao = int(input("Digite o número da aresta a ser removida: ")) - 1
+
+        if opcao < 0 or opcao >= len(arestas_disponiveis):
+            print("Opção inválida!")
+            return []
+
+        origem_remover, destino_remover, peso_remover = arestas_disponiveis[opcao]
+        self.remover_aresta(origem_remover, destino_remover)
+
+        origem = input("Digite o nome do vértice de origem: ")
+        destino = input("Digite o nome do vértice de destino: ")
+
+        caminhos_alternativos = self.encontrar_caminhos_alternativos(origem, destino)
+        return caminhos_alternativos
+
 
     def encontrar_caminhos_alternativos(self, origem, destino):
         """
@@ -377,30 +349,40 @@ class Grafo:
         """
         origem = input("Digite o nome do ponto de partida: ")
         destino = input("Digite o nome do ponto de destino: ")
-        caminhos_alternativos = self.encontrar_caminhos_alternativos(origem, destino)
-        if caminhos_alternativos:
-            print(f"\nCaminhos alternativos entre '{origem}' e '{destino}':")
-            for caminho in caminhos_alternativos:
-                print(" -> ".join(caminho))
 
-        distancia = self.dijkstra(origem)[destino]
-        tempo_estimado_a_pe = distancia * 10  # Exemplo: 10 minutos por unidade de distância
-        tempo_estimado_de_carro = distancia * 5  # Exemplo: 5 minutos por unidade de distância
+        distancia, predecessores = self.dijkstra(origem)
+
+        if distancia[destino] == float('inf'):
+            print(f"Não existe caminho entre '{origem}' e '{destino}'")
+            return
 
         print(f"\nCaminho mais curto entre '{origem}' e '{destino}':")
-        print(f"Distância a percorrer: {distancia} Km")
-        print(f"Tempo estimado a pé: {tempo_estimado_a_pe} minutos")
-        print(f"Tempo estimado de carro: {tempo_estimado_de_carro} minutos:)")
+        caminho = self.reconstruir_caminho(predecessores, destino)
+        print(" -> ".join(caminho))
 
-    def obter_arvore_rotas_carro(self, ponto_interesse, nome_ficheiro):
+        tempo_estimado_a_pe = distancia[destino] * 10  # Exemplo: 10 minutos por unidade de distância
+        tempo_estimado_de_carro = distancia[destino] * 5  # Exemplo: 5 minutos por unidade de distância
+
+        print(f"\nDistância a percorrer: {distancia[destino]} Km")
+        print(f"Tempo estimado a pé: {tempo_estimado_a_pe} minutos")
+        print(f"Tempo estimado de carro: {tempo_estimado_de_carro} minutos")
+
+    def reconstruir_caminho(self, predecessores, destino):
+        caminho = [destino]
+        vertice = destino
+        while vertice in predecessores:
+            vertice = predecessores[vertice]
+            caminho.insert(0, vertice)
+        return caminho
+
+    def obter_arvore_rotas_carro(self, ponto_interesse, nome_ficheiro, origem):
         """
         Obtém a subarvore de caminhos a partir de um ponto de interesse
         :param ponto_interesse: Ponto onde a árvore de caminhos de carro será obtida.
         :param nome_ficheiro: Ficheiro onde estão localizados os dados.
+        :param origem: Nó de origem para destacar na árvore de rotas de carro.
         :return:
         """
-
-
         # Adicionar vértices e arestas ao grafo
         with open(nome_ficheiro) as json_file:
             dados = json.load(json_file)
@@ -412,13 +394,13 @@ class Grafo:
             self.adicionar_aresta(aresta['origem'], aresta['destino'], aresta['peso'])
 
         # Obter árvore de caminhos de carro a partir do ponto de interesse
-        arvore = nx.DiGraph()
+        arvore = nx.Graph()
         visitados = set()
         visitados.add(ponto_interesse)
         self.obter_subarvore_carro(arvore, ponto_interesse, visitados)
 
-        # Desenhar a árvore
-        self.desenhar_arvore(arvore)
+        # Desenhar a árvore, destacando o nó de origem
+        self.desenhar_arvore(arvore, origem)
 
     def obter_subarvore_carro(self, arvore, vertice, visitados):
         """
@@ -434,40 +416,198 @@ class Grafo:
                 arvore.add_edge(vertice, adjacente)
                 self.obter_subarvore_carro(arvore, adjacente, visitados)
 
-    def desenhar_arvore(self, arvore):
+    def desenhar_arvore(self, g, origem):
         """
-        Desenha um grafo que representa a árvore de um grafo
-        :param arvore:
+        Desenha um grafo, destacando o nó de origem
+        :param g: Grafo a ser desenhado
+        :param origem: Nó de origem para destacar
         :return:
         """
-        g = nx.DiGraph()
-
-        cores = ['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 'brown', 'gray', 'cyan']
-
-        # Adicionar vértices ao grafo
-        for i, vertice in enumerate(arvore.nodes):
-            g.add_node(vertice, cor=cores[i % len(cores)])
-
-        # Adicionar arestas ao grafo
-        for origem, destino in arvore.edges:
-            peso = arvore[origem][destino].get('weight', 1)  # Obtém o peso ou usa 1 como valor padrão
-            peso_arredondado = round(peso, 2)
-            g.add_edge(origem, destino, weight=peso_arredondado)
-
-        pos = nx.spring_layout(g)
+        pos = nx.shell_layout(g)
 
         plt.figure(figsize=(12, 10))
-        node_colors = [g.nodes[vertice]['cor'] for vertice in g.nodes]
-        nx.draw_networkx_nodes(g, pos, node_size=200, node_color=node_colors)
-        nx.draw_networkx_edges(g, pos, node_size=200,
-                               edge_color='gray', width=1, arrowsize=15, arrowstyle='->')
-        edge_labels = nx.get_edge_attributes(g, 'weight')
-        nx.draw_networkx_edge_labels(g, pos, edge_labels=edge_labels, font_size=8)
-        nx.draw_networkx_labels(g, pos, font_size=1, font_color='black', font_weight='bold')
-        handles = [mpatches.Patch(color=color, label=vertice) for vertice, color in zip(g.nodes, node_colors)]
-        plt.legend(handles=handles, title='Vértices', loc='upper right')
-        plt.suptitle('Rotas de percursos de carro:')
+
+        # Definir tamanho dos nós
+        node_sizes = [200 if node != origem else 1000 for node in g.nodes]
+        node_colors = ["lightblue" if node != origem else "lightgreen" for node in g.nodes]
+        nx.draw(g, pos, node_color= "lightblue", edge_color='gray', width=1, arrowsize=15, arrowstyle='->')
+        # Desenhar nós
+        nx.draw_networkx_nodes(g, pos, node_size=node_sizes, node_color= node_colors)
+
+
+
+        # Adicionar rótulos aos nós
+        labels = {node: node for node in g.nodes}
+        nx.draw_networkx_labels(g, pos, labels=labels)
+
+        plt.suptitle('Árvore de rotas de carro')
         plt.xlabel('Longitude')
         plt.ylabel('Latitude')
         plt.show()
+
+    def shortest_path(self, origem: str, destino: str) -> List[str]:
+        result = self.calculate_shortest_path(origem, destino)
+        if destino not in result:
+            return []  # Não há um caminho entre os vértices
+        reversed_path: List[str] = []
+        reversed_path.append(destino)
+        current_label: str = destino
+        while result[current_label][1] is not None:
+            current_label = result[current_label][1]
+            reversed_path.append(current_label)
+        path: List[str] = reversed_path[::-1]
+        return path  # Inverter a sequência do caminho para que seja do vértice de origem ao vértice de destino
+
+
+    def calculate_shortest_path(self, origem: str, destino: str) -> Dict[str, Tuple[int, str]]:
+        distances: Dict[str, Tuple[int, str]] = {}
+        queue: List[Tuple[int, str]] = []
+
+        if origem not in self.vertices or destino not in self.vertices:
+            return distances
+
+        distances[origem] = (0, None)
+        heapq.heappush(queue, (0, origem))
+
+        while queue:
+            distance, vertex = heapq.heappop(queue)
+
+            if vertex == destino:
+                break
+
+            if distance > distances[vertex][0]:
+                continue
+
+            for neighbor, _ in self.adjacencias[vertex]:
+                new_distance = distance + self.calcular_distancia_geodesica(vertex, neighbor)
+
+                if neighbor not in distances or new_distance < distances[neighbor][0]:
+                    distances[neighbor] = (new_distance, vertex)
+                    heapq.heappush(queue, (new_distance, neighbor))
+
+        return distances
+
+    def calcular_centralidade_grau_interno(self, vertice):
+        """
+        Calcula a centralidade de grau interno de um vértice no grafo
+        :param vertice: O vértice para o qual se deseja calcular a centralidade de grau interno
+        :return: A centralidade de grau interno do vértice
+        """
+        if vertice not in self.vertices:
+            return 0
+
+        return len(self.adjacencias[vertice])
+
+    def calcular_centralidade_grau_externo(self, vertice):
+        """
+        Calcula a centralidade de grau externo de um vértice no grafo
+        :param vertice: O vértice para o qual se deseja calcular a centralidade de grau externo
+        :return: A centralidade de grau externo do vértice
+        """
+        if vertice not in self.vertices:
+            return 0
+
+        centralidade = 0
+        for origem, adjacencias in self.adjacencias.items():
+            if origem != vertice:
+                for destino, _ in adjacencias:
+                    if destino == vertice:
+                        centralidade += 1
+
+        return centralidade
+
+    def calcular_closeness(self, vertice):
+        """
+        Calcula o closeness de um vértice no grafo com base nas distâncias geodésicas entre os vértices
+        :param vertice: O vértice para o qual se deseja calcular o closeness
+        :return: O closeness do vértice
+        """
+        if vertice not in self.vertices:
+            return 0
+
+        closeness = 0
+        for v in self.vertices:
+            if v != vertice:
+                shortest_path = self.shortest_path(vertice, v)
+                if shortest_path:
+                # Utilizar a distância mais curta encontrada pelo shortest_path
+                    distancia = len(shortest_path) - 1  # Subtrair 1 para excluir o vértice de origem
+                    closeness += 1/distancia
+
+        if closeness == 0:
+            return 0
+
+        closeness = (len(self.vertices)-1) / closeness
+        normalized_closeness = closeness / (len(self.vertices) - 1)
+        return normalized_closeness
+
+    def calcular_distancia_geodesica(self, vertice1, vertice2):
+        """
+        Calcula a distância geodésica entre dois vértices do grafo com base em suas coordenadas geográficas (latitude, longitude)
+        :param vertice1: O primeiro vértice
+        :param vertice2: O segundo vértice
+        :return: A distância geodésica em quilômetros entre os dois vértices
+        """
+        if vertice1 not in self.vertices or vertice2 not in self.vertices:
+            return 0
+
+        lat1, lon1 = self.vertices[vertice1]
+        lat2, lon2 = self.vertices[vertice2]
+
+        # Raio médio da Terra em quilômetros
+        raio_terra = 6371.0
+
+        # Converter graus para radianos
+        lat1_rad = radians(lat1)
+        lon1_rad = radians(lon1)
+        lat2_rad = radians(lat2)
+        lon2_rad = radians(lon2)
+
+        # Diferença das longitudes e latitudes
+        dlon = lon2_rad - lon1_rad
+        dlat = lat2_rad - lat1_rad
+
+        # Fórmula de Haversine
+        a = sin(dlat / 2) ** 2 + cos(lat1_rad) * cos(lat2_rad) * sin(dlon / 2) ** 2
+        c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+        # Distância em quilômetros
+        distancia = raio_terra * c
+        return distancia
+
+    def identificar_pontos_criticos(self, num_pontos=10):
+        """
+        Identifica os pontos críticos do grafo com base na centralidade de grau interno, grau externo e closeness
+        :param num_pontos: O número de pontos críticos a serem identificados (padrão: 10)
+        :return: Uma lista de tuplas contendo os vértices e as métricas de centralidade de grau interno,
+                 grau externo e closeness
+        """
+        pontos_criticos = []
+        for vertice in self.vertices:
+            centralidade_grau_interno = self.calcular_centralidade_grau_interno(vertice)
+            centralidade_grau_externo = self.calcular_centralidade_grau_externo(vertice)
+            closeness = self.calcular_closeness(vertice)
+            pontos_criticos.append((vertice, centralidade_grau_interno, centralidade_grau_externo, closeness))
+
+        # Ordenar os pontos críticos com base na soma das métricas de centralidade
+        pontos_criticos.sort(key=lambda x: sum(x[1:]), reverse=True)
+
+        # Retornar os top n pontos críticos
+        return pontos_criticos[:num_pontos]
+
+    def mostrar_pontos_criticos(self, num_pontos=10):
+        """
+        Mostra os pontos críticos do grafo com base na centralidade de grau interno, grau externo e closeness
+        :param num_pontos: O número de pontos críticos a serem mostrados (padrão: 10)
+        """
+        pontos_criticos = self.identificar_pontos_criticos(num_pontos)
+        for i, (vertice, centralidade_grau_interno, centralidade_grau_externo, closeness) in enumerate(pontos_criticos, 1):
+            print(f"Vértice {i}: {vertice}")
+            print(f"Centralidade de Grau Interno: {centralidade_grau_interno}")
+            print(f"Centralidade de Grau Externo: {centralidade_grau_externo}")
+            print(f"Closeness: {closeness}")
+            print()
+
+
+
 

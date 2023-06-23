@@ -52,8 +52,13 @@
         },
         {
             "nome": "Ab",
-            "latitude": 37.1231342,
-            "longitude": -25.5542342
+            "latitude": 37.1232423,
+            "longitude": -25.234345
+        },
+        {
+            "nome": "BBA",
+            "latitude": 37.223432,
+            "longitude": -25.23445354
         }
     ]
 }

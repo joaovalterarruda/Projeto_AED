@@ -9,7 +9,6 @@ from sistema.algortimos import merge_sort
 from sistema.json import carregar_dados_grafo, ler_ficheiro, guardar_ficheiro, fazer_backup
 
 
-
 class Sistema:
     def __init__(self):
         self.linked_list = ler_ficheiro(FICHEIRO)
@@ -456,7 +455,7 @@ class Sistema:
         pontos_criticos = self.grafo.identificar_pontos_criticos()
 
         # Calcular centralidade de proximidade (closeness) para cada vértice
-        centralidade_closeness = nx.closeness_centrality(self.grafo.desenhar_grafo(GRAFO, FREGUESIAS))
+        centralidade_closeness = self.grafo.calcular_proximidade_closeness()
 
         # Exibir descrições dos pontos críticos, valores de closeness e graus
         for vertice, valor_closeness in centralidade_closeness.items():
@@ -470,4 +469,5 @@ class Sistema:
             print(f"Grau Interno: {grau_interno}")
             print(f"Grau Externo: {grau_externo}")
             print()
+
 

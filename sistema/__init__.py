@@ -1,7 +1,8 @@
 
-class PontoInteresse:
+
+class LinkedList:
     pass
 
 
-class LinkedList:
+class PontoInteresse:
     pass

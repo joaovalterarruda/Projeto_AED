@@ -108,5 +108,27 @@
         "acessibilidade_geo": "parque",
         "classificacao": 4.0,
         "visitas": 1
+    },
+    {
+        "designacao": "Ab",
+        "morada": "teste da morada Ab",
+        "latitude": 37.1232423,
+        "longitude": -25.234345,
+        "categoria_ponto": "cultural",
+        "acessibilidade_fis": "rampa",
+        "acessibilidade_geo": "pe",
+        "classificacao": 0,
+        "visitas": 0
+    },
+    {
+        "designacao": "BBA",
+        "morada": "teste de morada BBA",
+        "latitude": 37.223432,
+        "longitude": -25.23445354,
+        "categoria_ponto": "natureza",
+        "acessibilidade_fis": "elevador",
+        "acessibilidade_geo": "tp",
+        "classificacao": 0,
+        "visitas": 0
     }
 ]

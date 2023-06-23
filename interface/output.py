@@ -65,14 +65,27 @@ def menu_sec():
                 grafo.desenhar_grafo(GRAFO, FREGUESIAS)
 
             elif op == 2:
-                sist.pontos_criticos()
+                grafo.mostrar_pontos_criticos()
+                print(len(grafo.vertices))
             elif op == 3:
                 grafo.testar_caminho()
             elif op == 4:
                 grafo.obter_itinerario()
             elif op == 5:
                 ponto_interesse = input("Digite o ponto de interesse: ")
-                grafo.obter_arvore_rotas_carro(ponto_interesse, GRAFO)
+                grafo.obter_arvore_rotas_carro(ponto_interesse, GRAFO, ponto_interesse)
+            elif op == 6:
+                grafo.bfs("Portas do Mar")
+            elif op == 7:
+                grafo.dfs("Portas do Mar")
+            elif op == 8:
+
+                grafo.interromper_via()
+            elif op == 9:
+                origem = input("origem: ")
+                destino = input("destino: ")
+                grafo.shortest_path(origem, destino)
+                print(grafo.shortest_path(origem,destino))
             elif op == 0:
                 voltar_menu_principal = True
         except ValueError:
