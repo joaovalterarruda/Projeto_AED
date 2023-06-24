@@ -4,6 +4,8 @@ import time
 import webbrowser
 
 import networkx as nx
+from matplotlib import pyplot as plt
+
 from sistema.PontoInteresse import PontoInteresse
 from sistema.localize import obter_localizacao_atual
 from sistema.constantes import categorias_turismo, LAT, LONG, FRASE_INPUT, GRAFO, FREGUESIAS, FICHEIRO
@@ -30,10 +32,10 @@ def mostrar_info_conselho():
                 webbrowser.open("https://www.visitazores.com")
                 break
             elif link_op == 2:
-                webbrowser.open("https://www.exemplo.com")
+                webbrowser.open("https://www.cm-pontadelgada.pt/")
                 break
             elif link_op == 3:
-                webbrowser.open("https://www.exemplo2.com")
+                webbrowser.open("https://pt.wikipedia.org/wiki/Ponta_Delgada")
                 break
             else:
                 print("Opção inválida. Por favor, selecione um número válido.")
@@ -149,7 +151,6 @@ class Sistema:
         print("Ponto de interesse criado com sucesso!")
         print("\n")
 
-
     def obter_ponto_interesse(self):
         """
         Obtém um ponto de interesse na lista ligada.
@@ -162,7 +163,6 @@ class Sistema:
                 return ponto_interesse, current.data
             current = current.next
         return None, None
-
 
     def alterar_ponto_interesse(self):
         """
@@ -234,7 +234,6 @@ class Sistema:
         print("\n")
         time.sleep(2)
 
-
     def apagar_ponto_interesse(self):
         """
         Remove um ponto de interesse da lista ligada.
@@ -257,7 +256,6 @@ class Sistema:
 
         print("Não existe nenhum ponto de interesse com essa designação!")
         time.sleep(2)
-
 
     def pesquisar_ponto_interesse(self):
         """
@@ -375,6 +373,7 @@ class Sistema:
             opcao = input(FRASE_INPUT)
             if opcao.lower() == 'c':
                 return  # retorna para o menu
+
     def haversine(self, lat1, lon1, lat2, lon2) -> float:
         """
         Calcula a distância em km entre dois pontos na Terra utilizando a fórmula de Haversine.
@@ -473,14 +472,14 @@ class Sistema:
             vertices.append(ponto)
             current = current.next
 
-        pontos_int = {"vertices":vertices}
+        pontos_int = {"vertices": vertices}
         # Salvar os pontos de interesse num arquivo JSON
         with open("grafo_teste.json", "w") as file:
             json.dump(pontos_int, file, indent=4)
 
         print("Dados dos pontos de interesse foram salvos em pontos_interesse.json.")
-# Segunda Entrega
 
+    # Segunda Entrega
 
     def pontos_criticos(self):
         # Identificar pontos críticos
@@ -501,4 +500,3 @@ class Sistema:
             print(f"Grau Interno: {grau_interno}")
             print(f"Grau Externo: {grau_externo}")
             print()
-
