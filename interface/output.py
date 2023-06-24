@@ -68,9 +68,11 @@ def menu_sec():
                 ponto_interesse = input("Digite o ponto de interesse: ")
                 grafo.obter_arvore_rotas_carro(ponto_interesse, GRAFO, ponto_interesse)
             elif op == 6:
-                grafo.bfs("Portas do Mar")
+                ponto_interesse = input("Introduza um ponto para fazer a travessia em largura: ")
+                grafo.bfs(ponto_interesse)
             elif op == 7:
-                grafo.dfs("Portas do Mar")
+                ponto_interesse = input("Introduza um ponto para fazer a travessia em profundidade: ")
+                grafo.dfs(ponto_interesse)
             elif op == 8:
 
                 grafo.interromper_via()

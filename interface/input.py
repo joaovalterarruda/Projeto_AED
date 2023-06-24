@@ -34,6 +34,8 @@ def sub_menu():
     print("3- Interromper via de circulação: ")
     print("4- Obter itenerário (caminho mais curto): ")
     print("5- Consultar rotas para percursos de carro: ")
+    print("6- Fazer a travessia em largura a partir de um ponto (EXTRA)")
+    print("7- Fazer a travessia em profundidade a partir de um ponto (EXTRA)")
     print("0- Sair do submenu")
 
 
