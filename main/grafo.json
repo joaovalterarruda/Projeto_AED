@@ -6,7 +6,7 @@
       "longitude": -25.623417000000018
     },
     {
-      "nome": "Praia do Pópulo",
+      "nome": "Praia do Populo",
       "latitude": 37.7503986,
       "longitude": -25.618265399999927
     },
@@ -31,7 +31,7 @@
       "longitude": -25.852460861206055
     },
     {
-      "nome": "Universidade dos Açores",
+      "nome": "Universidade dos Acores",
       "latitude": 37.74588065027564,
       "longitude": -25.663613965021664
     },
@@ -41,7 +41,7 @@
       "longitude": -25.668544200000042
     },
     {
-      "nome": "Ermida da Mãe de Deus",
+      "nome": "Ermida da Mae de Deus",
       "latitude": 37.743817220597066,
       "longitude": -25.660897493362427
     }
@@ -49,7 +49,7 @@
   "arestas": [
     {
       "origem": "Praia das Milicias",
-      "destino": "Praia do Pópulo",
+      "destino": "Praia do Populo",
       "peso": 0.45727050531667823
     },
     {
@@ -59,11 +59,11 @@
     },
     {
       "origem": "Portas do Mar",
-      "destino": "Praia do Pópulo",
+      "destino": "Praia do Populo",
       "peso": 4.096110981698397
     },
     {
-      "origem": "Praia do Pópulo",
+      "origem": "Praia do Populo",
       "destino": "Vista do Rei",
       "peso": 18.396552923273692
     },
@@ -89,17 +89,17 @@
     },
     {
       "origem": "Igreja da Matriz",
-      "destino": "Universidade dos Açores",
+      "destino": "Universidade dos Acores",
       "peso": 0.7857064613718737
     },
     {
-      "origem": "Universidade dos Açores",
-      "destino": "Ermida da Mãe de Deus",
+      "origem": "Universidade dos Acores",
+      "destino": "Ermida da Mae de Deus",
       "peso": 0.33120035228836636
     },
     {
       "origem": "Igreja da Matriz",
-      "destino": "Ermida da Mãe de Deus",
+      "destino": "Ermida da Mae de Deus",
       "peso": 0.795886544489784
     },
     {
