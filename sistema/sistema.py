@@ -341,38 +341,42 @@ class Sistema:
 
     def consultar_estatisticas(self):
         """
-        Consulta estatísticas sobre os pontos turísticos, como ordenar por nome, número de visitas ou classificação média.
+        Consulta estatísticas sobre os pontos turísticos, exibindo as informações de cada ponto de interesse
+        e um gráfico com a distribuição das classificações para cada ponto turístico.
         """
-        opcao = input("Escolha a ordenação (1 - Designação, 2 - Número de Visitas, 3 - Classificação Média): ")
-
-        if opcao == "1":
-            ordenar_por = "designacao"
-        elif opcao == "2":
-            ordenar_por = "visitas"
-        elif opcao == "3":
-            ordenar_por = "classificacao"
-        else:
-            print("Opção inválida!")
-            time.sleep(2)
-            return
-
         pontos_turisticos = self.linked_list.to_list()
 
-        # Ordenar os pontos de interesse com base na opção selecionada
-        pontos_turisticos.sort(key=lambda p: p.get(ordenar_por),
-                               reverse=(ordenar_por in ["visitas", "classificacao"]))
-
         print("Estatísticas das Visitas nos Pontos Turísticos: ")
+
+        classificacoes = []  # Lista para armazenar todas as classificações
+
         for ponto in pontos_turisticos:
             num_visitas = ponto.get('visitas')
-            classificacao_media = ponto.get('classificacao')
+            classificacao = ponto.get('classificacao')
             print(f"Designação: {ponto.get('designacao')}")
             print(f"Número de Visitantes: {num_visitas}")
-            print(f"Classificação Média: {classificacao_media}\n")
+            print(f"Classificação: {classificacao}\n")
 
-            opcao = input(FRASE_INPUT)
-            if opcao.lower() == 'c':
-                return  # retorna para o menu
+            classificacoes.append(classificacao)  # Adiciona a classificação à lista
+
+        if classificacoes:
+            # Gera o gráfico de distribuição das classificações
+            labels = ['Nada Satisfeito', 'Pouco Satisfeito', 'Satisfeito', 'Muito Satisfeito']
+            count = [classificacoes.count(1), classificacoes.count(2), classificacoes.count(3), classificacoes.count(4)]
+            non_zero_indices = [i for i, count_value in enumerate(count) if count_value != 0]
+            non_zero_labels = [labels[i] for i in non_zero_indices]
+            non_zero_count = [count[i] for i in non_zero_indices]
+
+            plt.pie(non_zero_count, labels=non_zero_labels, autopct='%1.1f%%', startangle=140)
+            plt.axis('equal')  # Assegura que o gráfico é desenhado como um círculo.
+            plt.title('Distribuição das Classificações')
+            plt.show()
+        else:
+            print("Não há dados suficientes para gerar o gráfico.")
+
+        opcao = input(FRASE_INPUT)
+        if opcao.lower() == 'c':
+            return  # retorna para o menu
 
     def haversine(self, lat1, lon1, lat2, lon2) -> float:
         """
