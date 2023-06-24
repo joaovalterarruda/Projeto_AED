@@ -51,8 +51,8 @@
         "categoria_ponto": "natureza",
         "acessibilidade_fis": "rampa",
         "acessibilidade_geo": "parque de estacionamento",
-        "classificacao": 0,
-        "visitas": 0
+        "classificacao": 4.0,
+        "visitas": 5
     },
     {
         "designacao": "Ponta da Ferraria",
@@ -62,8 +62,8 @@
         "categoria_ponto": "praia",
         "acessibilidade_fis": "rampa",
         "acessibilidade_geo": "parque de estacionamento",
-        "classificacao": 0,
-        "visitas": 0
+        "classificacao": 1.0,
+        "visitas": 2
     },
     {
         "designacao": "Universidade dos A\u00e7ores",
@@ -73,8 +73,8 @@
         "categoria_ponto": "cultural",
         "acessibilidade_fis": "Elevador",
         "acessibilidade_geo": "parque de estacionamento",
-        "classificacao": 0,
-        "visitas": 0
+        "classificacao": 2.0,
+        "visitas": 2
     },
     {
         "designacao": "Igreja da Matriz",
@@ -84,8 +84,8 @@
         "categoria_ponto": "cultural",
         "acessibilidade_fis": "reduzida",
         "acessibilidade_geo": "pedonal",
-        "classificacao": 0,
-        "visitas": 0
+        "classificacao": 4.0,
+        "visitas": 1
     },
     {
         "designacao": "Ermida da M\u00e3e de Deus",
@@ -95,8 +95,8 @@
         "categoria_ponto": "cultural",
         "acessibilidade_fis": "rampa",
         "acessibilidade_geo": "outro",
-        "classificacao": 0,
-        "visitas": 0
+        "classificacao": 3.0,
+        "visitas": 1
     },
     {
         "designacao": "AA",
@@ -117,8 +117,8 @@
         "categoria_ponto": "cultural",
         "acessibilidade_fis": "rampa",
         "acessibilidade_geo": "pe",
-        "classificacao": 0,
-        "visitas": 0
+        "classificacao": 2.0,
+        "visitas": 1
     },
     {
         "designacao": "BBA",
@@ -128,7 +128,7 @@
         "categoria_ponto": "natureza",
         "acessibilidade_fis": "elevador",
         "acessibilidade_geo": "tp",
-        "classificacao": 0,
-        "visitas": 0
+        "classificacao": 1.0,
+        "visitas": 1
     }
 ]
