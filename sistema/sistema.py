@@ -362,14 +362,12 @@ class Sistema:
         if classificacoes:
             # Gera o gráfico de distribuição das classificações
             labels = ['Nada Satisfeito', 'Pouco Satisfeito', 'Satisfeito', 'Muito Satisfeito']
-            count = [classificacoes.count(1), classificacoes.count(2), classificacoes.count(3), classificacoes.count(4)]
-            non_zero_indices = [i for i, count_value in enumerate(count) if count_value != 0]
-            non_zero_labels = [labels[i] for i in non_zero_indices]
-            non_zero_count = [count[i] for i in non_zero_indices]
+            count = [classificacoes.count(i) for i in
+                     range(1, 5)]  # Conta as ocorrências para cada classificação de 1 a 4
 
-            plt.pie(non_zero_count, labels=non_zero_labels, autopct='%1.1f%%', startangle=140)
+            plt.pie(count, labels=labels, autopct='%1.1f%%', startangle=140)
             plt.axis('equal')  # Assegura que o gráfico é desenhado como um círculo.
-            plt.title('Distribuição das Classificações')
+            plt.title('Classificações Pontos de Interesse')
             plt.show()
         else:
             print("Não há dados suficientes para gerar o gráfico.")
