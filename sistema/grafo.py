@@ -7,13 +7,14 @@ import matplotlib.patches as mpatches
 from math import radians, sin, cos, sqrt, atan2
 
 from TDA.Stacks.StackBasedList import StackListBased
-from sistema.constantes import GRAFO
+from sistema.constantes import GRAFO, FRASE_INPUT
 
 
 class Grafo:
     def __init__(self):
         self.vertices = {}
         self.adjacencias = {}
+        self.arestas_removidas = []  # Lista para armazenar as arestas removidas
 
     def adicionar_vertice(self, nome, latitude, longitude):
         """
@@ -74,6 +75,8 @@ class Grafo:
         """
         if origem in self.adjacencias and destino in self.adjacencias[origem]:
             self.adjacencias[origem] = [(v, p) for v, p in self.adjacencias[origem] if v != destino]
+            # Adiciona a aresta removida à lista de arestas removidas
+            self.arestas_removidas.append((origem, destino))
 
     def get_vertices(self):
         """
@@ -156,11 +159,8 @@ class Grafo:
         return distancia, predecessores
 
     # RF10
+        # RF10
     def interromper_via(self):
-        """
-        Função para interromper uma via no grafo entre dois vértices e para encontrar um/ou mais caminhos alternativos
-        :return: Uma lista de caminhos alternativos entre a origem e o destino no grafo modificado
-        """
         arestas_disponiveis = []
 
         for origem, adjacencias in self.adjacencias.items():
@@ -172,7 +172,7 @@ class Grafo:
 
         print("Arestas disponíveis para interromper:")
         for i, (origem, destino, peso) in enumerate(arestas_disponiveis):
-            print(f"{i+1}. {origem} - {destino} (Peso: {peso})")
+            print(f"{i + 1}. {origem} - {destino} (Peso: {peso})")
 
         opcao = int(input("Digite o número da aresta a ser removida: ")) - 1
 
@@ -187,56 +187,37 @@ class Grafo:
         destino = input("Digite o nome do vértice de destino: ")
 
         caminhos_alternativos = self.encontrar_caminhos_alternativos(origem, destino)
-        return caminhos_alternativos
 
+        print("Caminhos alternativos encontrados:")
+        for caminho in caminhos_alternativos:
+            if (origem_remover, destino_remover) not in caminho:
+                print(caminho)
+
+        return caminhos_alternativos
 
     def encontrar_caminhos_alternativos(self, origem, destino):
         """
         Função para encontrar os caminhos alternativos entre dois vértices
         :param origem: O nome do vértice de origem
         :param destino: O nome do vértice de destino
-        :return:
+        :return: Uma lista de caminhos alternativos entre a origem e o destino no grafo modificado
         """
-        # Código para ler o JSON e adicionar vértices/arestas ao grafo
-        with open(GRAFO) as json_file:
-            dados = json.load(json_file)
-
-        # Adicionar vértices
-        for vertice in dados['vertices']:
-            self.adicionar_vertice(vertice['nome'], vertice['latitude'], vertice['longitude'])
-
-        # Adicionar arestas
-        for aresta in dados['arestas']:
-            self.adicionar_aresta(aresta['origem'], aresta['destino'], aresta['peso'])
-
         visitados = set()
         caminhos = []
         self._encontrar_caminhos_recursivo(origem, destino, [origem], caminhos, visitados)
         return caminhos
 
     def _encontrar_caminhos_recursivo(self, atual, destino, caminho, caminhos, visitados):
-        """
-        Função recursiva para ajudar a encontrar caminhos entre os vertices do grafo
-        :param atual: O vértice atual
-        :param destino: O vértice do destino
-        :param caminho: O caminho percorrido até ao momento
-        :param caminhos: Lista de caminhos encontrados
-        :param visitados: Conjunto de vértices visitados
-        :return:
-        """
         if atual == destino:
             caminhos.append(caminho.copy())
         else:
             visitados.add(atual)
             for adjacente, _ in self.adjacencias[atual]:
                 if adjacente not in visitados:
-                    caminho.append(adjacente)
-                    self._encontrar_caminhos_recursivo(adjacente, destino, caminho, caminhos, visitados)
-                    caminho.pop()
+                    novo_caminho = caminho.copy()  # Fazer uma cópia do caminho atual
+                    novo_caminho.append(adjacente)
+                    self._encontrar_caminhos_recursivo(adjacente, destino, novo_caminho, caminhos, visitados)
             visitados.remove(atual)
-
-
-
 
     def desenhar_grafo(self, nome_ficheiro_grafo, nome_ficheiro_freguesias):
         """
@@ -347,8 +328,8 @@ class Grafo:
         Obter informações sobre o itinerário entre os dois pontos
         :return:
         """
-        origem = input("Digite o nome do ponto de partida: ")
-        destino = input("Digite o nome do ponto de destino: ")
+        origem = input("Digite o nome do ponto de partida: ").lower
+        destino = input("Digite o nome do ponto de destino: ").lower
 
         distancia, predecessores = self.dijkstra(origem)
 
@@ -367,6 +348,9 @@ class Grafo:
         print(f"Tempo estimado a pé: {tempo_estimado_a_pe} minutos")
         print(f"Tempo estimado de carro: {tempo_estimado_de_carro} minutos")
 
+        opcao = input(FRASE_INPUT)
+        if opcao.lower() == 'c':
+            return  # retorna para o menu
     def reconstruir_caminho(self, predecessores, destino):
         caminho = [destino]
         vertice = destino

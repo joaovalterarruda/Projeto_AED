@@ -31,11 +31,13 @@ def sub_menu():
     print("-" * 72)
     print("1- Consultar a rede de circulação: ")
     print("2- Consultar pontos críticos da vida de circulação: ")
-    print("3- Interromper via de circulação: ")
+    print("3- Itinerarios disponiveis: ")
     print("4- Obter itenerário (caminho mais curto): ")
     print("5- Consultar rotas para percursos de carro: ")
-    print("6- Fazer a travessia em largura a partir de um ponto (EXTRA)")
-    print("7- Fazer a travessia em profundidade a partir de um ponto (EXTRA)")
+    print("6- Travessia em largura: ")
+    print("7- Travessia em profundidade: ")
+    print("8- Interromper via: ")
+    print("9- Caminho mais curto: ")
     print("0- Sair do submenu")
 
 

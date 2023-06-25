@@ -74,7 +74,6 @@ def menu_sec():
                 ponto_interesse = input("Introduza um ponto para fazer a travessia em profundidade: ")
                 grafo.dfs(ponto_interesse)
             elif op == 8:
-
                 grafo.interromper_via()
             elif op == 9:
                 origem = input("origem: ")
